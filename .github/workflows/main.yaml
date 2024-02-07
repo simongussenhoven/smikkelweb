@@ -33,7 +33,7 @@ jobs:
           npm run build
   deploy:
     runs-on: self-hosted
-    needs: build
+    # needs: build
     
     # steps:
     #   # Kill gunicorn server, if running already
