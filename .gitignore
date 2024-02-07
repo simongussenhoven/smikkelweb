@@ -1,5 +1,12 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
+# secrets
+.env
+.env.development
+.env.production
+
+
+
 # compiled output
 dist
 tmp
@@ -39,3 +46,9 @@ testem.log
 Thumbs.db
 
 .nx/cache
+# Nuxt dev/build outputs
+.output
+.data
+.nuxt
+.nitro
+.cache
