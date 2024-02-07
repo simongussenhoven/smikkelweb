@@ -1,46 +1,34 @@
-name: Build and Start Backend and Frontend
-
+name: CI
 on:
   push:
     branches:
       - main
+  pull_request:
+
+# Needed for nx-set-shas when run on the main branch
+permissions:
+  actions: read
+  contents: read
 
 jobs:
-  build-and-start:
+  main:
     runs-on: self-hosted
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v3
         with:
           node-version: 20
+          cache: 'npm'
+      # This line enables distribution
+      - run: npm i
+      - run: npm ci
+      - run: npx kill-port 3001
+      - run: npx kill-port 3000
+      - run: npm run start-backend
+      - run: npm run start-frontend
 
-      - name: Install dependencies
-        run: |
-          cd smikkelweb-backend
-          npm install
-          cd ../smikkelweb-frontend
-          npm install
-
-      - name: Build backend
-        run: |
-          cd smikkelweb-backend
-          npm run build
-
-      - name: Build frontend
-        run: |
-          cd smikkelweb-frontend
-          npm run build
-
-      - name: Start backend
-        run: |
-          cd backend
-          npm start
-
-      - name: Start frontend
-        run: |
-          cd frontend
-          npm start
+      - uses: nrwl/nx-set-shas@v3
+      # This line is needed for nx affected to work when CI is running on a PR
+      - run: git branch --track main origin/main

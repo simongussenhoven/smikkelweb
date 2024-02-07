@@ -4,7 +4,9 @@
   "license": "MIT",
   "scripts": {
     "dev": "nx run-many --target=serve --all",
-    "build": "nx run-many --target=build --all"
+    "build": "nx run-many --target=build --all",
+    "start-frontend": "node ./dist/smikkelweb-frontend/.output/server/index.mjs",
+    "start-backend": "node ./dist/smikkelweb-backend/main.js"
   },
   "private": true,
   "devDependencies": {
