@@ -13,11 +13,6 @@ permissions:
 jobs:
   main:
     runs-on: self-hosted
-    container:
-      image: ubuntu-latest
-      ports:
-        - 3000:3000
-        - 3001:3001
     steps:
       - uses: actions/checkout@v4
         with:
@@ -26,15 +21,15 @@ jobs:
         with:
           node-version: 20
           cache: 'npm'
-      #This line enables distribution
+      # This line enables distribution
       - run: npm i
       - run: npm ci
       - run: npm run build
-      - run: npx kill-port 127.0.0.1:3001
-      - run: npx kill-port 127.0.0.1:3000
-      - run: nohup npm run start-backend &
-      - run: nohup npm run start-frontend &
+      - run: npx kill-port 3000
+      - run: npx kill-port 3001
+      - run: RUNNER_TRACKING_ID="backend" && (nohup npm run start-backend &)
+      - run: RUNNER_TRACKING_ID="frontend" && (nohup npm run start-frontend &)
 
-      ## - uses: nrwl/nx-set-shas@v3
+      # - uses: nrwl/nx-set-shas@v3
       # This line is needed for nx affected to work when CI is running on a PR
-      ## - run: git branch --track main origin/main
+      # - run: git branch --track main origin/main
