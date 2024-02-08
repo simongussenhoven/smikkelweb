@@ -9,7 +9,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   devServer: {
     host: 'localhost',
-    port: 3001,
+    port: 3000,
   },
   typescript: {
     typeCheck: true,
