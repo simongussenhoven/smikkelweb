@@ -5,8 +5,8 @@
   "scripts": {
     "dev": "nx run-many --target=serve --all",
     "build": "nx run-many --target=build --all",
-    "start-frontend": "PORT=127.0.0.1:3000 node ./dist/smikkelweb-frontend/.output/server/index.mjs",
-    "start-backend": "PORT=127.0.0.1:3001 node ./dist/smikkelweb-backend/main.js"
+    "start-frontend": "PORT=3000 node ./dist/smikkelweb-frontend/.output/server/index.mjs",
+    "start-backend": "PORT=3001 node ./dist/smikkelweb-backend/main.js"
   },
   "private": true,
   "devDependencies": {
