@@ -22,11 +22,11 @@ jobs:
           node-version: 20
           cache: 'npm'
       # This line enables distribution
-      # - run: npm i
-      # - run: npm ci
-      # - run: npm run build
-      # - run: npx kill-port 3001
-      # - run: npx kill-port 3000
+      - run: npm i
+      - run: npm ci
+      - run: npm run build
+      - run: npx kill-port 3001
+      - run: npx kill-port 3000
       - run: nohup npm run start-backend &
       - run: nohup npm run start-frontend &
 
