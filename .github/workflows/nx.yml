@@ -27,8 +27,8 @@ jobs:
       - run: npm run build
       - run: npx kill-port 3001
       - run: npx kill-port 3000
-      - run: npm run start-backend
-      - run: npm run start-frontend
+      - run: nohup npm run start-backend &
+      - run: nohup npm run start-frontend &
 
       - uses: nrwl/nx-set-shas@v3
       # This line is needed for nx affected to work when CI is running on a PR
