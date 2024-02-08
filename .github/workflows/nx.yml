@@ -24,6 +24,7 @@ jobs:
       # This line enables distribution
       - run: npm i
       - run: npm ci
+      - run: npm run build
       - run: npx kill-port 3001
       - run: npx kill-port 3000
       - run: npm run start-backend
