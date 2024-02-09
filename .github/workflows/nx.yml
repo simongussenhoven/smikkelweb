@@ -4,7 +4,13 @@ on:
     branches:
       - main
   pull_request:
-
+env:
+  BACKEND_PORT: 3001
+  FRONTEND_PORT: 3000
+  DB_USER: smikkelweb-database-user
+  DB_PASSWORD: ow6ptpGUOAbcL0l9
+  JWT_SECRET: using-a-long-and-very-secure-secret-that-nobdy-can-know-about
+  JWT_EXPIRES_IN: 90d
 # Needed for nx-set-shas when run on the main branch
 permissions:
   actions: read
