@@ -17,12 +17,14 @@ export default defineNuxtConfig({
       extends: './tsconfig.app.json',
     },
   },
+  modules: [
+    '@pinia/nuxt',
+    '@nuxtjs/tailwindcss',
+    'flowbite-nuxt'
+  ],
   imports: {
     autoImport: false,
   },
-
-  css: ['~/assets/css/styles.scss'],
-
   vite: {
     plugins: [nxViteTsPaths()],
   },

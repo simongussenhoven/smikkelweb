@@ -7,5 +7,9 @@
       "path": "./tsconfig.app.json"
     }
   ],
-  "extends": "../tsconfig.base.json"
+  "extends": "../tsconfig.base.json",
+  "path": {
+    "@/*": [".nuxt/types"],
+    "~/*": [".nuxt/types"]
+  }
 }

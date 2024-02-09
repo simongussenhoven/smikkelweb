@@ -1,44 +1,30 @@
-<script setup lang="ts"></script>
-
 <template>
-  <main>
-    <header>
-      <nav>
-        <NuxtLink to="/"> Home </NuxtLink>
-        <NuxtLink to="/about"> About </NuxtLink>
-      </nav>
-    </header>
-    <nuxt-page />
-  </main>
+  <div class="app">
+    <SModalLoginCreate />
+    <SNavbar />
+    <NuxtPage />
+  </div>
 </template>
+<script lang="ts" setup>
+import { onMounted } from 'vue'
+import { initFlowbite } from 'flowbite'
+import { useUserStore } from './stores/userStore'
 
-<style scoped lang="css">
-header {
-  line-height: 1.5;
-  max-width: 100vw;
-}
+onMounted(() => {
+  initFlowbite();
+})
+const userStore = useUserStore();
 
-nav > a {
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
-
-@media (min-width: 768px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 768px;
-  }
-
-  nav {
-    text-align: left;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
+</script>
+<style>
+@import '~/assets/css/main.css';
+</style>
+<style lang="scss" scoped>
+.app {
+  background-color: black;
+  min-height: 100vh;
+  color: white;
+  display: flex;
+  flex-direction: column;
 }
 </style>

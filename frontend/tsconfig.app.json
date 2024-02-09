@@ -3,5 +3,8 @@
   "compilerOptions": {
     "composite": true
   },
-  "exclude": []
+  "exclude": [],
+  "path": {
+    "@": ["src"]
+  }
 }
