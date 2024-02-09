@@ -5,7 +5,7 @@ import { defineNuxtConfig } from 'nuxt/config';
 export default defineNuxtConfig({
   workspaceDir: '../',
   srcDir: 'src',
-  buildDir: '../dist/smikkelweb-frontend/.nuxt',
+  buildDir: '../dist/frontend/.nuxt',
   devtools: { enabled: true },
   devServer: {
     host: 'localhost',
@@ -28,7 +28,7 @@ export default defineNuxtConfig({
   },
   nitro: {
     output: {
-      dir: '../dist/smikkelweb-frontend/.output',
+      dir: '../dist/frontend/.output',
     },
   },
 });

@@ -1,21 +1,21 @@
 {
-  "name": "smikkelweb-backend",
+  "name": "backend",
   "$schema": "../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "smikkelweb-backend/src",
+  "sourceRoot": "backend/src",
   "projectType": "application",
   "targets": {
     "serve": {
       "executor": "@nx/js:node",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "smikkelweb-backend:build"
+        "buildTarget": "backend:build"
       },
       "configurations": {
         "development": {
-          "buildTarget": "smikkelweb-backend:build:development"
+          "buildTarget": "backend:build:development"
         },
         "production": {
-          "buildTarget": "smikkelweb-backend:build:production"
+          "buildTarget": "backend:build:production"
         }
       }
     }

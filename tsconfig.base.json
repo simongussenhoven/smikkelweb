@@ -16,5 +16,13 @@
     "baseUrl": ".",
     "paths": {}
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": ["node_modules", "tmp"],
+  "ts-node": {
+    // Tell ts-node CLI to install the --loader automatically
+    "esm": true
+  },
+  "paths": {
+    "@backend": ["backend/src"],
+    "@frontend": ["frontend/src"],
+  }
 }

@@ -1,7 +1,7 @@
 {
-  "name": "smikkelweb-frontend",
+  "name": "frontend",
   "$schema": "../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
-  "sourceRoot": "smikkelweb-frontend/src",
+  "sourceRoot": "frontend/src",
   "targets": {}
 }

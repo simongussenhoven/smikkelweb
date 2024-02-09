@@ -1,11 +1,11 @@
 /* eslint-disable */
 export default {
-  displayName: 'smikkelweb-backend',
+  displayName: 'backend',
   preset: '../jest.preset.js',
   testEnvironment: 'node',
   transform: {
     '^.+\\.[tj]s$': ['ts-jest', { tsconfig: '<rootDir>/tsconfig.spec.json' }],
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
-  coverageDirectory: '../coverage/smikkelweb-backend',
+  coverageDirectory: '../coverage/backend',
 };
