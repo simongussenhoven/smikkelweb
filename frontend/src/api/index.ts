@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseURL = 'http://127.0.0.1'; // Replace with your API base URL
+const baseURL = process.env.BACKEND_PORT
 
 const api = axios.create({
   baseURL,

@@ -9,6 +9,7 @@ env:
   FRONTEND_PORT: 3000
   DB_USER: smikkelweb-database-user
   DB_PASSWORD: ow6ptpGUOAbcL0l9
+  DB_STRING: mongodb+srv://smikkelweb-database-user:ow6ptpGUOAbcL0l9@smikkelweb.n7gcekz.mongodb.net/smikkelweb?retryWrites=true&w=majority
   JWT_SECRET: using-a-long-and-very-secure-secret-that-nobdy-can-know-about
   JWT_EXPIRES_IN: 90d
 # Needed for nx-set-shas when run on the main branch

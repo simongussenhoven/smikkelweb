@@ -6,6 +6,7 @@
     "dev": "nx run-many --target=serve --all",
     "dev:backend": "PORT=3001 nx run backend:serve",
     "build": "nx run-many --target=build --all",
+    "start": "nx run-many --target=start --all",
     "start-frontend": "PORT=3000 node ./dist/frontend/.output/server/index.mjs",
     "start-backend": "PORT=3001 node ./dist/backend/main.js"
   },
