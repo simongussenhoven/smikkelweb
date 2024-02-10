@@ -27,6 +27,12 @@ jobs:
         with:
           node-version: 20
           cache: 'npm'
+      - uses: actions/cache@v2
+          with:
+            path: ~/.npm
+            key: npm-${{ hashFiles('package-lock.json') }}
+            restore-keys: npm-
+
       # This line enables distribution
       - run: npm i
       - run: npm ci
