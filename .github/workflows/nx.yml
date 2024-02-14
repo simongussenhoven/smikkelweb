@@ -26,8 +26,8 @@ jobs:
       # This line enables distribution
       - run: npm ci
       - run: npm run build
-      - run: npx-kill-port 3000
-      - run: npx-kill-port 3001
+      - run: npx kill-port 3000
+      - run: npx kill-port 3001
       - run: RUNNER_TRACKING_ID="backend" && (nohup npm run start:backend &)
       - run: RUNNER_TRACKING_ID="frontend" && (nohup npm run start:frontend &)
 
