@@ -4,14 +4,8 @@ on:
     branches:
       - main
   pull_request:
-env:
-  BACKEND_PORT: 3001
-  FRONTEND_PORT: 3000
-  DB_USER: smikkelweb-database-user
-  DB_PASSWORD: ow6ptpGUOAbcL0l9
-  DB_STRING: mongodb+srv://smikkelweb-database-user:ow6ptpGUOAbcL0l9@smikkelweb.n7gcekz.mongodb.net/smikkelweb?retryWrites=true&w=majority
-  JWT_SECRET: using-a-long-and-very-secure-secret-that-nobdy-can-know-about
-  JWT_EXPIRES_IN: 90d
+    branches:
+      - main
 # Needed for nx-set-shas when run on the main branch
 permissions:
   actions: read
@@ -33,10 +27,7 @@ jobs:
       - run: npm i
       - run: npm ci
       - run: npm run build
-      - run: npx kill-port 3000
-      - run: npx kill-port 3001
-      - run: RUNNER_TRACKING_ID="backend" && (nohup npm run start-backend &)
-      - run: RUNNER_TRACKING_ID="frontend" && (nohup npm run start-frontend &)
+      - run: npm run start --production
 
       # - uses: nrwl/nx-set-shas@v3
       # This line is needed for nx affected to work when CI is running on a PR
