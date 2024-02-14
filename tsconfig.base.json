@@ -14,15 +14,14 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@backend": ["backend/src"],
+      "@frontend": ["frontend/src"],
+      "@types": ["types"]
+    }
   },
   "exclude": ["node_modules", "tmp"],
   "ts-node": {
-    // Tell ts-node CLI to install the --loader automatically
     "esm": true
   },
-  "paths": {
-    "@backend": ["backend/src"],
-    "@frontend": ["frontend/src"],
-  }
 }
