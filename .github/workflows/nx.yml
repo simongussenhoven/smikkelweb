@@ -26,10 +26,8 @@ jobs:
       # This line enables distribution
       - run: npm ci
       - run: npm run build
-      - run: npx kill-port 3000
-      - run: npx kill-port 3001
-      - run: RUNNER_TRACKING_ID="backend" && (nohup npm run start:backend &)
-      - run: RUNNER_TRACKING_ID="frontend" && (nohup npm run start:frontend &)
+      - run: npm stop
+      - run: RUNNER_TRACKING_ID="Apps" && (npm start)
 
       # - uses: nrwl/nx-set-shas@v3
       # This line is needed for nx affected to work when CI is running on a PR
