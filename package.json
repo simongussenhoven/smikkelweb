@@ -5,15 +5,18 @@
   "scripts": {
     "lint": "nx run-many --target=lint --all",
     "dev": "nx run-many --target=serve --all",
+    "dev:backend": "nx run backend:serve",
     "build": "nx run-many --target=build --all",
+    "start": "nx run-many --target=serve:production",
     "stop": "pm2 stop all && pm2 delete all && pm2 flush",
-    "start": "pm2 start ecosystem.config.js --env production"
+    "start:production": "pm2 start ecosystem.config.js --env production"
   },
   "private": true,
   "devDependencies": {
     "@nuxt/devtools": "1.0.0",
     "@nuxt/eslint-config": "0.2.0",
     "@nuxt/kit": "^3.10.0",
+    "@nuxt/types": "^2.17.3",
     "@nuxt/ui-templates": "^1.3.1",
     "@nuxtjs/tailwindcss": "^6.11.3",
     "@nx/eslint": "18.0.2",

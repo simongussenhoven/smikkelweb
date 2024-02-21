@@ -3,11 +3,21 @@ import { defineNuxtConfig } from 'nuxt/config';
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  runtimeConfig: {
+    // Private keys are only available on the server
+    apiSecret: '123',
+
+    // Public keys that are exposed to the client
+    public: {
+      apiBase: process.env.NUXT_PUBLIC_API_BASE,
+    }
+  },
   workspaceDir: '../',
   srcDir: 'src',
-  buildDir: '../dist/frontend/.nuxt',
+  buildDir: '../../dist/apps/frontend/.nuxt',
   devtools: { enabled: true },
   devServer: {
+    port: 3000,
     host: '127.0.0.1',
   },
   typescript: {
@@ -22,14 +32,14 @@ export default defineNuxtConfig({
     'flowbite-nuxt'
   ],
   imports: {
-    autoImport: false,
+    autoImport: true,
   },
   vite: {
     plugins: [nxViteTsPaths()],
   },
   nitro: {
     output: {
-      dir: '../dist/frontend/.output',
+      dir: '../../dist/apps/frontend/.output',
     },
   },
 });

@@ -1,15 +1,14 @@
-import { defineStore } from 'pinia';
-const baseURL = 'http://localhost:'
-const backendPort = process.env.BACKEND_PORT
+import { defineStore } from 'pinia'
+import { ref, computed } from 'vue'
 
-const useServiceStore = defineStore('serviceStore', () => {
-  console.info(`Using environment: ${process.env.NODE_ENV}`)
-  console.info(`Using backend port: ${backendPort}`)
+export const useServiceStore = defineStore('counter', () => {
+  const { apiBase } = useRuntimeConfig().public;
+
   const checkApi = async () => {
-    const dataTwice = await $fetch(`${baseURL}${backendPort}`)
-    return dataTwice
+    console.log(`Backend defined: ${apiBase}`)
+    const response = await $fetch(apiBase)
+    console.log(response)
   }
+
   return { checkApi }
 })
-
-export default useServiceStore

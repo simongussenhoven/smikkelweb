@@ -7,6 +7,7 @@ import * as authController from './controllers/auth';
 import cors from 'cors'
 import AppError from './utils/appError';
 import globalErrorHandler from './controllers/errorController'
+import corsOptions from './config/corsOptions';
 // import corsOptions from './config/corsOptions'
 
 // define the app
@@ -56,7 +57,7 @@ app.use(globalErrorHandler)
 
 const port = process.env.BACKEND_PORT
 const server = app.listen(port, () => {
-  console.info(`Listening at http://localhost:${port}`);
+  console.info(`Listening at http://127.0.0.1:${port}`);
 });
 server.on('error', console.error);
 

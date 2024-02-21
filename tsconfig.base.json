@@ -17,11 +17,12 @@
     "paths": {
       "@backend": ["backend/src"],
       "@frontend": ["frontend/src"],
-      "@types": ["types"]
+      "@types": ["types", "node_modules/@types",]
     }
   },
   "exclude": ["node_modules", "tmp"],
   "ts-node": {
     "esm": true
-  }
+  },
+  "files": [ "./types/*.d.ts"],
 }

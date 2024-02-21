@@ -2,10 +2,10 @@ module.exports = {
   apps: [
   {
     name   : "backend",
-    script: "./dist/backend/main.js",
+    script: "./dist/app/backend/main.js",
     instances: 1,
     env: {
-      "PORT": 3000,
+      "PORT": 4000,
       "NODE_ENV": "development"
       },
       env_production: {
@@ -15,10 +15,10 @@ module.exports = {
   },
   {
     name   : "frontend",
-    script: "./dist/frontend/.output/server/index.mjs",
+    script: "./dist/app/frontend/.output/server/index.mjs",
     instances: 1,
     env: {
-      "PORT": 3001,
+      "PORT": 4001,
       "NODE_ENV": "development"
       },
     env_production: {

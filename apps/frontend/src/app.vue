@@ -8,17 +8,13 @@
 <script lang="ts" setup>
 import { onMounted } from 'vue'
 import { initFlowbite } from 'flowbite'
-import { useUserStore } from './stores/userStore'
-import useServiceStore from './stores/serviceStore';
+import { useServiceStore } from './stores/serviceStore'
+const serviceStore = useServiceStore()
+serviceStore.checkApi()
 
 onMounted(async () => {
   initFlowbite();
-  await serviceStore.checkApi().then((response) => {
-    console.log(response.message)
-  });
 })
-const serviceStore = useServiceStore()
-const userStore = useUserStore();
 
 </script>
 <style>
