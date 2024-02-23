@@ -6,8 +6,12 @@ import recipeRoutes from './routes/recipeRoutes';
 import * as authController from './controllers/auth';
 import cors from 'cors'
 import AppError from './utils/appError';
+import dotenv from 'dotenv';
 import globalErrorHandler from './controllers/errorController'
 import corsOptions from './config/corsOptions';
+
+dotenv.config({ path: './config.env' });
+
 // import corsOptions from './config/corsOptions'
 
 // define the app
@@ -17,7 +21,7 @@ app.use('/assets', express.static(path.join(__dirname, 'assets')));
 app.use(express.json())
 
 // middleware
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.static(`${__dirname}/public`))
 
@@ -26,27 +30,20 @@ mongoose.connect(process.env.DB_STRING).then(() => {
   console.info('Connected to the database');
 })
 
-// confirm any request was received
-app.all('/api/v1/', (req, res, next) => {
-  console.info('Request received');
-  console.info({
-    method: req.method,
-    path: req.path,
-    body: req.body
-  });
-  next();
-});
-
-// get the status of the API
-app.get('/', (req, res) => {
-  res.status(200).json({
-    status: 'success',
-    message: 'API is running'
-  });
-});
-
+// routes
 app.use('/api/v1/users/', userRoutes)
 app.use('/api/v1/recipes/', authController.protect, recipeRoutes)
+
+// get the status of the API
+app.get('/', (req, res, next) => {
+  console.log('hostname', req.hostname)
+  console.log('originalUrl', req.originalUrl)
+  console.log('origin', req.get('origin'))
+  res.status(200).json({
+    status: 'success',
+    message: 'Welcome to the API'
+  });
+});
 
 // catch all other routes
 app.all('*', (req, res, next) => {
@@ -54,10 +51,9 @@ app.all('*', (req, res, next) => {
 });
 
 app.use(globalErrorHandler)
-
 const port = process.env.BACKEND_PORT
 const server = app.listen(port, () => {
-  console.info(`Listening at http://127.0.0.1:${port}`);
+  console.info(`localhost:${port}`);
 });
 server.on('error', console.error);
 

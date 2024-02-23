@@ -9,7 +9,7 @@ export default defineNuxtConfig({
 
     // Public keys that are exposed to the client
     public: {
-      apiBase: process.env.NUXT_PUBLIC_API_BASE,
+      apiBase: process.env.NUXT_PUBLIC_API_BASE || 'http://localhost:4000',
     }
   },
   workspaceDir: '../',
@@ -18,7 +18,6 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   devServer: {
     port: 3000,
-    host: '127.0.0.1',
   },
   typescript: {
     typeCheck: true,
