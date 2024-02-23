@@ -17,12 +17,12 @@
         <div v-show="isLoggedIn" id="user-dropdown"
           class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600">
           <div class="px-4 py-3">
-            <span class="block text-sm text-gray-900 dark:text-white">{{ userStore.user.name }}</span>
-            <span class="block text-sm  text-gray-500 truncate dark:text-gray-400">{{ userStore.user.email }}</span>
+            <span class="block text-sm text-gray-900 dark:text-white">{{ userStore.username }}</span>
+            <span class="block text-sm  text-gray-500 truncate dark:text-gray-400">{{ userStore.isModalVisible }}</span>
           </div>
           <ul class="py-2" aria-labelledby="user-menu-button">
             <SNavbarUserLink title="Profiel" link="profiel" />
-            <SNavbarUserLink title="Logout" />
+            <SNavbarUserLink title="Logout" @click="onClickLogout" />
           </ul>
         </div>
         <button data-collapse-toggle="navbar-user" type="button"
@@ -51,14 +51,17 @@ import { computed } from 'vue';
 import { useUserStore } from '../stores/userStore'
 const userStore = useUserStore();
 
-const isLoggedIn = computed(() => userStore.user.isLoggedIn);
-
+const isLoggedIn = computed(() => userStore.isLoggedIn);
 const onClickUser = (e: any) => {
-  if (userStore.user.isLoggedIn) {
+  if (userStore.isLoggedIn) {
     return
   }
   e.stopPropagation();
-  userStore.loginVisible = true;
+  userStore.isModalVisible = true;
+}
+
+const onClickLogout = () => {
+  userStore.logout();
 }
 
 </script>

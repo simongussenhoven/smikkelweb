@@ -10,7 +10,9 @@
       dark:hover:bg-gray-700 
       dark:hover:text-white 
       md:dark:hover:bg-transparent 
-      dark:border-gray-700">{{ title }}</nuxt-link>
+      dark:border-gray-700">
+      {{ title }}
+    </nuxt-link>
   </li>
 </template>
 <script lang="ts" setup>

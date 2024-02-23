@@ -27,8 +27,8 @@
         <a href="#" class="text-sm text-blue-700 hover:underline dark:text-blue-500">Lost Password?</a>
       </div>
       <!-- login button -->
-      <div class="flex mt-4">
-        <fwb-button class="flex grow justify-center text-center" size="md" color="default" @click="onClickLogin">
+      <div class="flex mt-4" @click="onClickLogin">
+        <fwb-button class="flex grow justify-center text-center" size="md" color="default">
           <fwb-spinner v-if="isLoading" color="gray" />
           <span v-else>Login</span>
         </fwb-button>
@@ -52,12 +52,10 @@ const userStore = useUserStore();
 
 const email = ref('')
 const password = ref('')
-const passwordConfirm = ref('')
-const isLoggedIn = computed(() => userStore.user.isLoggedIn)
-const loginVisible = computed(() => userStore.loginVisible)
+const isModalVisible = computed(() => userStore.isModalVisible)
 
 const isLoading = ref(false)
-watch(loginVisible, () => {
+watch(isModalVisible, () => {
   userStore.loginError = ''
 })
 

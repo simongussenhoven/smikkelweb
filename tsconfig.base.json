@@ -3,7 +3,7 @@
   "compilerOptions": {
     "rootDir": ".",
     "sourceMap": true,
-    "declaration": false,
+    "declaration": true,
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
@@ -17,12 +17,13 @@
     "paths": {
       "@backend": ["backend/src"],
       "@frontend": ["frontend/src"],
-      "@types": ["types", "node_modules/@types",]
+      "@types": ["types"]
     }
   },
   "exclude": ["node_modules", "tmp"],
   "ts-node": {
     "esm": true
   },
-  "files": [],
+  "include": [],
+  "files":[]
 }

@@ -9,7 +9,8 @@
   ],
   "extends": "../../tsconfig.base.json",
   "path": {
-    "@/*": [".nuxt/types"],
-    "~/*": [".nuxt/types"]
+    "@/*": [
+      "src/*"
+    ],
   }
 }

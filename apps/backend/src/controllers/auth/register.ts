@@ -5,10 +5,16 @@ import { createSendToken } from './createSendToken';
 import AppError from "../../utils/appError";
 
 export const register = async (req: IUserRequest, res: Response, next: NextFunction) => {
-  console.info('Registering user')
+  console.log('Registering user')
   try {
     const { username, password, email, passwordConfirm } = req.body;
-
+    if (!username || !password || !email || !passwordConfirm) {
+      res.status(400).json({
+        status: 'error',
+        message: 'Please provide username, email, password and passwordConfirm'
+      })
+      return
+    }
     // Check if user already exists
     const existingUser = await userModel.findOne({ username });
     if (existingUser) {
@@ -25,6 +31,7 @@ export const register = async (req: IUserRequest, res: Response, next: NextFunct
     createSendToken(newUser, 201, res)
 
   } catch (error) {
+    console.error(error)
     return next(new AppError('Failed to register user', 500))
   }
 };
