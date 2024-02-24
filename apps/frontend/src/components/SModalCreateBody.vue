@@ -64,7 +64,6 @@ watch(loginVisible, () => {
 })
 
 const onClickRegister = async (e: any) => {
-  console.log('reguster')
   e.preventDefault();
   if (!email.value || !password.value || !username.value || !passwordConfirm.value) {
     userStore.loginError = 'Vul alle velden in';

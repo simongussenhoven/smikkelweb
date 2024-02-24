@@ -13,8 +13,6 @@ interface IUser {
   token: string;
 }
 
-
-
 export const useUserStore = defineStore('userStore', () => {
 
   //@ts-expect-error: nuxt types
@@ -32,7 +30,6 @@ export const useUserStore = defineStore('userStore', () => {
 
   // env
   const register = async (request) => {
-    console.log(request)
     try {
       //@ts-expect-error: nuxt types
       const response: IUserResponse = await $fetch(`${apiBase}/api/v1/users/register`, {
@@ -50,7 +47,6 @@ export const useUserStore = defineStore('userStore', () => {
 
   // login
   const login = async (request) => {
-    console.log(request)
     try {
       //@ts-expect-error: nuxt types
       const response: IUserResponse = await $fetch(`${apiBase}/api/v1/users/login`, {
