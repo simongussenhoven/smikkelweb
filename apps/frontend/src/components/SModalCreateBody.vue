@@ -51,10 +51,10 @@ import { FwbButton } from 'flowbite-vue';
 import { FwbSpinner } from 'flowbite-vue';
 const userStore = useUserStore();
 
-const username = ref('smikkelson')
-const email = ref('siem@siem.nl')
-const password = ref('1234')
-const passwordConfirm = ref('1234')
+const username = ref('')
+const email = ref('')
+const password = ref('')
+const passwordConfirm = ref('')
 const isLoggedIn = computed(() => userStore.isLoggedIn)
 const loginVisible = computed(() => userStore.isModalVisible)
 
