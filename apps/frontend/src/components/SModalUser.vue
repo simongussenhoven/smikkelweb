@@ -25,6 +25,8 @@
         <SModalLoginBody v-if="userStore.userModalState === 'login'" />
         <SModalCreateBody v-if="userStore.userModalState === 'register'" />
         <SModalResetBody v-if="userStore.userModalState === 'reset'" />
+        <SModalForgotPassword v-if="userStore.userModalState === 'forgot'" />
+        <SModalForgotPassword v-if="userStore.userModalState === 'reset'" />
       </div>
     </div>
   </div>
@@ -42,9 +44,11 @@ const modalTitle = computed(() => {
     return 'Maak een account aan'
   }
   if (userStore.userModalState === 'reset') {
-    return 'Reset wacthwoord'
+    return 'Reset wachthwoord'
   }
-
+  if (userStore.userModalState === 'forgot') {
+    return 'Wachtwoord vergeten'
+  }
 })
 </script>
 

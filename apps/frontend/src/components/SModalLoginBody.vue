@@ -24,7 +24,8 @@
           <label for="remember" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Onthoud
             mij</label>
         </div>
-        <a href="#" class="text-sm text-blue-700 hover:underline dark:text-blue-500">Lost Password?</a>
+        <a href="#" @click="userStore.userModalState = 'forgot'"
+          class="text-sm text-blue-700 hover:underline dark:text-blue-500">Wachtwoord vergeten?</a>
       </div>
       <!-- login button -->
       <div class="flex mt-4" @click="onClickLogin">

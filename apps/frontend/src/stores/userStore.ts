@@ -15,14 +15,13 @@ interface IUser {
   token: string;
 }
 
-interface IUserLoginRequest extends Request {
-  username: string;
+interface IUserLoginRequest {
   password: string;
   rememberMe: boolean;
   email: string;
 }
 
-type IUserModalState = 'login' | 'register' | 'reset'
+type IUserModalState = 'login' | 'register' | 'reset' | 'forgot' | 'update';
 
 interface IUpdatePasswordRequest {
   id?: string | number;
@@ -65,7 +64,7 @@ export const useUserStore = defineStore('userStore', () => {
   }
 
   // login
-  const login = async (request: IUserLoginRequest) => {
+  const login = async (request) => {
     try {
       //@ts-expect-error: nuxt types
       const response: IUserResponse = await $fetch(`${apiBase}/api/v1/users/login`, {
@@ -95,16 +94,6 @@ export const useUserStore = defineStore('userStore', () => {
     isLoggedIn.value = true
     isModalVisible.value = false
     return
-  }
-
-  const logout = () => {
-    //@ts-expect-error: nuxt types
-    const cookie = useCookie('token')
-    cookie.value = ''
-    isLoggedIn.value = false
-    username.value = ''
-    email.value = ''
-    token.value = ''
   }
 
   const updatePassword = async (request: IUpdatePasswordRequest) => {
@@ -141,5 +130,31 @@ export const useUserStore = defineStore('userStore', () => {
       console.error('Error checking token:', error);
     }
   };
-  return { isModalVisible, username, email, token, isLoggedIn, loginError, userModalState, login, register, setUser, logout, updatePassword, checkToken, isUserMenuVisible }
+
+  const sendResetPassword = async (email: string) => {
+    try {
+      //@ts-expect-error: nuxt types
+      const response: any = await $fetch(`${apiBase}/api/v1/users/forgotPassword`, {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify({ email })
+      });
+      return response
+    } catch (error) {
+      console.error('Error sending reset password:', error);
+    }
+  }
+
+  const logOut = () => {
+    //@ts-expect-error: nuxt types
+    const cookie = useCookie('token')
+    cookie.value = null
+    isLoggedIn.value = false
+    username.value = ''
+    email.value = ''
+    token.value = ''
+    userModalState.value = 'login'
+  }
+
+  return { isModalVisible, username, email, token, isLoggedIn, loginError, userModalState, login, register, setUser, updatePassword, checkToken, logOut, sendResetPassword, isUserMenuVisible }
 })
