@@ -18,11 +18,15 @@
           class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600">
           <div class="px-4 py-3">
             <span class="block text-sm text-gray-900 dark:text-white">{{ userStore.username }}</span>
-            <span class="block text-sm  text-gray-500 truncate dark:text-gray-400">{{ userStore.isModalVisible }}</span>
+            <span class="block text-sm  text-gray-500 truncate dark:text-gray-400">{{ userStore.email }}</span>
           </div>
           <ul class="py-2" aria-labelledby="user-menu-button">
-            <SNavbarUserLink title="Profiel" link="profiel" />
-            <SNavbarUserLink title="Logout" @click="onClickLogout" />
+            <SNavbarUserLink title="Profiel" link="profiel" data-collapse-toggle="navbar-user"
+              aria-controls="navbar-user" />
+            <SNavbarUserLink title="Update wachtwoord" @click="onClickReset" data-collapse-toggle="navbar-user"
+              aria-controls="navbar-user" />
+            <SNavbarUserLink title="Uitloggen" @click="onClickLogout" data-collapse-toggle="navbar-user"
+              aria-controls="navbar-user" />
           </ul>
         </div>
         <button data-collapse-toggle="navbar-user" type="button"
@@ -62,6 +66,11 @@ const onClickUser = (e: any) => {
 
 const onClickLogout = () => {
   userStore.logout();
+}
+
+const onClickReset = () => {
+  userStore.isModalVisible = true;
+  userStore.userModalState = 'reset'
 }
 
 </script>

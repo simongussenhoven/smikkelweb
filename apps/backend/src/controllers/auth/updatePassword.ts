@@ -7,6 +7,9 @@ import { createSendToken } from "./createSendToken";
 export const updatePassword = async (req: IUserRequest, res: Response, next: NextFunction) => {
   // 1) get user from collection
   const user = await userModel.findById(req.user.id).select('+password');
+  if (!user) {
+    return next(new AppError('User not found', 404));
+  }
   // 2) check if posted current password is correct
   if (!await user.correctPassword(req.body.passwordCurrent, user.password)) {
     return next(new AppError('Your current password is wrong', 401));

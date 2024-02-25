@@ -18,7 +18,7 @@
       <div class="flex justify-between">
         <div class="flex items-start">
           <div class="flex items-center h-5">
-            <input id="remember" v-model="password" type="checkbox" value=""
+            <input id="remember" v-model="rememberMe" type="checkbox" value=""
               class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-600 dark:border-gray-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800">
           </div>
           <label for="remember" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Onthoud
@@ -52,6 +52,7 @@ const userStore = useUserStore();
 
 const email = ref('')
 const password = ref('')
+const rememberMe = ref(false)
 const isModalVisible = computed(() => userStore.isModalVisible)
 
 const isLoading = ref(false)
@@ -70,6 +71,7 @@ const onClickLogin = async (e: any) => {
   await userStore.login({
     email: email.value,
     password: password.value,
+    rememberMe: rememberMe.value
   })
   isLoading.value = false
 }

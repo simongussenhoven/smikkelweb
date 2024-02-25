@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <SModalLoginCreate />
+    <SModalUser />
     <SNavbar />
     <NuxtPage />
   </div>
@@ -9,11 +9,14 @@
 import { onMounted } from 'vue'
 import { initFlowbite } from 'flowbite'
 import { useServiceStore } from './stores/serviceStore'
+import { useUserStore } from './stores/userStore';
 const serviceStore = useServiceStore()
 serviceStore.checkApi()
 
+const userStore = useUserStore()
 onMounted(async () => {
   initFlowbite();
+  userStore.checkToken()
 })
 
 </script>

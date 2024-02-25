@@ -10,12 +10,17 @@ export const createSendToken = (user: IUser, statusCode: number, res: Response) 
     httpOnly: true,
     sameSite: "none"
   } as CookieOptions
-  res.cookie('jwt', token, cookieOptions)
+  res.cookie('token', token, cookieOptions)
   res.status(statusCode).json({
     status: 'success',
-    token,
     data: {
-      user
+      user: {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+        role: user.role,
+        token
+      }
     }
   });
 }

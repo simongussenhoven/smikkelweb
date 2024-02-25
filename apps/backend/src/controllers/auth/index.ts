@@ -6,3 +6,4 @@ export * from './register';
 export * from './restrictTo';
 export * from './updatePassword';
 export * from './resetPassword';
+export * from './checkToken';

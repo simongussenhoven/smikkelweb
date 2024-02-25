@@ -8,7 +8,7 @@
         <!-- Modal header -->
         <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
           <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-            Log in op Smikkelweb
+            {{ modalTitle }}
           </h3>
 
           <button type="button"
@@ -23,7 +23,8 @@
         </div>
         <!-- Modal body -->
         <SModalLoginBody v-if="userStore.userModalState === 'login'" />
-        <SModalCreateBody v-else />
+        <SModalCreateBody v-if="userStore.userModalState === 'register'" />
+        <SModalResetBody v-if="userStore.userModalState === 'reset'" />
       </div>
     </div>
   </div>
@@ -33,6 +34,18 @@ import { useUserStore } from '../stores/userStore'
 import { computed } from 'vue';
 const userStore = useUserStore();
 const isModalVisible = computed(() => userStore.isModalVisible)
+const modalTitle = computed(() => {
+  if (userStore.userModalState === 'login') {
+    return 'Log in op Smikkelweb'
+  }
+  if (userStore.userModalState === 'register') {
+    return 'Maak een account aan'
+  }
+  if (userStore.userModalState === 'reset') {
+    return 'Reset wacthwoord'
+  }
+
+})
 </script>
 
 <style lang="scss" scoped>

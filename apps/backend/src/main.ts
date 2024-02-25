@@ -9,6 +9,8 @@ import AppError from './utils/appError';
 import dotenv from 'dotenv';
 import globalErrorHandler from './controllers/errorController'
 import corsOptions from './config/corsOptions';
+import logger from 'morgan';
+import cookieParser from 'cookie-parser';
 
 dotenv.config({ path: './config.env' });
 
@@ -24,6 +26,8 @@ app.use(express.json())
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.static(`${__dirname}/public`))
+app.use(cookieParser())
+if (process.env.NODE_ENV == 'development') app.use(logger('dev'))
 
 // connect to the database
 mongoose.connect(process.env.DB_STRING).then(() => {
@@ -36,9 +40,6 @@ app.use('/api/v1/recipes/', authController.protect, recipeRoutes)
 
 // get the status of the API
 app.get('/', (req, res, next) => {
-  console.log('hostname', req.hostname)
-  console.log('originalUrl', req.originalUrl)
-  console.log('origin', req.get('origin'))
   res.status(200).json({
     status: 'success',
     message: 'Welcome to the API'
