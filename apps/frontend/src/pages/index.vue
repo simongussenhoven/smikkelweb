@@ -1,10 +1,10 @@
 <template>
   <section class="hero bg-cover bg-[url('/docs/images/style/food-1920.jpg')] bg-gray-500 bg-blend-multiply">
     <div class="px-4 mx-auto max-w-screen-xl text-center py-24 lg:py-56 flex flex-col items-center">
-      <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-white md:text-5xl lg:text-6xl">
+      <h1 class="title mb-4 text-4xl font-extrabold tracking-tight leading-none text-white md:text-5xl lg:text-6xl">
         Smikkelweb.com
       </h1>
-      <p class="mb-8 text-lg font-normal text-gray-300 lg:text-xl sm:px-16 lg:px-48">
+      <p class="mb-8 text-lg font-normal text-gray-300 sm:px-16 lg:text-xl">
         Vind en deel de lekkerste recepten
         op
         de leukste community van Nederland.
@@ -30,8 +30,35 @@
     </div>
   </section>
 </template>
+<script lang="ts" setup>
+import { onMounted } from 'vue'
+import { useUserStore } from '../stores/userStore';
+const userStore = useUserStore();
+
+onMounted(() => {
+  //@ts-expect-error nuxt types
+  const token = useRoute().query.token
+  if (token) {
+    userStore.resetHashToken = token
+    setTimeout(() => {
+      userStore.isModalVisible = true
+      userStore.userModalState = 'reset'
+    }, 100)
+  }
+})
+</script>
 <style lang="scss" scoped>
 .hero {
   flex-grow: 1;
+}
+
+
+
+@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Roboto:wght@300&display=swap');
+
+.title {
+  font-family: "Lobster", sans-serif;
+  font-weight: 800;
+  font-style: normal;
 }
 </style>

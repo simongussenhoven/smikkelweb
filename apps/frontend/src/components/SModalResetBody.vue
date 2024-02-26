@@ -1,7 +1,7 @@
 <template>
   <div class="p-4 md:p-5">
     <form class="space-y-4" action="#">
-      <div>
+      <div v-if="!userStore.resetHashToken">
         <label for="passwordCurrent" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Huidig
           wachtwoord</label>
         <input id="passwordCurrent" v-model="passwordCurrent" type="password" name="passwordCurrent"

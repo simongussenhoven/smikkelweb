@@ -7,7 +7,10 @@ export const checkToken = async (req, res, next) => {
   const token = req.cookies.token
 
   if (!token) {
-    return res.status(401).json({ error: 'Unauthorized - No token provided' });
+    return res.status(200).json({
+      status: 'success',
+      data: { user: null }
+    });
   }
 
   try {
