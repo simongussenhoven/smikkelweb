@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 
 export const useServiceStore = defineStore('counter', () => {
+  //@ts-expect-error: nuxt types
   const { apiBase } = useRuntimeConfig().public;
 
   const checkApi = async () => {
@@ -9,10 +10,12 @@ export const useServiceStore = defineStore('counter', () => {
       console.log('No API base found')
       return
     }
-    console.log('Checking API at ' + apiBase)
+    //@ts-expect-error: nuxt types
     const response = await $fetch(apiBase)
-
-    console.log(response)
+    if (!response.ok) {
+      console.log('API not available')
+      return
+    }
   }
 
   return { checkApi }

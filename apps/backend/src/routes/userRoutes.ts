@@ -1,6 +1,5 @@
 import * as express from 'express'
 const router = express.Router();
-// import * as userController from '../controllers/userController'
 import * as authController from '../controllers/auth'
 import { checkToken } from '../controllers/auth/'
 
@@ -19,5 +18,6 @@ router.post('/forgotPassword', authController.forgotPassword)
 router.patch('/resetPassword/:token', authController.resetPassword)
 router.patch('/updatePassword', authController.protect, authController.updatePassword)
 router.get('/checkToken', checkToken);
+router.get('/logout', authController.logout)
 
 export default router

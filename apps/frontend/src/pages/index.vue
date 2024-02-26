@@ -38,11 +38,11 @@ const userStore = useUserStore();
 onMounted(() => {
   //@ts-expect-error nuxt types
   const token = useRoute().query.token
-  console.log('token', token)
   if (token) {
+    userStore.resetHashToken = token
     setTimeout(() => {
       userStore.isModalVisible = true
-      userStore.userModalState = 'update'
+      userStore.userModalState = 'reset'
     }, 100)
   }
 })

@@ -18,9 +18,13 @@ export const resetPassword = async (req: IUserRequest, res: Response, next: Next
   user.passwordConfirm = req.body.passwordConfirm;
   user.passwordResetToken = undefined;
   user.passwordResetExpires = undefined;
-  await user.save();
 
   //3) update changedPasswordAt property for the user
+  user.passwordChangedAt = new Date();
+
+  await user.save();
+
+
 
 
   //4) log the user in, send JWT

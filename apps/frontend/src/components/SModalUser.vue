@@ -26,7 +26,7 @@
         <SModalCreateBody v-if="userStore.userModalState === 'register'" />
         <SModalResetBody v-if="userStore.userModalState === 'reset'" />
         <SModalForgotPassword v-if="userStore.userModalState === 'forgot'" />
-        <SModalForgotPassword v-if="userStore.userModalState === 'reset'" />
+        <SModalLogoutConfimBody v-if="userStore.userModalState === 'loggedOut'" />
       </div>
     </div>
   </div>
@@ -37,17 +37,19 @@ import { computed } from 'vue';
 const userStore = useUserStore();
 const isModalVisible = computed(() => userStore.isModalVisible)
 const modalTitle = computed(() => {
-  if (userStore.userModalState === 'login') {
-    return 'Log in op Smikkelweb'
-  }
-  if (userStore.userModalState === 'register') {
-    return 'Maak een account aan'
-  }
-  if (userStore.userModalState === 'reset') {
-    return 'Reset wachthwoord'
-  }
-  if (userStore.userModalState === 'forgot') {
-    return 'Wachtwoord vergeten'
+  switch (userStore.userModalState) {
+    case 'login':
+      return 'Log in op Smikkelweb'
+    case 'register':
+      return 'Maak een account aan'
+    case 'reset':
+      return 'Reset wachtwoord'
+    case 'forgot':
+      return 'Wachtwoord vergeten'
+    case 'loggedOut':
+      return 'Uitgelogd'
+    default:
+      return 'Smikkelweb'
   }
 })
 </script>
