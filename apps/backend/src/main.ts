@@ -12,22 +12,23 @@ import corsOptions from './config/corsOptions';
 import logger from 'morgan';
 import cookieParser from 'cookie-parser';
 
-dotenv.config({ path: './config.env' });
-
-// import corsOptions from './config/corsOptions'
+// define environment variables
+const envPath = process.env.NODE_ENV === 'production' ? './config.production.env' : './config.env'
+dotenv.config({ path: envPath });
 
 // define the app
 console.info(`Using environment: ${process.env.NODE_ENV}`)
 const app = express();
-app.use('/assets', express.static(path.join(__dirname, 'assets')));
-app.use(express.json())
+
 
 // middleware
+app.use('/assets', express.static(path.join(__dirname, 'assets')));
+app.use(express.json())
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.static(`${__dirname}/public`))
 app.use(cookieParser())
-if (process.env.NODE_ENV == 'development') app.use(logger('dev'))
+if (process.env.NODE_ENV !== 'production') app.use(logger('dev'))
 
 // connect to the database
 mongoose.connect(process.env.DB_STRING).then(() => {
@@ -39,7 +40,7 @@ app.use('/api/v1/users/', userRoutes)
 app.use('/api/v1/recipes/', authController.protect, recipeRoutes)
 
 // get the status of the API
-app.get('/', (req, res, next) => {
+app.get('/', (req, res) => {
   res.status(200).json({
     status: 'success',
     message: 'Welcome to the API'
