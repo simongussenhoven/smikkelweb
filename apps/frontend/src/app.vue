@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <SModalUser />
+    <UserModal />
     <SNavbar />
     <NuxtPage />
   </div>

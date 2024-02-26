@@ -1,11 +1,15 @@
 {
-  "extends": ["../../tsconfig.base.json"],
+  "extends": [
+    "../../tsconfig.base.json"
+  ],
   "compilerOptions": {
     "composite": true,
-    "noEmit": false
+    "noEmit": false,
+    "paths": {
+      "@stores/*": [
+        "src/stores"
+      ],
+    }
   },
   "exclude": [],
-  "path": {
-    "@": ["src"]
-  }
 }

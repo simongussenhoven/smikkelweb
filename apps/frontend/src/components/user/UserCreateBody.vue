@@ -5,7 +5,7 @@
         <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Naam</label>
         <input id="username" v-model="username" type="text" name="username"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-          placeholder="Joost Smikkelson" required>
+          placeholder="Gebruikersnaam" required>
       </div>
       <div>
         <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
@@ -46,9 +46,10 @@
 </template>
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
-import { useUserStore } from '../stores/userStore';
+import { useUserStore } from '../../stores/userStore';
 import { FwbButton } from 'flowbite-vue';
 import { FwbSpinner } from 'flowbite-vue';
+import { badUsernames } from '../../validators/badUsernames';
 const userStore = useUserStore();
 
 const username = ref('')
@@ -58,13 +59,25 @@ const passwordConfirm = ref('')
 const isLoggedIn = computed(() => userStore.isLoggedIn)
 const loginVisible = computed(() => userStore.isModalVisible)
 
-const isLoading = ref(false)
+const isDisabled = ref(false);
+const isLoading = ref(false);
 watch(loginVisible, () => {
   userStore.loginError = ''
 })
 
+watch(username, () => {
+  if (badUsernames.includes(username.value)) {
+    userStore.loginError = 'Deze gebruikersnaam is niet toegestaan';
+    isDisabled.value = true;
+  } else {
+    userStore.loginError = '';
+    isDisabled.value = false;
+  }
+})
+
 const onClickRegister = async (e: any) => {
   e.preventDefault();
+  if (isDisabled.value) return
   if (!email.value || !password.value || !username.value || !passwordConfirm.value) {
     userStore.loginError = 'Vul alle velden in';
     return;

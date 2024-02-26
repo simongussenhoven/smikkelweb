@@ -21,10 +21,10 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { useUserStore } from '../stores/userStore';
+import { useUserStore } from '../../stores/userStore';
 import { ref, watch, computed } from 'vue';
 import { FwbButton, FwbSpinner } from 'flowbite-vue';
-import { isEmail } from '../../utils'
+import { isEmail } from '../../../utils'
 
 type IMailSendState = 'ready' | 'sent'
 

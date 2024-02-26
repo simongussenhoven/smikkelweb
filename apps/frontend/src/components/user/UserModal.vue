@@ -22,17 +22,17 @@
           </button>
         </div>
         <!-- Modal body -->
-        <SModalLoginBody v-if="userStore.userModalState === 'login'" />
-        <SModalCreateBody v-if="userStore.userModalState === 'register'" />
-        <SModalResetBody v-if="userStore.userModalState === 'reset'" />
-        <SModalForgotPassword v-if="userStore.userModalState === 'forgot'" />
-        <SModalLogoutConfimBody v-if="userStore.userModalState === 'loggedOut'" />
+        <UserLoginBody v-if="userStore.userModalState === 'login'" />
+        <UserCreateBody v-if="userStore.userModalState === 'register'" />
+        <UserResetBody v-if="userStore.userModalState === 'reset'" />
+        <UserForgotBody v-if="userStore.userModalState === 'forgot'" />
+        <UserLogoutConfirmBody v-if="userStore.userModalState === 'loggedOut'" />
       </div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import { useUserStore } from '../stores/userStore'
+import { useUserStore } from '../../stores/userStore'
 import { computed } from 'vue';
 const userStore = useUserStore();
 const isModalVisible = computed(() => userStore.isModalVisible)

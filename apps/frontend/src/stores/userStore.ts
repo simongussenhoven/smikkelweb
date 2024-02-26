@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 
 interface IUserResponse extends Response {
   data: {
@@ -47,6 +47,9 @@ export const useUserStore = defineStore('userStore', () => {
   const isUserMenuVisible = ref(false);
   const resetHashToken = ref('')
 
+  watch(isUserMenuVisible, () => {
+    if (!isUserMenuVisible.value) userModalState.value = 'login'
+  })
   // env
   const register = async (request) => {
     try {

@@ -36,7 +36,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { useUserStore } from '../stores/userStore';
+import { useUserStore } from '../../stores/userStore';
 import { FwbButton } from 'flowbite-vue';
 import { FwbSpinner } from 'flowbite-vue';
 import { ref, computed, watch } from 'vue';

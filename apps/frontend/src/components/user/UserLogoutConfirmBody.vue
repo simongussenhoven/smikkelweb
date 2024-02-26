@@ -22,7 +22,7 @@
 <script setup lang="ts">
 import { FwbButton, FwbSpinner } from 'flowbite-vue';
 import { ref } from 'vue'
-import { useUserStore } from '../stores/userStore';
+import { useUserStore } from '../../stores/userStore';
 const userStore = useUserStore();
 
 const isLoading = ref(false);
