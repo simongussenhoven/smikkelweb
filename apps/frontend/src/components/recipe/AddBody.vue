@@ -1,74 +1,66 @@
 <template>
   <div class="p-4 md:p-5">
     <form class="space-y-4" action="#">
-      <!-- name -->
-      <div>
-        <span class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-          <Icon name="flowbite:file-circle-plus-outline" />
-          Naam
-        </span>
-        <FwbInput v-model="recipeModel.title" type="text" name="title" label="" placholder="Titel" required />
+
+      <!-- settings -->
+      <div class="flex gap-2">
+        <div class="w-1/2">
+          <span class="flex items-center gap-3 mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            <Icon name="flowbite:user-solid" />
+            Aantal personen
+          </span>
+          <SCounter v-model="recipeModel.servings" />
+        </div>
+        <!-- prep time -->
+        <div class="w-1/2">
+          <span class="flex items-center gap-3 mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            <Icon name="flowbite:clock-outline" />
+            Bereidingstijd (min)
+          </span>
+          <div class="flex items-center gap-2">
+            <SCounter v-model="recipeModel.time" />
+          </div>
+        </div>
       </div>
+
+      <!-- name -->
+      <span class="flex items-center gap-3 mb-2 text-sm font-medium text-gray-900 dark:text-white">
+        <Icon name="flowbite:file-circle-plus-outline" />
+        Titel
+      </span>
+      <FwbInput v-model="recipeModel.title" type="text" name="title" label="" placholder="Titel" required />
 
       <!-- description -->
       <div>
-        <span class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+        <span class="flex items-center gap-3 mb-2 text-sm font-medium text-gray-900 dark:text-white mt-2">
           <Icon name="flowbite:annotation-outline" />
           Omschrijving
         </span>
         <FwbTextarea v-model="recipeModel.description" name="description" placeholder="Recept beschrijving" label=""
           required />
       </div>
-
       <!-- veggie options -->
-      <div class="flex gap-3">
-        <FwbCheckbox class="w-1/2" v-model="recipeModel.vegetarian" label="Vegetarisch" />
-        <FwbCheckbox class="w-1/2" v-model="recipeModel.vegan" label="Vegan" />
-      </div>
-
-      <!-- settings -->
-      <div class="flex gap-2">
-        <div class="w-1/2">
-          <span class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-            Aantal personen
-          </span>
-          <div class="flex items-center gap-2">
-            <FwbButton color="dark" outline size="sm" @click.prevent="onClickCounter(CounterTypeEnum.SERVINGS, -1)">
-              <Icon name="flowbite:minus-outline" />
-            </FwbButton>
-            <FwbInput class="w-14" v-model="recipeModel.servings" type="number" name="servings"
-              placeholder="Aantal personen" label="" required />
-            <FwbButton color="dark" outline size="sm" @click.prevent="onClickCounter(CounterTypeEnum.SERVINGS, 1)">
-              <Icon name="flowbite:plus-outline" />
-            </FwbButton>
-          </div>
+      <div class="flex flex-col gap-3 m-3">
+        <div class="flex">
+          <FwbCheckbox class="w-1/2" v-model="recipeModel.vegetarian" label="Vegetarisch" />
+          <FwbCheckbox class="w-1/2" v-model="recipeModel.vegan" label="Vegan" />
         </div>
-        <div class="w-1/2">
-          <span class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-            Bereidingstijd (min)
-          </span>
-          <div class="flex items-center gap-2">
-            <FwbButton color="dark" outline size="sm" @click.prevent="onClickCounter(CounterTypeEnum.TIME, -1)">
-              <Icon name="flowbite:minus-outline" />
-            </FwbButton>
-            <FwbInput class="w-14" v-model="recipeModel.time" type="number" name="time" placeholder="Tijd" label=""
-              required />
-            <FwbButton color="dark" outline size="sm" @click.prevent="onClickCounter(CounterTypeEnum.TIME, 1)">
-              <Icon name="flowbite:plus-outline" />
-            </FwbButton>
-          </div>
+        <div class="flex">
+          <FwbCheckbox class="w-1/2" v-model="recipeModel.glutefree" label="Glutenvrij" />
+          <FwbCheckbox class="w-1/2" v-model="recipeModel.lactofree" label="Lactosevrij" />
         </div>
       </div>
 
       <!-- requirements -->
       <div>
-        <span class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-          <Icon name="fluent-emoji-high-contrast:broccoli" />
+        <span class="flex items-center gap-3 mb-2 text-sm font-medium text-gray-900 dark:text-white">
+          <Icon name="icon-park-outline:cook" />
           Benodigdheden
         </span>
         <div class="flex gap-2 mb-2" v-for="(req, i) in recipeModel.requirements">
-          <FwbInput class="w-20" v-model="req.amount" type="number" name="unit" placeholder="Aantal" required />
-          <FwbInput class="grow" v-model="req.name" type="text" name="ingredient" placeholder="Keukengerei" required />
+          <FwbInput class="w-10" v-model="recipeModel.requirements[i].amount" type="number" name="requirement"
+            placeholder="Hoeveelheid" required />
+          <FwbSelect class="grow" v-model="recipeModel.requirements[i].name" :options="gearOptions" />
           <FwbButton class="flex justify-center text-center" size="md" :color="getColor(InputTypeEnum.REQ, i)"
             @click.prevent="onClickButton(InputTypeEnum.REQ, i)">
             <Icon :name="getIcon(InputTypeEnum.REQ, i)" />
@@ -78,14 +70,23 @@
 
       <!-- ingredients -->
       <div>
-        <span class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+        <span class="flex items-center gap-3 mb-2 text-sm font-medium text-gray-900 dark:text-white">
           <Icon name="fluent-emoji-high-contrast:broccoli" />
           Ingredienten
         </span>
-        <div class="flex gap-2 mb-2" v-for="(ing, i) in recipeModel.ingredients">
-          <FwbInput class="w-20" v-model="ing.unit" type="number" name="unit" placeholder="Aantal" required />
-          <FwbInput class="grow" v-model="ing.name" type="text" name="ingredient" placeholder="Ingredient" required />
-          <FwbButton class="flex justify-center text-center" size="md" :color="getColor(InputTypeEnum.ING, i)"
+        <div class="flex items-end gap-2" v-for="(ing, i) in recipeModel.ingredients">
+          <div class="flex grow flex-col gap-2 mb-2">
+            <div class="flex gap-2">
+              <FwbInput class="w-10" v-model="recipeModel.ingredients[i].amount" type="number" name="ingredient"
+                placeholder="Hoeveelheid" required />
+              <FwbSelect class="grow" v-model="recipeModel.ingredients[i].unit" :options="unitOptions" />
+            </div>
+            <div class="flex gap-2">
+              <FwbInput class="grow" v-model="recipeModel.ingredients[i].name" type="text" name="ingredient"
+                placeholder="Ingredient" required />
+            </div>
+          </div>
+          <FwbButton class="flex text-center items-center" size="md" :color="getColor(InputTypeEnum.ING, i)"
             @click.prevent="onClickButton(InputTypeEnum.ING, i)">
             <Icon :name="getIcon(InputTypeEnum.ING, i)" />
           </FwbButton>
@@ -94,23 +95,28 @@
 
       <!-- steps -->
       <div>
-        <span class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+        <span class="flex items-center gap-3 mb-2 text-sm font-medium text-gray-900 dark:text-white">
           <Icon name="flowbite:ordored-list-outline" />
-          Stappen
+          Instructies
         </span>
         <div class="flex gap-2 mb-2" v-for="(step, i) in recipeModel.steps">
-          <FwbInput class="grow" v-model="step.description" type="text" name="step" placeholder="Stap" required />
+          <FwbInput class="grow" v-model="step.description" type="text" name="step" placeholder="" required>
+          </FwbInput>
           <FwbButton class="flex justify-center text-center" size="md" :color="getColor(InputTypeEnum.STEP, i)"
             @click.prevent="onClickButton(InputTypeEnum.STEP, i)">
             <Icon :name="getIcon(InputTypeEnum.STEP, i)" />
           </FwbButton>
         </div>
       </div>
+
+      <!-- error -->
       <span class="text-sm text-red-500 pt-5">{{ recipeStore.error }}</span>
-      <div class="flex">
-        <fwb-button class="flex grow justify-center text-center" size="md" color="default">
+
+      <!-- button -->
+      <div class="flex gap-2">
+        <fwb-button class="flex grow justify-center text-center" size="md" color="default" @click.prevent="onClickNext">
           <fwb-spinner v-if="isLoading" color="gray" />
-          <span v-else>Recept aanmaken</span>
+          <span v-else>Recept opslaan</span>
         </fwb-button>
       </div>
     </form>
@@ -118,8 +124,10 @@
 </template>
 <script setup lang="ts">
 import { computed, ref, watch, onMounted } from 'vue'
-import { FwbSpinner, FwbInput, FwbTextarea, FwbCheckbox, FwbButton } from 'flowbite-vue';
+import { FwbSpinner, FwbInput, FwbTextarea, FwbCheckbox, FwbButton, FwbDropdown, FwbListGroupItem, FwbSelect } from 'flowbite-vue';
 import { useRecipeStore } from '../../stores/recipeStore';
+import { tools } from '../../data/tools'
+import { units } from '../../data/units'
 
 enum InputTypeEnum {
   REQ = 1,
@@ -146,11 +154,13 @@ const recipeModel = ref({
   description: '',
   vegetarian: false,
   vegan: false,
+  glutefree: false,
+  lactofree: false,
   servings: 4,
   time: 30,
   category: '',
-  requirements: [{ name: '', amount: '' }],
-  ingredients: [{ unit: '', name: '', amount: '' }],
+  requirements: [{ name: '', amount: 1 }],
+  ingredients: [{ unit: '', name: '', amount: 1 }],
   steps: [{ description: '' }],
   image: '',
 })
@@ -164,6 +174,18 @@ const recipeModel = ref({
 //   { value: 'dessert', label: 'Dessert' },
 //   { value: 'drink', label: 'Drinken' },
 // ])
+
+const gearOptions = computed(() => {
+  return tools.map((tool) => {
+    return { id: tool.id, value: tool.description, name: tool.description }
+  })
+})
+
+const unitOptions = computed(() => {
+  return units.map((tool) => {
+    return { id: tool.id, value: tool.description, name: tool.description }
+  })
+})
 
 const getIcon = (type: InputTypeEnum, index: number) => {
   let arrLength = 0
@@ -220,6 +242,11 @@ const onClickCounter = (type: CounterTypeEnum, value: number) => {
     if (recipeModel.value.time + value > 10) recipeModel.value.time += value * 5
     return
   }
+}
+
+const onClickNext = () => {
+  if (step.value === 1) step.value = 2;
+
 }
 
 </script>

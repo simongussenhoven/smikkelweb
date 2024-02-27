@@ -29,10 +29,10 @@
 </template>
 <script setup lang="ts">
 import { useRecipeStore } from '../../stores/recipeStore'
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 const recipeStore = useRecipeStore();
 const isModalVisible = computed(() => recipeStore.isModalVisible)
-
+const step = ref(1)
 </script>
 
 <style lang="scss" scoped>

@@ -1,0 +1,18 @@
+export const units = [
+  { "id": 1, "description": "Gram", "plural": "Gram" },
+  { "id": 2, "description": "Kilogram", "plural": "Kilogram" },
+  { "id": 3, "description": "Milligram", "plural": "Milligram" },
+  { "id": 4, "description": "Liter", "plural": "Liter" },
+  { "id": 5, "description": "Milliliter", "plural": "Milliliter" },
+  { "id": 6, "description": "Theelepel", "plural": "Theelepels" },
+  { "id": 7, "description": "Eetlepel", "plural": "Eetlepels" },
+  { "id": 8, "description": "Kop", "plural": "Koppen" },
+  { "id": 10, "description": "Pond", "plural": "Pond" },
+  { "id": 11, "description": "Stuk", "plural": "Stukken" },
+  { "id": 12, "description": "Plakje", "plural": "Plakjes" },
+  { "id": 13, "description": "Snufje", "plural": "Snufjes" },
+  { "id": 14, "description": "Mespunt", "plural": "Mespunten" },
+  { "id": 15, "description": "Druppel", "plural": "Druppels" },
+  { "id": 16, "description": "Teen", "plural": "Tenen" },
+  { "id": 17, "description": "Takje", "plural": "Takjes" },
+]
