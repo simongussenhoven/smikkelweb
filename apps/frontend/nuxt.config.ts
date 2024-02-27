@@ -28,7 +28,8 @@ export default defineNuxtConfig({
   modules: [
     '@pinia/nuxt',
     '@nuxtjs/tailwindcss',
-    'flowbite-nuxt'
+    'flowbite-nuxt',
+    'nuxt-icon'
   ],
   imports: {
     autoImport: true,

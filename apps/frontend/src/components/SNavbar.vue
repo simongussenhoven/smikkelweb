@@ -23,6 +23,8 @@
           <ul class="py-2" aria-labelledby="user-menu-button">
             <SNavbarUserLink title="Profiel" link="profiel" data-collapse-toggle="navbar-user"
               aria-controls="navbar-user" />
+            <SNavbarUserLink title="Recept toevoegen" @click="onClickAddRecipe" data-collapse-toggle="navbar-user"
+              aria-controls="navbar-user" />
             <SNavbarUserLink title="Update wachtwoord" @click="onClickReset" data-collapse-toggle="navbar-user"
               aria-controls="navbar-user" />
             <SNavbarUserLink title="Uitloggen" @click="onClickLogout" data-collapse-toggle="navbar-user"
@@ -51,9 +53,16 @@
   </nav>
 </template>
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useUserStore } from '../stores/userStore'
+import { useRecipeStore } from '../stores/recipeStore'
 const userStore = useUserStore();
+const recipeStore = useRecipeStore()
+const dropdown = ref();
+
+onMounted(() => {
+
+})
 
 const isLoggedIn = computed(() => userStore.isLoggedIn);
 const onClickUser = (e: any) => {
@@ -71,6 +80,11 @@ const onClickLogout = () => {
 const onClickReset = () => {
   userStore.isModalVisible = true;
   userStore.userModalState = 'reset'
+}
+
+const onClickAddRecipe = () => {
+  recipeStore.isModalVisible = true;
+  recipeStore.recipeModalState = 'add'
 }
 
 </script>

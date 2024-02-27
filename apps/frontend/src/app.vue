@@ -1,6 +1,7 @@
 <template>
   <div class="app">
     <UserModal />
+    <RecipeModal />
     <SNavbar />
     <NuxtPage />
   </div>
