@@ -11,6 +11,10 @@ import globalErrorHandler from './controllers/errorController'
 import corsOptions from './config/corsOptions';
 import logger from 'morgan';
 import cookieParser from 'cookie-parser';
+import rateLimit from 'express-rate-limit';
+import helmet from 'helmet';
+import mongoSanitize from 'express-mongo-sanitize';
+import xss from 'xss-clean';
 
 // define environment variables
 const envPath = process.env.NODE_ENV === 'production' ? './config.production.env' : './config.env'
@@ -21,12 +25,32 @@ console.info(`Using environment: ${process.env.NODE_ENV}`)
 const app = express();
 
 
-// middleware
+// middleware security
+app.use(helmet())
+const limiter = rateLimit({
+  max: 100,
+  windowMs: 60 * 60 * 1000,
+  message: 'Too many requests from this IP, please try again in an hour'
+})
+if (process.env.NODE_ENV === 'production') app.use('/api', limiter)
+
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
-app.use(express.json())
-app.use(cors(corsOptions));
-app.use(express.json());
+
+// format responses
+app.use(express.json({ limit: '10kb' }))
 app.use(express.static(`${__dirname}/public`))
+
+// data sanitization
+app.use(mongoSanitize())
+app.use(xss())
+
+// cors
+app.use(cors(corsOptions));
+
+// error handler
+app.use(globalErrorHandler)
+
+// cookies
 app.use(cookieParser())
 if (process.env.NODE_ENV !== 'production') app.use(logger('dev'))
 
@@ -52,7 +76,7 @@ app.all('*', (req, res, next) => {
   next(new AppError(`Route not found: ${req.originalUrl}`, 500))
 });
 
-app.use(globalErrorHandler)
+
 const port = process.env.BACKEND_PORT
 const server = app.listen(port, () => {
   console.info(`localhost:${port}`);
