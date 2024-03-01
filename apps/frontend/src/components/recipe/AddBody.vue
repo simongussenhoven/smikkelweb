@@ -68,7 +68,7 @@
           Benodigdheden
         </span>
         <div class="flex gap-2 mb-2" v-for="(req, i) in recipeModel.requirements">
-          <FwbInput class="w-10" v-model="recipeModel.requirements[i].amount" type="number" name="requirement"
+          <FwbInput class="w-20" v-model="recipeModel.requirements[i].amount" type="number" name="requirement"
             placeholder="Hoeveelheid" required />
           <FwbSelect class="grow" v-model="recipeModel.requirements[i].name" :options="requirementOptions"
             placeholder="Kies keukengerei" />
@@ -88,7 +88,7 @@
         <div class="flex gap-2 items-center" v-for="(_ing, i) in recipeModel.ingredients">
           <div class="flex grow flex-col gap-2 mb-2">
             <div class="flex gap-2">
-              <FwbInput class="w-10" v-model="recipeModel.ingredients[i].amount" type="number" name="ingredient"
+              <FwbInput class="w-20" v-model="recipeModel.ingredients[i].amount" type="number" name="ingredient"
                 placeholder="Hoeveelheid" required />
               <FwbSelect class="grow" v-model="recipeModel.ingredients[i].unit" :options="unitOptions"
                 placeholder="Kies een hoeveelheid" />
