@@ -1,5 +1,5 @@
 <template>
-  <form class="max-w-xs mx-auto">
+  <div class="max-w-xs mx-auto">
     <label v-if="label" for="quantity-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
       {{ label }}</label>
     <div class="relative flex items-center max-w-[8rem]">
@@ -25,7 +25,7 @@
     </div>
     <p v-if="explainText" id="helper-text-explanation" class="mt-2 text-sm text-gray-500 dark:text-gray-400">{{
       explainText }}</p>
-  </form>
+  </div>
 </template>
 <script setup lang="ts">
 import { computed } from 'vue';

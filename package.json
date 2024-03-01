@@ -8,6 +8,8 @@
     "dev:frontend": "nx run frontend:serve --host",
     "dev:backend": "nx run backend:serve",
     "build": "nx run-many --target=build --all",
+    "build:frontend": "nx run frontend:build",
+    "build:backend": "nx run backend:build",
     "stop": "pm2 stop all && pm2 delete all",
     "start": "pm2 start ecosystem.config.js"
   },
