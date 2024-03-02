@@ -27,10 +27,22 @@
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
           required>
       </div>
+
+      <div class="flex items-start">
+        <div class="flex items-center h-5">
+          <input id="remember" v-model="rememberMe" type="checkbox" value=""
+            class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-600 dark:border-gray-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800">
+        </div>
+        <label for="remember" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Ik ga akkoord met de
+          <a href="#" class="underline" @click.prevent="userStore.userModalState = 'terms'">algemene
+            voorwaarden</a></label>
+      </div>
+
       <span class="text-sm text-red-500 pt-5">{{ userStore.loginError }}</span>
 
       <div class="flex">
-        <fwb-button class="flex grow justify-center text-center" size="md" color="default" @click.stop="onClickRegister">
+        <fwb-button class="flex grow justify-center text-center" size="md" color="default"
+          @click.stop="onClickRegister">
           <fwb-spinner v-if="isLoading" color="gray" />
           <span v-else>Account aanmaken</span>
         </fwb-button>
@@ -44,6 +56,7 @@
     </form>
   </div>
 </template>
+
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
 import { useUserStore } from '../../stores/userStore';

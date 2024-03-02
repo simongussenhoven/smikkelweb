@@ -27,10 +27,12 @@
         <UserResetBody v-if="userStore.userModalState === 'reset'" />
         <UserForgotBody v-if="userStore.userModalState === 'forgot'" />
         <UserLogoutConfirmBody v-if="userStore.userModalState === 'loggedOut'" />
+        <UserCreateTermsBody v-if="userStore.userModalState === 'terms'" />
       </div>
     </div>
   </div>
 </template>
+
 <script setup lang="ts">
 import { useUserStore } from '../../stores/userStore'
 import { computed } from 'vue';

@@ -21,7 +21,7 @@ interface IUserLoginRequest {
   email: string;
 }
 
-type IUserModalState = 'login' | 'register' | 'reset' | 'forgot' | 'update' | 'loggedOut';
+type IUserModalState = 'login' | 'register' | 'reset' | 'forgot' | 'update' | 'loggedOut' | 'terms';
 
 interface IUpdatePasswordRequest {
   id?: string | number;
