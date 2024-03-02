@@ -30,12 +30,19 @@
 
       <div class="flex items-start">
         <div class="flex items-center h-5">
-          <input id="remember" v-model="rememberMe" type="checkbox" value=""
+          <input id="terms" v-model="acceptTerms" type="checkbox"
             class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-600 dark:border-gray-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800">
         </div>
-        <label for="remember" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Ik ga akkoord met de
+        <label for="terms" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Ik ga akkoord met de
           <a href="#" class="underline" @click.prevent="userStore.userModalState = 'terms'">algemene
             voorwaarden</a></label>
+      </div>
+      <div class="flex items-start">
+        <div class="flex items-center h-5">
+          <input id="remember" v-model="rememberMe" type="checkbox"
+            class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-600 dark:border-gray-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800">
+        </div>
+        <label for="remember" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Onthoud mij</label>
       </div>
 
       <span class="text-sm text-red-500 pt-5">{{ userStore.loginError }}</span>
@@ -63,23 +70,23 @@ import { useUserStore } from '../../stores/userStore';
 import { FwbButton } from 'flowbite-vue';
 import { FwbSpinner } from 'flowbite-vue';
 import { badUsernames } from '../../validators/badUsernames';
-const userStore = useUserStore();
 
+const userStore = useUserStore();
 const username = ref('')
 const email = ref('')
 const password = ref('')
 const passwordConfirm = ref('')
-const isLoggedIn = computed(() => userStore.isLoggedIn)
 const loginVisible = computed(() => userStore.isModalVisible)
-
+const acceptTerms = ref(false);
 const isDisabled = ref(false);
 const isLoading = ref(false);
+
 watch(loginVisible, () => {
   userStore.loginError = ''
 })
 
 watch(username, () => {
-  if (badUsernames.includes(username.value)) {
+  if (badUsernames.includes(username.value.toLowerCase())) {
     userStore.loginError = 'Deze gebruikersnaam is niet toegestaan';
     isDisabled.value = true;
   } else {
@@ -91,6 +98,10 @@ watch(username, () => {
 const onClickRegister = async (e: any) => {
   e.preventDefault();
   if (isDisabled.value) return
+  if (!acceptTerms.value) {
+    userStore.loginError = 'Je moet akkoord gaan met de algemene voorwaarden';
+    return;
+  }
   if (!email.value || !password.value || !username.value || !passwordConfirm.value) {
     userStore.loginError = 'Vul alle velden in';
     return;

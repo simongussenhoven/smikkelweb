@@ -50,6 +50,11 @@ export const useUserStore = defineStore('userStore', () => {
   watch(isUserMenuVisible, () => {
     if (!isUserMenuVisible.value) userModalState.value = 'login'
   })
+
+  watch(isModalVisible, () => {
+    if (!isModalVisible.value) userModalState.value = 'login'
+  })
+
   // env
   const register = async (request) => {
     try {
