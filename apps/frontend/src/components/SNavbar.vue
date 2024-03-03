@@ -3,27 +3,28 @@
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
       <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
         <img src="../docs/images/style/logo.png" class="h-8" alt="Smikkelweb logo">
+        <!-- <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Flowbite</span> -->
       </a>
       <div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
         <button id="user-menu-button" type="button"
           class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
           aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom"
           @click="onClickUser">
-          <span class="sr-only">Open user menu</span>
+          <!-- <span class="sr-only">Open user menu</span> -->
           <img class="w-8 h-8 rounded-full" src="/docs/images/style/user.png" alt="user photo">
         </button>
         <!-- Dropdown menu -->
         <div v-show="isLoggedIn" id="user-dropdown"
-          class="z-50 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600">
+          class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600">
           <div class="px-4 py-3">
             <span class="block text-sm text-gray-900 dark:text-white">{{ userStore.username }}</span>
             <span class="block text-sm  text-gray-500 truncate dark:text-gray-400">{{ userStore.email }}</span>
           </div>
           <ul class="py-2" aria-labelledby="user-menu-button">
             <SNavbarUserLink title="Gegevens wijzigen" @click="userStore.userModalState = 'edit'"
-              data-collapse-toggle="navbar-user" aria-controls="navbar-user" />
-            <SNavbarUserLink title="Recept toevoegen" @click="onClickAddRecipe" data-dropdown-toggle="user-dropdown"
-              data-dropdown-placement="bottom" aria-controls="navbar-user" />
+              data-modal-target="navbar-user" data-modal-hide="navbar-user" aria-controls="navbar-user" />
+            <SNavbarUserLink title="Recept toevoegen" @click="onClickAddRecipe" data-collapse-toggle="navbar-user"
+              aria-controls="navbar-user" />
             <SNavbarUserLink title="Update wachtwoord" @click="userStore.userModalState = 'reset'"
               data-collapse-toggle="navbar-user" aria-controls="navbar-user" />
             <SNavbarUserLink title="Account verwijderen" @click="userStore.userModalState = 'delete'"

@@ -6,14 +6,16 @@ import AppError from "../../utils/appError";
 import { createSendToken } from "./createSendToken";
 
 export const resetPassword = async (req: IUserRequest, res: Response, next: NextFunction) => {
-  // 1) get user based on token
+  // get user based on token
   const hashedToken = crypto.createHash('sha256').update(req.params.token).digest('hex');
   const user = await userModel.findOne({ passwordResetToken: hashedToken, passwordResetExpires: { $gt: Date.now() } });
-  // 2) if token has not expired and there is a user, set the new password
+
+  // check if token expired
   if (!user) {
     return next(new AppError('Token is invalid or has expired', 400));
   }
-  //2 ) if token has not expired and there is a user, set the new password
+
+  // if token has not expired and there is a user, set the new password
   user.password = req.body.password;
   user.passwordConfirm = req.body.passwordConfirm;
   user.passwordResetToken = undefined;
@@ -23,10 +25,5 @@ export const resetPassword = async (req: IUserRequest, res: Response, next: Next
   user.passwordChangedAt = new Date();
 
   await user.save();
-
-
-
-
-  //4) log the user in, send JWT
   createSendToken(user, 200, res);
 }

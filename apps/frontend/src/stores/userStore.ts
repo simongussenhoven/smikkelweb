@@ -91,7 +91,7 @@ export const useUserStore = defineStore('userStore', () => {
 
   const getUsers = async () => {
     try {
-      const response: IUserResponse = await $fetch(`${apiBase}/api/v1/getUsers`, {
+      const response: IUserResponse = await $fetch(`${apiBase}/api/v1/users/getUsers`, {
         method: 'GET',
         headers,
         credentials: 'include',
@@ -278,5 +278,26 @@ export const useUserStore = defineStore('userStore', () => {
       loginError.value = "Er ging iets mis bij het updaten van je gegevens. Probeer het opnieuw.";
     }
   }
-  return { isModalVisible, username, email, token, isLoggedIn, loginError, userModalState, isUserMenuVisible, resetHashToken, role, login, register, setUser, updatePassword, checkToken, logOut, sendResetPassword, update, deleteAccount }
+  return {
+    isModalVisible,
+    username,
+    email,
+    token,
+    isLoggedIn,
+    loginError,
+    userModalState,
+    isUserMenuVisible,
+    resetHashToken,
+    role,
+    getUsers,
+    login,
+    register,
+    setUser,
+    updatePassword,
+    checkToken,
+    logOut,
+    sendResetPassword,
+    update,
+    deleteAccount
+  }
 })

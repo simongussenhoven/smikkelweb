@@ -13,6 +13,8 @@ const filterObj = (obj: any, ...allowedFields: string[]) => {
 }
 
 export const updateMe = async (req: IUserRequest, res: Response, next: NextFunction) => {
+  console.log(req.file)
+  console.log(req.body)
   if (req.body.password || req.body.passwordConfirm) {
     return res.status(400).json({
       status: 'fail',
