@@ -14,8 +14,8 @@
           <img class="w-8 h-8 rounded-full" src="/docs/images/style/user.png" alt="user photo">
         </button>
         <!-- Dropdown menu -->
-        <div v-show="isLoggedIn" id="user-dropdown"
-          class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600">
+        <div v-show="isLoggedIn" id="user-dropdown" :class="{ 'hidden': userStore.isModalVisible }"
+          class="z-50 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600">
           <div class="px-4 py-3">
             <span class="block text-sm text-gray-900 dark:text-white">{{ userStore.username }}</span>
             <span class="block text-sm  text-gray-500 truncate dark:text-gray-400">{{ userStore.email }}</span>
