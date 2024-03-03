@@ -6,8 +6,10 @@ import { promisify } from 'util';
 import jwt from 'jsonwebtoken';
 
 export const protect = async function (req: IUserRequest, res: Response, next: NextFunction) {
+  console.log(req.headers.authorization)
   try {
-    const token = req.headers.authorization && req.headers.authorization.startsWith('Bearer') ? req.headers.authorization.split(' ')[1] : null
+    let token = req.headers.authorization && req.headers.authorization.startsWith('Bearer') ? req.headers.authorization.split(' ')[1] : null
+    if (!token) token = req.cookies.token
     if (!token) {
       return next(new AppError('Please login to access this resource', 401));
     }

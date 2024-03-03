@@ -80,6 +80,7 @@ const loginVisible = computed(() => userStore.isModalVisible)
 const acceptTerms = ref(false);
 const isDisabled = ref(false);
 const isLoading = ref(false);
+const rememberMe = ref(false);
 
 watch(loginVisible, () => {
   userStore.loginError = ''

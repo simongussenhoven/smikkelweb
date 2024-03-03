@@ -1,3 +1,4 @@
+import { useCookie, useRequestHeaders, useRuntimeConfig } from 'nuxt/app';
 import { defineStore } from 'pinia';
 import { ref, watch } from 'vue';
 
@@ -31,10 +32,7 @@ interface IUpdatePasswordRequest {
 }
 
 export const useUserStore = defineStore('userStore', () => {
-
-  //@ts-expect-error: nuxt types
   const { apiBase } = useRuntimeConfig().public;
-  //@ts-expect-error: nuxt types
   const headers = useRequestHeaders(['cookie', 'content-type', 'accept', 'authorization'])
   const isModalVisible = ref(false);
   const id = ref('')
@@ -58,13 +56,11 @@ export const useUserStore = defineStore('userStore', () => {
   // env
   const register = async (request) => {
     try {
-      //@ts-expect-error: nuxt types
       const response: IUserResponse = await $fetch(`${apiBase}/api/v1/users/register`, {
         method: 'POST',
         headers,
         body: JSON.stringify(request)
       })
-      // setCookie(response)
       setUser(response.data.user)
     }
     catch (e: any) {
@@ -75,18 +71,16 @@ export const useUserStore = defineStore('userStore', () => {
   // login
   const login = async (request) => {
     try {
-      //@ts-expect-error: nuxt types
       const response: IUserResponse = await $fetch(`${apiBase}/api/v1/users/login`, {
         method: 'POST',
         headers,
         credentials: 'include',
         body: JSON.stringify(request)
       });
-      // setCookie(response)
       setUser(response.data.user);
       if (!request.rememberMe) {
-        //@ts-expect-error: nuxt types
         const cookie = useCookie('token')
+        //@ts-expect-error: nuxt types
         cookie.options.expires = 1;
       }
     } catch (e: any) {
@@ -113,7 +107,6 @@ export const useUserStore = defineStore('userStore', () => {
     //when reset is performed with logged in user
     try {
       request.id = id.value
-      //@ts-expect-error: nuxt types
       const response: IUserResponse = await $fetch(`${apiBase}/api/v1/users/updatePassword`, {
         method: 'PATCH',
         headers: {
@@ -130,7 +123,6 @@ export const useUserStore = defineStore('userStore', () => {
 
   const resetPassword = async (request: IUpdatePasswordRequest) => {
     try {
-      //@ts-expect-error: nuxt types
       const response: IUserResponse = await $fetch(`${apiBase}/api/v1/users/resetPassword/${resetHashToken.value}`, {
         method: 'PATCH',
         headers: {
@@ -149,7 +141,6 @@ export const useUserStore = defineStore('userStore', () => {
   const checkToken = async () => {
     if (isLoggedIn.value) return
     try {
-      //@ts-expect-error: nuxt types
       const response: any = await $fetch(`${apiBase}/api/v1/users/checkToken`, {
         method: 'GET',
         headers: headers,
@@ -172,7 +163,6 @@ export const useUserStore = defineStore('userStore', () => {
 
   const sendResetPassword = async (email: string) => {
     try {
-      //@ts-expect-error: nuxt types
       const response: any = await $fetch(`${apiBase}/api/v1/users/forgotPassword`, {
         method: 'POST',
         headers: headers,
@@ -186,8 +176,7 @@ export const useUserStore = defineStore('userStore', () => {
 
   const logOut = async () => {
     try {
-      //@ts-expect-error: nuxt types
-      const response: any = await $fetch(`${apiBase}/api/v1/users/logout`, {
+      await $fetch(`${apiBase}/api/v1/users/logout`, {
         method: 'GET',
         headers: headers,
         credentials: 'include',

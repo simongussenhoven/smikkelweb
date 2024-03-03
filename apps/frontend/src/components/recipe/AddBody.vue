@@ -72,8 +72,8 @@
             placeholder="Hoeveelheid" required />
           <FwbSelect class="grow" v-model="recipeModel.requirements[i].name" :options="requirementOptions"
             placeholder="Kies keukengerei" />
-          <FwbButton class="flex justify-center items-centertext-center" size="md" :color="getColor(InputTypeEnum.REQ, i)"
-            @click.prevent="onClickButton(InputTypeEnum.REQ, i)">
+          <FwbButton class="flex justify-center items-centertext-center" size="md"
+            :color="getColor(InputTypeEnum.REQ, i)" @click.prevent="onClickButton(InputTypeEnum.REQ, i)">
             <Icon :name="getIcon(InputTypeEnum.REQ, i)" />
           </FwbButton>
         </div>
@@ -143,6 +143,7 @@
     </form>
   </div>
 </template>
+
 <script setup lang="ts">
 import { computed, ref, watch, onMounted } from 'vue'
 import { FwbSpinner, FwbInput, FwbTextarea, FwbCheckbox, FwbButton, FwbDropdown, FwbListGroupItem, FwbSelect, FwbFileInput } from 'flowbite-vue';
@@ -158,13 +159,7 @@ enum InputTypeEnum {
 }
 
 const recipeStore = useRecipeStore();
-const isLoading = ref(false)
-
-interface Ingredient {
-  name: string;
-  amount: string;
-  unit: string;
-}
+const isLoading = ref(false);
 
 const recipeModel = ref({
   title: '',

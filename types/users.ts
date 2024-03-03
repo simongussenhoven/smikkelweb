@@ -31,3 +31,15 @@ export interface IUserRequest extends Request {
   passwordChangedAt: Date,
   user: IUser
 }
+
+export interface INewUserRequest {
+  name: string,
+  email: string,
+  password: string,
+  passwordConfirm: string
+}
+
+export interface ILoginRequest extends Request {
+  email: string,
+  password: string
+}
