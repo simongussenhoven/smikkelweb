@@ -78,7 +78,6 @@ export const useUserStore = defineStore('userStore', () => {
         credentials: 'include',
         body: JSON.stringify(request)
       });
-      console.log(response.data.user)
       setUser(response.data.user);
       if (!request.rememberMe) {
         const cookie = useCookie('token')
@@ -159,6 +158,7 @@ export const useUserStore = defineStore('userStore', () => {
   const clearUser = () => {
     id.value = ''
     username.value = ''
+    role.value = ''
     email.value = ''
     token.value = ''
     isLoggedIn.value = false
