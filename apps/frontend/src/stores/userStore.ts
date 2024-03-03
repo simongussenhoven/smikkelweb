@@ -22,7 +22,15 @@ interface IUserLoginRequest {
   email: string;
 }
 
-type IUserModalState = 'login' | 'register' | 'reset' | 'forgot' | 'update' | 'loggedOut' | 'terms';
+type IUserModalState =
+  'login'
+  | 'register'
+  | 'reset'
+  | 'forgot'
+  | 'update'
+  | 'loggedOut'
+  | 'terms'
+  | 'edit';
 
 interface IUpdatePasswordRequest {
   id?: string | number;
@@ -51,7 +59,10 @@ export const useUserStore = defineStore('userStore', () => {
   })
 
   watch(isModalVisible, () => {
-    if (!isModalVisible.value) userModalState.value = 'login'
+    if (!isModalVisible.value) {
+      userModalState.value = 'login'
+      loginError.value = ''
+    }
   })
 
   // env
@@ -188,8 +199,22 @@ export const useUserStore = defineStore('userStore', () => {
       isModalVisible.value = true;
       userModalState.value = 'loggedOut';
     } catch (error) {
-      console.error('Error checking token:', error);
+      console.error('Error logging out:', error);
     }
   };
-  return { isModalVisible, username, email, token, isLoggedIn, loginError, userModalState, isUserMenuVisible, resetHashToken, role, login, register, setUser, updatePassword, checkToken, logOut, sendResetPassword, }
+
+  const update = async (request) => {
+    try {
+      const response: IUserResponse = await $fetch(`${apiBase}/api/v1/users/updateMe`, {
+        method: 'PATCH',
+        headers,
+        credentials: 'include',
+        body: JSON.stringify(request)
+      });
+
+    } catch (error) {
+      loginError.value = "Er ging iets mis bij het updaten van je gegevens. Probeer het opnieuw.";
+    }
+  }
+  return { isModalVisible, username, email, token, isLoggedIn, loginError, userModalState, isUserMenuVisible, resetHashToken, role, login, register, setUser, updatePassword, checkToken, logOut, sendResetPassword, update }
 })

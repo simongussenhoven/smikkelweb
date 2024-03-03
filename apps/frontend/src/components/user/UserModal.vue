@@ -28,6 +28,7 @@
         <UserForgotBody v-if="userStore.userModalState === 'forgot'" />
         <UserLogoutConfirmBody v-if="userStore.userModalState === 'loggedOut'" />
         <UserCreateTermsBody v-if="userStore.userModalState === 'terms'" />
+        <UserEditBody v-if="userStore.userModalState === 'edit'" />
       </div>
     </div>
   </div>
@@ -38,6 +39,7 @@ import { useUserStore } from '../../stores/userStore'
 import { computed } from 'vue';
 const userStore = useUserStore();
 const isModalVisible = computed(() => userStore.isModalVisible)
+
 const modalTitle = computed(() => {
   switch (userStore.userModalState) {
     case 'login':
@@ -50,10 +52,15 @@ const modalTitle = computed(() => {
       return 'Wachtwoord vergeten'
     case 'loggedOut':
       return 'Uitgelogd'
+    case 'terms':
+      return 'Algemene voorwaarden'
+    case 'edit':
+      return 'Gegevens aanpassen'
     default:
       return 'Smikkelweb'
   }
 })
+
 </script>
 
 <style lang="scss" scoped>

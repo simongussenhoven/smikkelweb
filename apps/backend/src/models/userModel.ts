@@ -9,6 +9,7 @@ import crypto from 'crypto';
 const userSchema = new Schema<IUser, UserModel, IUserMethods>({
   username: {
     type: String,
+    unique: true,
     required: [true, 'Name required'],
   },
   email: {
@@ -26,7 +27,7 @@ const userSchema = new Schema<IUser, UserModel, IUserMethods>({
   password: {
     type: String,
     required: [true, 'Password required'],
-    minlength: 4
+    minlength: 8
   },
   passwordConfirm: {
     type: String,

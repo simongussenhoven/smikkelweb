@@ -15,6 +15,7 @@ import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
 import mongoSanitize from 'express-mongo-sanitize';
 import xss from 'xss-clean';
+// import multer from 'multer';
 
 // define environment variables
 const envPath = process.env.NODE_ENV === 'production' ? './config.production.env' : './config.env'
@@ -43,6 +44,10 @@ app.use(express.static(`${__dirname}/public`))
 // data sanitization
 app.use(mongoSanitize())
 app.use(xss())
+
+// multer file upload
+// const upload = multer({ dest: 'public/images/users' })
+// app.use(upload.single('photo'))
 
 // cors
 app.use(cors(corsOptions));

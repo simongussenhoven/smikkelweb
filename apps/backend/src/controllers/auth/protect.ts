@@ -6,7 +6,6 @@ import { promisify } from 'util';
 import jwt from 'jsonwebtoken';
 
 export const protect = async function (req: IUserRequest, res: Response, next: NextFunction) {
-  console.log(req.headers.authorization)
   try {
     let token = req.headers.authorization && req.headers.authorization.startsWith('Bearer') ? req.headers.authorization.split(' ')[1] : null
     if (!token) token = req.cookies.token
