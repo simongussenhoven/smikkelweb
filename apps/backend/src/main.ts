@@ -61,7 +61,7 @@ mongoose.connect(process.env.DB_STRING).then(() => {
 
 // routes
 app.use('/api/v1/users/', userRoutes)
-app.use('/api/v1/recipes/', authController.protect, recipeRoutes)
+app.use('/api/v1/recipes/', recipeRoutes)
 
 // get the status of the API
 app.get('/', (req, res) => {

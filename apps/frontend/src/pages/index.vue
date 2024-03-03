@@ -5,9 +5,7 @@
         Smikkelweb.com
       </h1>
       <p class="mb-8 text-lg font-normal text-gray-300 sm:px-16 lg:text-xl">
-        Vind en deel de lekkerste recepten
-        op
-        de leukste community van Nederland.
+        Vind en deel de lekkerste recepten op de leukste community van Nederland.
       </p>
       <!-- <div class="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0">
         <a href="#"
@@ -30,6 +28,7 @@
     </div>
   </section>
 </template>
+
 <script lang="ts" setup>
 import { onMounted } from 'vue'
 import { useUserStore } from '../stores/userStore';
@@ -47,14 +46,13 @@ onMounted(() => {
   }
 })
 </script>
+
 <style lang="scss" scoped>
+@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Roboto:wght@300&display=swap');
+
 .hero {
   flex-grow: 1;
 }
-
-
-
-@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Roboto:wght@300&display=swap');
 
 .title {
   font-family: "Lobster", sans-serif;

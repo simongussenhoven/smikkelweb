@@ -12,7 +12,22 @@ export const useRecipeStore = defineStore('recipeStore', () => {
   const isModalVisible = ref(false);
   const recipeModalState = ref('add')
   const recipeError = ref('');
+  const recipes = ref([]);
 
+  const getRecipes = async () => {
+    try {
+      const response = await $fetch(`${apiBase}/api/v1/recipes`, {
+        method: 'GET',
+        headers,
+      })
+
+      //@ts-expect-error: fix types
+      recipes.value = response.data.recipes
+    }
+    catch (e: any) {
+      recipeError.value = "Er ging iets mis bij het ophalen van de recepten. Probeer het opnieuw."
+    }
+  }
 
   const addRecipe = async (request) => {
     try {
@@ -29,5 +44,5 @@ export const useRecipeStore = defineStore('recipeStore', () => {
     }
   }
 
-  return { isModalVisible, recipeModalState, recipeError, addRecipe }
+  return { isModalVisible, recipeModalState, recipeError, recipes, getRecipes, addRecipe }
 })

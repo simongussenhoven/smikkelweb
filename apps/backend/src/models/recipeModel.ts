@@ -1,6 +1,5 @@
 import { Schema, model } from 'mongoose';
 import { IRecipe, IRecipeModel } from '@types'
-import { IStep } from '@types';
 
 const recipeSchema = new Schema<IRecipe, IRecipeModel>({
   category: {

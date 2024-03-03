@@ -1,7 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Roboto:wght@300&display=swap');
+
 html, body{
   height:100%!important;
   width: 100%!important;
 }
 #__nuxt, #__layout {
   flex-grow: 1;
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Lobster", sans-serif;
+  font-weight: 800;
+  font-style: normal;
 }

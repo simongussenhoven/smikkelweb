@@ -39,7 +39,3 @@ export type IRecipeModel = Model<IRecipe>;
 export interface IRecipeRequest {
   body: IRecipe
 }
-
-export interface IStep {
-  description: string
-}
