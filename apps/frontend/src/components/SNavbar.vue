@@ -14,21 +14,24 @@
           <img class="w-8 h-8 rounded-full" src="/docs/images/style/user.png" alt="user photo">
         </button>
         <!-- Dropdown menu -->
-        <div v-show="isLoggedIn" id="user-dropdown" :class="{ 'hidden': userStore.isModalVisible }"
+        <div v-show="isLoggedIn" id="user-dropdown"
           class="z-50 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600">
           <div class="px-4 py-3">
             <span class="block text-sm text-gray-900 dark:text-white">{{ userStore.username }}</span>
             <span class="block text-sm  text-gray-500 truncate dark:text-gray-400">{{ userStore.email }}</span>
           </div>
           <ul class="py-2" aria-labelledby="user-menu-button">
-            <SNavbarUserLink title="Wijzigen" @click="onClickEdit" data-collapse-toggle="navbar-user"
-              aria-controls="navbar-user" />
-            <SNavbarUserLink title="Recept toevoegen" @click="onClickAddRecipe" data-collapse-toggle="navbar-user"
-              aria-controls="navbar-user" />
-            <SNavbarUserLink title="Update wachtwoord" @click="onClickReset" data-collapse-toggle="navbar-user"
-              aria-controls="navbar-user" />
+            <SNavbarUserLink title="Gegevens wijzigen" @click="userStore.userModalState = 'edit'"
+              data-collapse-toggle="navbar-user" aria-controls="navbar-user" />
+            <SNavbarUserLink title="Recept toevoegen" @click="recipeStore.recipeModalState = 'add'"
+              data-collapse-toggle="navbar-user" aria-controls="navbar-user" />
+            <SNavbarUserLink title="Update wachtwoord" @click="userStore.userModalState = 'reset'"
+              data-collapse-toggle="navbar-user" aria-controls="navbar-user" />
+            <SNavbarUserLink title="Account verwijderen" @click="userStore.userModalState = 'delete'"
+              data-collapse-toggle="navbar-user" aria-controls="navbar-user" />
             <SNavbarUserLink title="Uitloggen" @click="onClickLogout" data-collapse-toggle="navbar-user"
               aria-controls="navbar-user" />
+
           </ul>
         </div>
         <button data-collapse-toggle="navbar-user" type="button"
@@ -72,21 +75,6 @@ const onClickUser = (e: any) => {
 
 const onClickLogout = () => {
   userStore.logOut();
-}
-
-const onClickReset = () => {
-  userStore.isModalVisible = true;
-  userStore.userModalState = 'reset'
-}
-
-const onClickAddRecipe = () => {
-  recipeStore.isModalVisible = true;
-  recipeStore.recipeModalState = 'add'
-}
-
-const onClickEdit = () => {
-  userStore.isModalVisible = true;
-  userStore.userModalState = 'edit'
 }
 
 </script>

@@ -4,7 +4,8 @@ import { ref, watch } from 'vue';
 
 interface IUserResponse extends Response {
   data: {
-    user: IUser
+    users?: IUser[]
+    user?: IUser
   }
 }
 
@@ -30,12 +31,14 @@ type IUserModalState =
   | 'update'
   | 'terms'
   | 'edit'
+  | 'delete'
   | 'loginConfirm'
   | 'registerConfirm'
   | 'logoutConfirm'
   | 'resetConfirm'
   | 'forgotConfirm'
   | 'editConfirm'
+  | 'deleteConfirm'
 
 
 interface IUpdatePasswordRequest {
@@ -65,6 +68,9 @@ export const useUserStore = defineStore('userStore', () => {
   const loginError = ref('');
   const resetHashToken = ref('')
 
+  // admin stuff
+  const users = ref([])
+
   // watch for changes
   watch(isUserMenuVisible, () => {
     if (!isUserMenuVisible.value) userModalState.value = 'login'
@@ -77,6 +83,24 @@ export const useUserStore = defineStore('userStore', () => {
     }
   })
 
+  watch(userModalState, () => {
+    if (userModalState.value !== 'login') {
+      isModalVisible.value = true
+    }
+  })
+
+  const getUsers = async () => {
+    try {
+      const response: IUserResponse = await $fetch(`${apiBase}/api/v1/getUsers`, {
+        method: 'GET',
+        headers,
+        credentials: 'include',
+      });
+      users.value = response.data.users
+    } catch (error) {
+      console.error('Error getting users:', error);
+    }
+  }
 
   // set user after register, login or checkToken
   const setUser = (user: IUser) => {
@@ -239,5 +263,20 @@ export const useUserStore = defineStore('userStore', () => {
       loginError.value = "Er ging iets mis bij het updaten van je gegevens. Probeer het opnieuw.";
     }
   }
-  return { isModalVisible, username, email, token, isLoggedIn, loginError, userModalState, isUserMenuVisible, resetHashToken, role, login, register, setUser, updatePassword, checkToken, logOut, sendResetPassword, update }
+
+  // update user
+  const deleteAccount = async () => {
+    try {
+      const response: IUserResponse = await $fetch(`${apiBase}/api/v1/users/deleteMe`, {
+        method: 'DELETE',
+        headers,
+        credentials: 'include',
+      });
+      clearUser()
+      userModalState.value = 'deleteConfirm'
+    } catch (error) {
+      loginError.value = "Er ging iets mis bij het updaten van je gegevens. Probeer het opnieuw.";
+    }
+  }
+  return { isModalVisible, username, email, token, isLoggedIn, loginError, userModalState, isUserMenuVisible, resetHashToken, role, login, register, setUser, updatePassword, checkToken, logOut, sendResetPassword, update, deleteAccount }
 })

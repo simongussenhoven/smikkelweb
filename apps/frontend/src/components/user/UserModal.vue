@@ -12,6 +12,7 @@
       <UserCreateTermsBody v-if="userStore.userModalState === 'terms'" />
       <UserEditBody v-if="userStore.userModalState === 'edit'" />
       <UserConfirmBody v-if="userStore.userModalState.toLowerCase().includes('confirm')" />
+      <UserDeleteBody v-if="userStore.userModalState === 'delete'" />
     </template>
 
   </SModal>
@@ -43,6 +44,8 @@ const modalTitle = computed(() => {
       return 'Algemene voorwaarden'
     case 'edit':
       return 'Gegevens aanpassen'
+    case 'delete':
+      return 'Account verwijderen'
     default:
       return 'Smikkelweb'
   }

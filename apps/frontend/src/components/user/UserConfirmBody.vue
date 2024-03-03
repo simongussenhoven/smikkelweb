@@ -1,6 +1,6 @@
 <template>
   <div class="p-4 md:p-5">
-    <form class="space-y-4" action="#">
+    <form class="space-y-4">
       <div>
         {{ confirmText }}
       </div>
@@ -45,11 +45,13 @@ const confirmText = (computed(() => {
     case 'registerConfirm':
       return 'Je account is aangemaakt.'
     case 'resetConfirm':
-      return 'Je wachtwoord is gereset.'
+      return 'Je wachtwoord is gewijzigd.'
     case 'forgotConfirm':
-      return 'Je wachtwoord is gereset.'
+      return 'Als je account bestaat, is er een email gestuurd naar het adres dat bij ons bekend is. Controleer je email om je wachtwoord te resetten.'
     case 'editConfirm':
       return 'Je gegevens zijn aangepast.'
+    case 'deleteConfirm':
+      return 'Je account is verwijderd.'
     default:
       return ''
   }
