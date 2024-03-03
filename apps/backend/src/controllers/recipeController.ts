@@ -24,28 +24,6 @@ export const addRecipe = async (req: IRecipeRequest, res: Response, next: NextFu
   console.log('Registering recipe')
   try {
     console.log(req.body)
-    // const { username, password, email, passwordConfirm } = req.body;
-    // if (!username || !password || !email || !passwordConfirm) {
-    //   res.status(400).json({
-    //     status: 'error',
-    //     message: 'Please provide username, email, password and passwordConfirm'
-    //   })
-    //   return
-    // }
-    // Check if user already exists
-    // const existingUser = await recipeModel.findOne({ username });
-    // if (existingUser) {
-    //   res.status(400).json({
-    //     status: 'error',
-    //     message: 'User already exists'
-    //   })
-    //   return
-    // }
-
-    // Create a new user
-    // const newUser = new recipeModel({ username, password, email, passwordConfirm });
-    // await newUser.save();
-    // createSendToken(newUser, 201, res)
     const newRecipe = new recipeModel(req.body);
     await newRecipe.save();
     res.status(201).json({

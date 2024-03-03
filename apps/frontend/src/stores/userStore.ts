@@ -37,6 +37,7 @@ export const useUserStore = defineStore('userStore', () => {
   const isModalVisible = ref(false);
   const id = ref('')
   const username = ref('')
+  const role = ref('')
   const email = ref('')
   const token = ref('')
   const isLoggedIn = ref(false)
@@ -77,6 +78,7 @@ export const useUserStore = defineStore('userStore', () => {
         credentials: 'include',
         body: JSON.stringify(request)
       });
+      console.log(response.data.user)
       setUser(response.data.user);
       if (!request.rememberMe) {
         const cookie = useCookie('token')
@@ -93,6 +95,7 @@ export const useUserStore = defineStore('userStore', () => {
     if (!user) return
     id.value = user.id
     username.value = user.username
+    role.value = user.role
     email.value = user.email
     token.value = user.token
     isLoggedIn.value = true
@@ -188,5 +191,5 @@ export const useUserStore = defineStore('userStore', () => {
       console.error('Error checking token:', error);
     }
   };
-  return { isModalVisible, username, email, token, isLoggedIn, loginError, userModalState, login, register, setUser, updatePassword, checkToken, logOut, sendResetPassword, isUserMenuVisible, resetHashToken }
+  return { isModalVisible, username, email, token, isLoggedIn, loginError, userModalState, isUserMenuVisible, resetHashToken, role, login, register, setUser, updatePassword, checkToken, logOut, sendResetPassword, }
 })
