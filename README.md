@@ -6,6 +6,33 @@ See the trello board for TODO's: https://trello.com/b/WrtV1SV8/smikkelweb
 
 For more information about NX-monorepo, visit https://nx.dev/.
 
+# Getting things running
+  - clone this repo: 'git clone https://github.com/simongussenhoven/smikkelweb'
+  - run 'npm i'
+  - create a config.env file development containing the following values:
+    - NODE_ENV=development
+
+    # nuxt local settings
+    - NUXT_PUBLIC_API_BASE = 
+    - NUXT_PUBLIC_FRONTEND_PORT=
+
+    # mongodb
+    - BACKEND_PORT=
+    - DB_STRING=
+    - DB_PASSWORD=
+    - DB_USER=
+    - JWT_SECRET=
+    - JWT_EXPIRATION=
+    - JTW_COOKIE_EXPIRES_IN=
+
+    # use mailtrap for development
+    - EMAIL_HOST=
+    - EMAIL_USERNAME=
+    - EMAIL_PASSWORD=
+    - EMAIL_PORT=
+
+  - run 'npm run dev' to start the development environment
+  
 # Backend
 
  - Database: MongoDB
