@@ -9,11 +9,11 @@ For more information about NX-monorepo, visit https://nx.dev/.
 # Getting things running
   - clone this repo: 'git clone https://github.com/simongussenhoven/smikkelweb'
   - run 'npm i'
-  - create a config.env file development containing the following values:
+  - create a config.env file in the root of the project containing the following values:
     - NODE_ENV=development
 
     # nuxt local settings
-    - NUXT_PUBLIC_API_BASE = 
+    - NUXT_PUBLIC_API_BASE= 
     - NUXT_PUBLIC_FRONTEND_PORT=
 
     # mongodb
@@ -31,8 +31,12 @@ For more information about NX-monorepo, visit https://nx.dev/.
     - EMAIL_PASSWORD=
     - EMAIL_PORT=
 
-  - run 'npm run dev' to start the development environment
-  
+  - run 'npm run dev' to start the development environment here: https://github.com/simongussenhoven/smikkelweb/actions
+
+# development general
+  - Please use a feature branch and use merge request and do not push directly to main
+  - After a feature was merged from to main, you can see the deoply and build process 
+
 # Backend
 
  - Database: MongoDB
