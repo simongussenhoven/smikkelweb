@@ -51,6 +51,7 @@ interface IUpdatePasswordRequest {
 export const useUserStore = defineStore('userStore', () => {
   // request options
   const { apiBase } = useRuntimeConfig().public;
+  const backendUrl = process.env.NODE_ENV === 'development' ? `${apiBase}/api/v1` : '/api/v1'
   const headers = useRequestHeaders(['cookie', 'content-type', 'accept', 'authorization'])
 
   // state of the modal and user menu
@@ -91,7 +92,7 @@ export const useUserStore = defineStore('userStore', () => {
 
   const getUsers = async () => {
     try {
-      const response: IUserResponse = await $fetch(`${apiBase}/api/v1/users/getUsers`, {
+      const response: IUserResponse = await $fetch(`${backendUrl}/users/getUsers`, {
         method: 'GET',
         headers,
         credentials: 'include',
@@ -117,7 +118,7 @@ export const useUserStore = defineStore('userStore', () => {
   // register
   const register = async (request) => {
     try {
-      const response: IUserResponse = await $fetch(`${apiBase}/api/v1/users/register`, {
+      const response: IUserResponse = await $fetch(`${backendUrl}/users/register`, {
         method: 'POST',
         headers,
         body: JSON.stringify(request)
@@ -133,7 +134,7 @@ export const useUserStore = defineStore('userStore', () => {
   // login
   const login = async (request) => {
     try {
-      const response: IUserResponse = await $fetch(`${apiBase}/api/v1/users/login`, {
+      const response: IUserResponse = await $fetch(`${backendUrl}/users/login`, {
         method: 'POST',
         headers,
         credentials: 'include',
@@ -156,7 +157,7 @@ export const useUserStore = defineStore('userStore', () => {
     if (resetHashToken.value) return resetPassword(request)
     try {
       request.id = id.value
-      const response: IUserResponse = await $fetch(`${apiBase}/api/v1/users/updatePassword`, {
+      const response: IUserResponse = await $fetch(`${backendUrl}/users/updatePassword`, {
         method: 'PATCH',
         headers: {
           authorization: `Bearer ${token.value}`,
@@ -174,7 +175,7 @@ export const useUserStore = defineStore('userStore', () => {
   // reset password
   const resetPassword = async (request: IUpdatePasswordRequest) => {
     try {
-      const response: IUserResponse = await $fetch(`${apiBase}/api/v1/users/resetPassword/${resetHashToken.value}`, {
+      const response: IUserResponse = await $fetch(`${backendUrl}/api/v1/users/resetPassword/${resetHashToken.value}`, {
         method: 'PATCH',
         headers: {
           authorization: `Bearer ${token.value}`,
@@ -194,7 +195,7 @@ export const useUserStore = defineStore('userStore', () => {
   const checkToken = async () => {
     if (isLoggedIn.value) return
     try {
-      const response: any = await $fetch(`${apiBase}/api/v1/users/checkToken`, {
+      const response: any = await $fetch(`${backendUrl}/users/checkToken`, {
         method: 'GET',
         headers: headers,
         credentials: 'include',
@@ -219,7 +220,7 @@ export const useUserStore = defineStore('userStore', () => {
   // send reset password
   const sendResetPassword = async (email: string) => {
     try {
-      const response: any = await $fetch(`${apiBase}/api/v1/users/forgotPassword`, {
+      const response: any = await $fetch(`${backendUrl}/users/forgotPassword`, {
         method: 'POST',
         headers: headers,
         body: JSON.stringify({ email })
@@ -233,7 +234,7 @@ export const useUserStore = defineStore('userStore', () => {
   // log out
   const logOut = async () => {
     try {
-      await $fetch(`${apiBase}/api/v1/users/logout`, {
+      await $fetch(`${backendUrl}/users/logout`, {
         method: 'GET',
         headers: headers,
         credentials: 'include',
@@ -249,7 +250,7 @@ export const useUserStore = defineStore('userStore', () => {
   // update user
   const update = async (request) => {
     try {
-      const response: IUserResponse = await $fetch(`${apiBase}/api/v1/users/updateMe`, {
+      const response: IUserResponse = await $fetch(`${backendUrl}/api/v1/users/updateMe`, {
         method: 'PATCH',
         headers,
         credentials: 'include',
@@ -267,7 +268,7 @@ export const useUserStore = defineStore('userStore', () => {
   // update user
   const deleteAccount = async () => {
     try {
-      const response: IUserResponse = await $fetch(`${apiBase}/api/v1/users/deleteMe`, {
+      const response: IUserResponse = await $fetch(`${backendUrl}/users/deleteMe`, {
         method: 'DELETE',
         headers,
         credentials: 'include',

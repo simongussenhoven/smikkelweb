@@ -4,17 +4,19 @@ import * as mongoose from 'mongoose';
 import userRoutes from './routes/userRoutes';
 import recipeRoutes from './routes/recipeRoutes';
 import * as authController from './controllers/auth';
-import cors from 'cors'
 import AppError from './utils/appError';
 import dotenv from 'dotenv';
 import globalErrorHandler from './controllers/errorController'
-import corsOptions from './config/corsOptions';
 import logger from 'morgan';
 import cookieParser from 'cookie-parser';
 import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
 import mongoSanitize from 'express-mongo-sanitize';
 import xss from 'xss-clean';
+
+// no corse because nginx proxy
+import cors from 'cors'
+import corsOptions from './config/corsOptions';
 
 
 // define environment variables
@@ -25,6 +27,9 @@ dotenv.config({ path: envPath });
 console.info(`Using environment: ${process.env.NODE_ENV}`)
 const app = express();
 
+// only enable cors on dev
+console.log(process.env.NODE_ENV)
+if (process.env.NODE_ENV === 'development') app.use(cors(corsOptions))
 
 // middleware security
 app.use(helmet())
@@ -44,9 +49,6 @@ app.use(express.static(`${__dirname}/public`))
 // data sanitization
 app.use(mongoSanitize())
 app.use(xss())
-
-// cors
-app.use(cors(corsOptions));
 
 // error handler
 app.use(globalErrorHandler)

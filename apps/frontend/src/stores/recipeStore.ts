@@ -6,6 +6,7 @@ import { ref } from 'vue';
 export const useRecipeStore = defineStore('recipeStore', () => {
   // nuxt stuff
   const { apiBase } = useRuntimeConfig().public;
+  const backedUrl = process.env.NODE_ENV === 'development' ? `${apiBase}/api/v1` : '/api/v1'
   const headers = useRequestHeaders(['cookie', 'content-type', 'accept', 'authorization'])
 
   // state
@@ -16,7 +17,7 @@ export const useRecipeStore = defineStore('recipeStore', () => {
 
   const getRecipes = async () => {
     try {
-      const response = await $fetch(`${apiBase}/api/v1/recipes`, {
+      const response = await $fetch(`${backedUrl}/api/v1/recipes`, {
         method: 'GET',
         headers,
       })
@@ -31,7 +32,7 @@ export const useRecipeStore = defineStore('recipeStore', () => {
 
   const addRecipe = async (request) => {
     try {
-      const response = await $fetch(`${apiBase}/api/v1/recipes`, {
+      const response = await $fetch(`${backedUrl}/api/v1/recipes`, {
         method: 'POST',
         headers,
         credentials: 'include',
