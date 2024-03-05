@@ -17,7 +17,7 @@ export const useRecipeStore = defineStore('recipeStore', () => {
 
   const getRecipes = async () => {
     try {
-      const response = await $fetch(`${backedUrl}/api/v1/recipes`, {
+      const response = await $fetch(`${backedUrl}/recipes`, {
         method: 'GET',
         headers,
       })
@@ -32,7 +32,7 @@ export const useRecipeStore = defineStore('recipeStore', () => {
 
   const addRecipe = async (request) => {
     try {
-      const response = await $fetch(`${backedUrl}/api/v1/recipes`, {
+      const response = await $fetch(`${backedUrl}/recipes`, {
         method: 'POST',
         headers,
         credentials: 'include',

@@ -4,7 +4,6 @@ import AppError from "../../utils/appError";
 import { IUserRequest } from "@types";
 
 const filterObj = (obj: any, ...allowedFields: string[]) => {
-  console.log(obj)
   const newObj: any = {};
   Object.keys(obj).forEach(el => {
     if (allowedFields.includes(el)) newObj[el] = obj[el];
@@ -13,8 +12,6 @@ const filterObj = (obj: any, ...allowedFields: string[]) => {
 }
 
 export const updateMe = async (req: IUserRequest, res: Response, next: NextFunction) => {
-  console.log(req.file)
-  console.log(req.body)
   if (req.body.password || req.body.passwordConfirm) {
     return res.status(400).json({
       status: 'fail',

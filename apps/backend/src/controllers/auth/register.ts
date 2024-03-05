@@ -5,7 +5,6 @@ import { createSendToken } from './createSendToken';
 import AppError from "../../utils/appError";
 
 export const register = async (req: IUserRequest, res: Response, next: NextFunction) => {
-  console.log('Registering user')
   try {
     const { username, password, email, passwordConfirm } = req.body;
     if (!username || !password || !email || !passwordConfirm) {
@@ -31,7 +30,6 @@ export const register = async (req: IUserRequest, res: Response, next: NextFunct
     createSendToken(newUser, 201, res)
 
   } catch (error) {
-    console.error(error)
     return next(new AppError('Failed to register user', 500))
   }
 };

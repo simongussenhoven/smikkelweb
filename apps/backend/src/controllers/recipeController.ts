@@ -4,7 +4,6 @@ import recipeModel from "../models/recipeModel";
 import AppError from "../utils/appError";
 
 export const getRecipes = async (req: IRecipeRequest, res: Response, next: NextFunction) => {
-  console.log('Getting recipes')
   try {
     const recipes = await recipeModel.find();
     res.status(200).json({
@@ -15,7 +14,6 @@ export const getRecipes = async (req: IRecipeRequest, res: Response, next: NextF
       }
     })
   } catch (error) {
-    console.error(error)
     return next(new AppError('Failed to get recipes', 500))
   }
 }
@@ -23,7 +21,6 @@ export const getRecipes = async (req: IRecipeRequest, res: Response, next: NextF
 export const addRecipe = async (req: IRecipeRequest, res: Response, next: NextFunction) => {
   console.log('Registering recipe')
   try {
-    console.log(req.body)
     const newRecipe = new recipeModel(req.body);
     await newRecipe.save();
     res.status(201).json({
@@ -33,7 +30,6 @@ export const addRecipe = async (req: IRecipeRequest, res: Response, next: NextFu
       }
     })
   } catch (error) {
-    console.error(error)
     return next(new AppError('Failed to register recipe', 500))
   }
 };

@@ -26,7 +26,6 @@ export const sendEmail = async (options) => {
     await transport.sendMail(mailOptions)
   }
   catch (err) {
-    console.log(err)
     new AppError('There was an error sending the email. Please try again later', 500)
   }
 }
