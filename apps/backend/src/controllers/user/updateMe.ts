@@ -18,13 +18,14 @@ export const updateMe = async (req: IUserRequest, res: Response, next: NextFunct
       message: 'This route is not for password updates. Please use /updateMyPassword'
     })
   }
-  const filteredBody = filterObj(req.body, 'username', 'email');
 
+  const filteredBody = filterObj(req.body, 'username', 'email');
+  if (req.file) filteredBody.photo = req.file.filename;
   const existingEmailUser = await User.findOne({ email: filteredBody.email });
   if (existingEmailUser && existingEmailUser.id !== req.user.id) {
     return res.status(400).json({
       status: 'fail',
-      message: 'Emailadres is al in gebruik'
+      message: 'Emailadress in use'
     })
   }
 
@@ -32,7 +33,7 @@ export const updateMe = async (req: IUserRequest, res: Response, next: NextFunct
   if (existingUserName && existingUserName.id !== req.user.id) {
     return res.status(400).json({
       status: 'fail',
-      message: 'Gebruikersnaam is al in gebruik'
+      message: 'Username in use'
     })
   }
 

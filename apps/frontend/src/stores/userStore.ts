@@ -1,5 +1,6 @@
 import { useCookie, useRequestHeaders, useRuntimeConfig } from 'nuxt/app';
 import { defineStore } from 'pinia';
+import { promiseHooks } from 'v8';
 import { ref, watch } from 'vue';
 
 interface IUserResponse extends Response {
@@ -15,6 +16,7 @@ interface IUser {
   email: string;
   role: string;
   token: string;
+  photo: string;
 }
 
 interface IUserLoginRequest {
@@ -68,6 +70,7 @@ export const useUserStore = defineStore('userStore', () => {
   const isLoggedIn = ref(false)
   const userError = ref('');
   const resetHashToken = ref('')
+  const photo = ref('')
 
   // admin stuff
   const users = ref([])
@@ -112,6 +115,7 @@ export const useUserStore = defineStore('userStore', () => {
     email.value = user.email
     token.value = user.token
     isLoggedIn.value = true
+    photo.value = user.photo
     return
   }
 

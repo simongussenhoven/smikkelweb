@@ -53,3 +53,6 @@ Thumbs.db
 .nuxt
 .nitro
 .cache
+
+# images and such
+./public/images

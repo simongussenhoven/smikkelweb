@@ -12,6 +12,7 @@ export interface IUser extends Document {
   passwordResetExpires: Date,
   token: string,
   active: boolean,
+  photo: string,
 }
 
 export type UserModel = Model<IUser, {}, IUserMethods>;
