@@ -45,7 +45,7 @@
         <label for="remember" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Onthoud mij</label>
       </div>
 
-      <span class="text-sm text-red-500 pt-5">{{ userStore.loginError }}</span>
+      <span class="text-sm text-red-500 pt-5">{{ userStore.userError }}</span>
 
       <div class="flex">
         <fwb-button class="flex grow justify-center text-center" size="md" color="default"
@@ -84,15 +84,15 @@ const isLoading = ref(false);
 const rememberMe = ref(false);
 
 watch(loginVisible, () => {
-  userStore.loginError = ''
+  userStore.userError = ''
 })
 
 watch(username, () => {
   if (badUsernames.includes(username.value.toLowerCase())) {
-    userStore.loginError = 'Deze gebruikersnaam is niet toegestaan';
+    userStore.userError = 'Deze gebruikersnaam is niet toegestaan';
     isDisabled.value = true;
   } else {
-    userStore.loginError = '';
+    userStore.userError = '';
     isDisabled.value = false;
   }
 })
@@ -100,20 +100,20 @@ watch(username, () => {
 watch(email, () => {
   const domain = email.value.split('@')[1]
   if (badDomains.includes(domain?.toLowerCase())) {
-    userStore.loginError = 'Dit domein is niet toegestaan';
+    userStore.userError = 'Dit domein is niet toegestaan';
     isDisabled.value = true;
   } else {
-    userStore.loginError = '';
+    userStore.userError = '';
     isDisabled.value = false;
   }
 })
 
 watch(password, () => {
   if (password.value.length < 8) {
-    userStore.loginError = 'Wachtwoord moet minimaal 8 tekens bevatten';
+    userStore.userError = 'Wachtwoord moet minimaal 8 tekens bevatten';
     isDisabled.value = true;
   } else {
-    userStore.loginError = '';
+    userStore.userError = '';
     isDisabled.value = false;
   }
 })
@@ -122,11 +122,11 @@ const onClickRegister = async (e: any) => {
   e.preventDefault();
   if (isDisabled.value) return
   if (!acceptTerms.value) {
-    userStore.loginError = 'Je moet akkoord gaan met de algemene voorwaarden';
+    userStore.userError = 'Je moet akkoord gaan met de algemene voorwaarden';
     return;
   }
   if (!email.value || !password.value || !username.value || !passwordConfirm.value) {
-    userStore.loginError = 'Vul alle velden in';
+    userStore.userError = 'Vul alle velden in';
     return;
   }
   isLoading.value = true;

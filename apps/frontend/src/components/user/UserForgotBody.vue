@@ -7,7 +7,7 @@
         <input id="email" v-model="email" type="email" name="email"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
           placeholder="naam@voorbeeld.nl" required>
-        <span class="text-sm text-red-500 pt-5">{{ userStore.loginError }}</span>
+        <span class="text-sm text-red-500 pt-5">{{ userStore.userError }}</span>
       </div>
 
       <div class="flex">
@@ -20,6 +20,7 @@
     </form>
   </div>
 </template>
+
 <script lang="ts" setup>
 import { useUserStore } from '../../stores/userStore';
 import { ref, watch, computed } from 'vue';
@@ -34,7 +35,7 @@ const state = ref<IMailSendState>('ready')
 const isLoading = ref(false)
 
 watch(email, () => {
-  userStore.loginError = ''
+  userStore.userError = ''
 })
 
 const introText = computed(() => {
@@ -49,7 +50,7 @@ const onClickButton = async (e) => {
   e.preventDefault();
   if (state.value === 'ready') {
     if (!isEmail(email.value)) {
-      userStore.loginError = 'Ongeldig emailadres'
+      userStore.userError = 'Ongeldig emailadres'
       return
     }
     isLoading.value = true

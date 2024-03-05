@@ -13,14 +13,14 @@ export default {
   ],
   theme: {
     extend: {
-      colors: {
-        stone: colors.warmGray,
-        sky: colors.lightBlue,
-        neutral: colors.trueGray,
-        gray: colors.coolGray,
-        slate: colors.blueGray,
-        green: colors.green,
-      }
+      // colors: {
+      //   stone: colors.warmGray,
+      //   sky: colors.lightBlue,
+      //   neutral: colors.trueGray,
+      //   gray: colors.coolGray,
+      //   slate: colors.blueGray,
+      //   green: colors.green,
+      // }
     },
   },
   plugins: [

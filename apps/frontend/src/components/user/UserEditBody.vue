@@ -45,7 +45,7 @@
         <label for="remember" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Onthoud mij</label>
       </div>
  -->
-      <span class="text-sm text-red-500 pt-5">{{ userStore.loginError }}</span>
+      <span class="text-sm text-red-500 pt-5">{{ userStore.userError }}</span>
 
       <div class="flex">
         <fwb-button class="flex grow justify-center text-center" size="md" color="default" @click.stop="onClickUpdate">
@@ -78,16 +78,16 @@ onMounted(() => {
 })
 
 watch(loginVisible, () => {
-  userStore.loginError = ''
+  userStore.userError = ''
 })
 
 watch(username, () => {
   if (badUsernames.includes(username.value.toLowerCase())) {
-    userStore.loginError = 'Deze gebruikersnaam is niet toegestaan';
+    userStore.userError = 'Deze gebruikersnaam is niet toegestaan';
     isDisabled.value = true;
   }
   else {
-    userStore.loginError = '';
+    userStore.userError = '';
     isDisabled.value = false;
   }
 })
@@ -95,15 +95,15 @@ watch(username, () => {
 watch(email, () => {
   const domain = email.value.split('@')[1]
   if (badDomains.includes(domain?.toLowerCase())) {
-    userStore.loginError = 'Dit domein is niet toegestaan';
+    userStore.userError = 'Dit domein is niet toegestaan';
     isDisabled.value = true;
   }
   if (email.value.split('@')[1].toLowerCase().includes('smikkelweb.com')) {
-    userStore.loginError = 'Maak een account aan via de database of neem contact op met de webmaster';
+    userStore.userError = 'Maak een account aan via de database of neem contact op met de webmaster';
     isDisabled.value = true;
   }
   else {
-    userStore.loginError = '';
+    userStore.userError = '';
     isDisabled.value = false;
   }
 })
@@ -111,10 +111,10 @@ watch(email, () => {
 const onClickUpdate = async (e: any) => {
   e.preventDefault();
   if (!email.value || !username.value) {
-    userStore.loginError = 'Vul alle velden in';
+    userStore.userError = 'Vul alle velden in';
     return;
   }
-  if (userStore.loginError) {
+  if (userStore.userError) {
     return;
   }
   isLoading.value = true;

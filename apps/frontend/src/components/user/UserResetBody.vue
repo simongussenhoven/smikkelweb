@@ -17,14 +17,15 @@
           required>
       </div>
       <div>
-        <label for="passwordConfirm" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nieuw wachtwoord
+        <label for="passwordConfirm" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nieuw
+          wachtwoord
           herhalen</label>
         <input id="passwordConfirm" v-model="passwordConfirm" type="password" name="passwordConfirm"
           placeholder="••••••••"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
           required>
       </div>
-      <span class="text-sm text-red-500 pt-5">{{ userStore.loginError }}</span>
+      <span class="text-sm text-red-500 pt-5">{{ userStore.userError }}</span>
       <!-- login button -->
       <div class="flex mt-4" @click="onClickLogin">
         <fwb-button class="flex grow justify-center text-center" size="md" color="default">
@@ -35,6 +36,7 @@
     </form>
   </div>
 </template>
+
 <script setup lang="ts">
 import { useUserStore } from '../../stores/userStore';
 import { FwbButton } from 'flowbite-vue';
@@ -49,13 +51,13 @@ const isModalVisible = computed(() => userStore.isModalVisible)
 
 const isLoading = ref(false)
 watch(isModalVisible, () => {
-  userStore.loginError = ''
+  userStore.userError = ''
 })
 
 const onClickLogin = async (e: any) => {
   e.preventDefault();
   if (password.value !== passwordConfirm.value) {
-    userStore.loginError = 'Wachtwoorden komen niet overeen'
+    userStore.userError = 'Wachtwoorden komen niet overeen'
     return
   }
   // do the call from store

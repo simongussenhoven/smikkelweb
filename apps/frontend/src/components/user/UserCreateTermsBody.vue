@@ -90,15 +90,15 @@ const loginVisible = computed(() => userStore.isModalVisible)
 const isDisabled = ref(false);
 const isLoading = ref(false);
 watch(loginVisible, () => {
-  userStore.loginError = ''
+  userStore.userError = ''
 })
 
 watch(username, () => {
   if (badUsernames.includes(username.value)) {
-    userStore.loginError = 'Deze gebruikersnaam is niet toegestaan';
+    userStore.userError = 'Deze gebruikersnaam is niet toegestaan';
     isDisabled.value = true;
   } else {
-    userStore.loginError = '';
+    userStore.userError = '';
     isDisabled.value = false;
   }
 })
@@ -107,7 +107,7 @@ const onClickRegister = async (e: any) => {
   e.preventDefault();
   if (isDisabled.value) return
   if (!email.value || !password.value || !username.value || !passwordConfirm.value) {
-    userStore.loginError = 'Vul alle velden in';
+    userStore.userError = 'Vul alle velden in';
     return;
   }
   isLoading.value = true;

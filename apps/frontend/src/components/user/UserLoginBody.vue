@@ -13,7 +13,7 @@
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
           required>
       </div>
-      <span class="text-sm text-red-500 pt-5">{{ userStore.loginError }}</span>
+      <span class="text-sm text-red-500 pt-5">{{ userStore.userError }}</span>
       <!-- login options-->
       <div class="flex justify-between">
         <div class="flex items-start">
@@ -44,6 +44,7 @@
     </form>
   </div>
 </template>
+
 <script setup lang="ts">
 import { useUserStore } from '../../stores/userStore';
 import { FwbButton } from 'flowbite-vue';
@@ -58,13 +59,13 @@ const isModalVisible = computed(() => userStore.isModalVisible)
 
 const isLoading = ref(false)
 watch(isModalVisible, () => {
-  userStore.loginError = ''
+  userStore.userError = ''
 })
 
 const onClickLogin = async (e: any) => {
   e.preventDefault();
   if (!email.value || !password.value) {
-    userStore.loginError = 'Vul a.u.b. alle velden in'
+    userStore.userError = 'Vul a.u.b. alle velden in'
     return
   }
   // do the call from store

@@ -66,7 +66,7 @@ export const useUserStore = defineStore('userStore', () => {
   const email = ref('')
   const token = ref('')
   const isLoggedIn = ref(false)
-  const loginError = ref('');
+  const userError = ref('');
   const resetHashToken = ref('')
 
   // admin stuff
@@ -80,7 +80,7 @@ export const useUserStore = defineStore('userStore', () => {
   watch(isModalVisible, () => {
     if (!isModalVisible.value) {
       userModalState.value = 'login'
-      loginError.value = ''
+      userError.value = ''
     }
   })
 
@@ -127,7 +127,7 @@ export const useUserStore = defineStore('userStore', () => {
       userModalState.value = 'registerConfirm'
     }
     catch (e: any) {
-      loginError.value = "Er ging iets mis bij het aanmaken. Probeer het opnieuw."
+      userError.value = "Er ging iets mis bij het aanmaken. Probeer het opnieuw."
     }
   }
 
@@ -141,14 +141,10 @@ export const useUserStore = defineStore('userStore', () => {
         body: JSON.stringify(request)
       });
       setUser(response.data.user);
-      if (!request.rememberMe) {
-        const cookie = useCookie('token')
-        //@ts-expect-error: nuxt types
-        cookie.options.expires = 1;
-      }
       userModalState.value = 'loginConfirm'
     } catch (e: any) {
-      loginError.value = "Login mislukt. Controleer je gegevens en probeer het opnieuw.";
+      console.log('Error:', e)
+      userError.value = "Login mislukt. Controleer je gegevens en probeer het opnieuw.";
     }
   };
 
@@ -168,7 +164,7 @@ export const useUserStore = defineStore('userStore', () => {
       setUser(response.data.user);
       userModalState.value = 'resetConfirm'
     } catch (e: any) {
-      loginError.value = "Er ging iets mis bij het updaten van je wachtwoord. Probeer het opnieuw.";
+      userError.value = "Er ging iets mis bij het updaten van je wachtwoord. Probeer het opnieuw.";
     }
   }
 
@@ -187,7 +183,7 @@ export const useUserStore = defineStore('userStore', () => {
       userModalState.value = 'resetConfirm'
       resetHashToken.value = ''
     } catch (e: any) {
-      loginError.value = "Er ging iets mis bij het updaten van je wachtwoord. Probeer het opnieuw.";
+      userError.value = "Er ging iets mis bij het updaten van je wachtwoord. Probeer het opnieuw.";
     }
   }
 
@@ -261,7 +257,7 @@ export const useUserStore = defineStore('userStore', () => {
       userModalState.value = 'editConfirm'
 
     } catch (error) {
-      loginError.value = "Er ging iets mis bij het updaten van je gegevens. Probeer het opnieuw.";
+      userError.value = "Er ging iets mis bij het updaten van je gegevens. Probeer het opnieuw.";
     }
   }
 
@@ -276,7 +272,7 @@ export const useUserStore = defineStore('userStore', () => {
       clearUser()
       userModalState.value = 'deleteConfirm'
     } catch (error) {
-      loginError.value = "Er ging iets mis bij het updaten van je gegevens. Probeer het opnieuw.";
+      userError.value = "Er ging iets mis bij het updaten van je gegevens. Probeer het opnieuw.";
     }
   }
   return {
@@ -285,7 +281,7 @@ export const useUserStore = defineStore('userStore', () => {
     email,
     token,
     isLoggedIn,
-    loginError,
+    userError,
     userModalState,
     isUserMenuVisible,
     resetHashToken,

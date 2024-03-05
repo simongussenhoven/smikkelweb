@@ -6,7 +6,7 @@
           recepten. Weet je het zeker?</p>
 
       </div>
-      <span class="text-sm text-red-500 pt-5">{{ userStore.loginError }}</span>
+      <span class="text-sm text-red-500 pt-5">{{ userStore.userError }}</span>
 
       <div class="flex flex-col gap-2">
         <fwb-button size="md" color="default" @click.prevent="onClickOk">
