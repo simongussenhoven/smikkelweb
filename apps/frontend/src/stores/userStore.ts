@@ -175,7 +175,7 @@ export const useUserStore = defineStore('userStore', () => {
   // reset password
   const resetPassword = async (request: IUpdatePasswordRequest) => {
     try {
-      const response: IUserResponse = await $fetch(`${backendUrl}/api/v1/users/resetPassword/${resetHashToken.value}`, {
+      const response: IUserResponse = await $fetch(`${backendUrl}/users/resetPassword/${resetHashToken.value}`, {
         method: 'PATCH',
         headers: {
           authorization: `Bearer ${token.value}`,
@@ -250,7 +250,7 @@ export const useUserStore = defineStore('userStore', () => {
   // update user
   const update = async (request) => {
     try {
-      const response: IUserResponse = await $fetch(`${backendUrl}/api/v1/users/updateMe`, {
+      const response: IUserResponse = await $fetch(`${backendUrl}/users/updateMe`, {
         method: 'PATCH',
         headers,
         credentials: 'include',
