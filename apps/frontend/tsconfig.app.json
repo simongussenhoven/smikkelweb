@@ -1,19 +1,14 @@
 {
   "extends": [
-    "../../tsconfig.base.json"
+    "./tsconfig.json"
   ],
   "compilerOptions": {
     "composite": true,
     "noEmit": false,
-    "paths": {
-      "@stores/*": [
-        "src/stores"
-      ],
-    }
   },
-  "exclude": [],
   "include": [
     "src/**/*.ts",
-    "src/**/*.vue"
+    "src/**/*.vue",
+    "../../types"
   ]
 }

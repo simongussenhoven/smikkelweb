@@ -1,4 +1,5 @@
 import { Model } from "mongoose";
+import { Request } from "express";
 
 export interface IDropdownOption {
   id: number,
@@ -18,7 +19,7 @@ export interface IRequirement {
 }
 
 export interface IRecipe {
-  _id: number,
+  _id: string,
   category: IDropdownOption,
   description: string,
   glutefree: boolean,
@@ -36,6 +37,4 @@ export interface IRecipe {
 
 export type IRecipeModel = Model<IRecipe>;
 
-export interface IRecipeRequest {
-  body: IRecipe
-}
+export interface IRecipeRequest extends Request { }

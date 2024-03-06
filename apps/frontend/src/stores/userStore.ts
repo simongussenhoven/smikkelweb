@@ -1,6 +1,7 @@
 import { useCookie, useRequestHeaders, useRuntimeConfig } from 'nuxt/app';
 import { defineStore } from 'pinia';
 import { ref, watch } from 'vue';
+import { IUser } from '@types'
 
 interface IUserResponse extends Response {
   data: {
@@ -9,13 +10,13 @@ interface IUserResponse extends Response {
   }
 }
 
-interface IUser {
-  id: string;
-  username: string;
-  email: string;
-  role: string;
-  token: string;
-}
+// interface IUser {
+//   id: string;
+//   username: string;
+//   email: string;
+//   role: string;
+//   token: string;
+// }
 
 interface IUserLoginRequest {
   password: string;
