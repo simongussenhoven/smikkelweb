@@ -1,6 +1,5 @@
-import { useCookie, useRequestHeaders, useRuntimeConfig } from 'nuxt/app';
+import { useRequestHeaders, useRuntimeConfig } from 'nuxt/app';
 import { defineStore } from 'pinia';
-import { promiseHooks } from 'v8';
 import { ref, watch } from 'vue';
 
 interface IUserResponse extends Response {
@@ -93,6 +92,7 @@ export const useUserStore = defineStore('userStore', () => {
     }
   })
 
+  // get users, admin only
   const getUsers = async () => {
     try {
       const response: IUserResponse = await $fetch(`${backendUrl}/users/getUsers`, {

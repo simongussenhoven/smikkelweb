@@ -93,6 +93,7 @@ const onClickUpdate = async (e: any) => {
     {
       username: username.value,
       email: email.value,
+      file: file.value
     });
   isLoading.value = false;
 }

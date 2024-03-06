@@ -2,7 +2,7 @@ import { useRuntimeConfig } from 'nuxt/app';
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 
-export const useServiceStore = defineStore('counter', () => {
+export const useServiceStore = defineStore('serviceStore', () => {
   const { apiBase } = useRuntimeConfig().public;
   const backendUrl = process.env.NODE_ENV === 'development' ? apiBase : '/api'
   const checkApi = async () => {

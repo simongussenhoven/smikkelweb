@@ -14,13 +14,7 @@ export const createSendToken = (user: IUser, statusCode: number, res: Response) 
   res.status(statusCode).json({
     status: 'success',
     data: {
-      user: {
-        id: user._id,
-        username: user.username,
-        email: user.email,
-        role: user.role,
-        token
-      }
+      user
     }
   });
 }
