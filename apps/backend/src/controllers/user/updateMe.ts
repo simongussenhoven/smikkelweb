@@ -1,6 +1,5 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Response } from "express";
 import User from "../../models/userModel";
-import AppError from "../../utils/appError";
 import { IUserRequest } from "@types";
 
 const filterObj = (obj: any, ...allowedFields: string[]) => {
@@ -20,7 +19,9 @@ export const updateMe = async (req: IUserRequest, res: Response, next: NextFunct
   }
 
   const filteredBody = filterObj(req.body, 'username', 'email');
+  console.log(req.file)
   if (req.file) filteredBody.photo = req.file.filename;
+
   const existingEmailUser = await User.findOne({ email: filteredBody.email });
   if (existingEmailUser && existingEmailUser.id !== req.user.id) {
     return res.status(400).json({
@@ -36,7 +37,7 @@ export const updateMe = async (req: IUserRequest, res: Response, next: NextFunct
       message: 'Username in use'
     })
   }
-
+  console.log('filteredBody', filteredBody)
   const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
     new: true,
     runValidators: true

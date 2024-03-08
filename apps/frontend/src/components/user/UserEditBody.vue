@@ -89,7 +89,7 @@ const onClickUpdate = async (e: any) => {
     return;
   }
   isLoading.value = true;
-  await userStore.update(
+  await userStore.updateMe(
     {
       username: username.value,
       email: email.value,

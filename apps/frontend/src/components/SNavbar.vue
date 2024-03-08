@@ -11,7 +11,7 @@
           aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom"
           @click="onClickUser">
           <!-- <span class="sr-only">Open user menu</span> -->
-          <img class="w-8 h-8 rounded-full" src="/docs/images/style/user.png" alt="user photo">
+          <img class="w-8 h-8 rounded-full" src="../../../../public/images/users/user.png" alt="user photo">
         </button>
         <!-- Dropdown menu -->
         <div v-show="isLoggedIn" id="user-dropdown"
@@ -63,7 +63,6 @@ import { useRecipeStore } from '../stores/recipeStore'
 const userStore = useUserStore();
 const recipeStore = useRecipeStore();
 const isAdmin = computed(() => userStore.role === 'admin');
-
 const isLoggedIn = computed(() => userStore.isLoggedIn);
 const onClickUser = (e: any) => {
   if (userStore.isLoggedIn) {

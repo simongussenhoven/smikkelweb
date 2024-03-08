@@ -1,4 +1,4 @@
-import { IUser } from "@types";
+import { IUser, IUserResponse } from "@types";
 import { signToken } from '../../utils/signToken';
 import { CookieOptions, Response } from 'express';
 
@@ -14,7 +14,14 @@ export const createSendToken = (user: IUser, statusCode: number, res: Response) 
   res.status(statusCode).json({
     status: 'success',
     data: {
-      user
+      user: {
+        _id: user._id,
+        username: user.username,
+        email: user.email,
+        role: user.role,
+        photo: user.photo,
+        token
+      }
     }
   });
 }

@@ -7,7 +7,7 @@ export const useUserStore = defineStore('userStore', () => {
   // request options
   const { apiBase } = useRuntimeConfig().public;
   const backendUrl = process.env.NODE_ENV === 'development' ? `${apiBase}/api/v1` : '/api/v1'
-  const headers = useRequestHeaders(['cookie', 'content-type', 'accept', 'authorization'])
+  const headers = useRequestHeaders(['cookie', 'accept', 'authorization'])
 
   // state of the modal and user menu
   const isModalVisible = ref(false);
@@ -62,6 +62,7 @@ export const useUserStore = defineStore('userStore', () => {
 
   // set user after register, login or checkToken
   const setUser = (user: IUser) => {
+    console.log(user)
     if (!user) return
     id.value = user.id
     username.value = user.username
@@ -202,11 +203,15 @@ export const useUserStore = defineStore('userStore', () => {
   };
 
   // update user
-  const update = async (request) => {
+  const updateMe = async (request) => {
+    console.log(request)
     try {
       const response: IUserResponse = await $fetch(`${backendUrl}/users/updateMe`, {
         method: 'PATCH',
-        headers,
+        headers: {
+          "Content-Type": "multipart/form-data",
+          ...headers
+        },
         credentials: 'include',
         body: JSON.stringify(request)
       });
@@ -244,6 +249,7 @@ export const useUserStore = defineStore('userStore', () => {
     isUserMenuVisible,
     resetHashToken,
     role,
+    photo,
     getUsers,
     login,
     register,
@@ -252,7 +258,7 @@ export const useUserStore = defineStore('userStore', () => {
     checkToken,
     logOut,
     sendResetPassword,
-    update,
+    updateMe,
     deleteAccount
   }
 })
