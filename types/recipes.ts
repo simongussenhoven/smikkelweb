@@ -1,3 +1,4 @@
+import { Request } from "express";
 import { Model } from "mongoose";
 
 export interface IDropdownOption {
@@ -27,7 +28,7 @@ export interface IRecipe {
   lactofree: boolean,
   requirements: IRequirement[],
   servings: number,
-  steps: string[],
+  steps: { description: string }[],
   time: number,
   title: string,
   vegan: boolean,
@@ -36,6 +37,6 @@ export interface IRecipe {
 
 export type IRecipeModel = Model<IRecipe>;
 
-export interface IRecipeRequest {
-  body: IRecipe
+export interface IRecipeRequest extends Request {
+  id: string
 }

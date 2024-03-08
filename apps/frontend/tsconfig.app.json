@@ -1,3 +1,4 @@
+// this config is not ok but nuxt is not working with tsconfig.json
 {
   "extends": [
     "../../tsconfig.base.json"
@@ -9,11 +10,14 @@
       "@stores/*": [
         "src/stores"
       ],
+      "@types":
+        ["../../types"]
     }
   },
   "exclude": [],
   "include": [
     "src/**/*.ts",
-    "src/**/*.vue"
+    "src/**/*.vue",
+    "../../types"
   ]
 }

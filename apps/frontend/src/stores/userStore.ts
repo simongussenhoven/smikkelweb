@@ -1,53 +1,7 @@
 import { useRequestHeaders, useRuntimeConfig } from 'nuxt/app';
 import { defineStore } from 'pinia';
 import { ref, watch } from 'vue';
-
-interface IUserResponse extends Response {
-  data: {
-    users?: IUser[]
-    user?: IUser
-  }
-}
-
-interface IUser {
-  id: string;
-  username: string;
-  email: string;
-  role: string;
-  token: string;
-  photo: string;
-}
-
-interface IUserLoginRequest {
-  password: string;
-  rememberMe: boolean;
-  email: string;
-}
-
-type IUserModalState =
-  'login'
-  | 'register'
-  | 'reset'
-  | 'forgot'
-  | 'update'
-  | 'terms'
-  | 'edit'
-  | 'delete'
-  | 'loginConfirm'
-  | 'registerConfirm'
-  | 'logoutConfirm'
-  | 'resetConfirm'
-  | 'forgotConfirm'
-  | 'editConfirm'
-  | 'deleteConfirm'
-
-
-interface IUpdatePasswordRequest {
-  id?: string | number;
-  passwordCurrent: string;
-  password: string;
-  passwordConfirm: string;
-}
+import { IUser, IUserModalState, IUserResponse, IUpdatePasswordRequest } from 'types';
 
 export const useUserStore = defineStore('userStore', () => {
   // request options
