@@ -19,6 +19,5 @@
     "src/**/*.ts",
     "src/**/*.vue",
     "../../types",
-    "../../public/images/**/*"
   ]
 }
