@@ -16,4 +16,6 @@ export const units = [
   { "id": 16, "description": "Teen", "plural": "Tenen" },
   { "id": 17, "description": "Takje", "plural": "Takjes" },
   { "id": 18, "description": "Blokje", "plural": "Blokjes" },
+  { "id": 19, "description": "Hele", "plural": "Blokjes" },
+  { "id": 19, "description": "Halve", "plural": "Blokjes" },
 ]

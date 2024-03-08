@@ -47,5 +47,8 @@ export const tools = [
   { "id": 46, "description": "Vergiet", "plural": "Vergieten" },
   { "id": 47, "description": "Notenkraker", "plural": "Notenkrakers" },
   { "id": 48, "description": "Wijnopener", "plural": "Wijnopeners" },
-  { "id": 49, "description": "Eiersnijder", "plural": "Eiersnijders" }
+  { "id": 49, "description": "Eiersnijder", "plural": "Eiersnijders" },
+  { "id": 50, "description": "Lepel", "plural": "Lepers" },
+  { "id": 51, "description": "Vork", "plural": "Vorken" },
+  { "id": 52, "description": "Mes", "plural": "Messen" }
 ]
