@@ -1,5 +1,5 @@
 import { Model, Document } from 'mongoose';
-import { Request } from 'express';
+import { Request, Response } from 'express';
 
 export interface IUser extends Document {
   username: string,
@@ -44,3 +44,42 @@ export interface ILoginRequest extends Request {
   email: string,
   password: string
 }
+
+export interface IUserResponse extends Response {
+  data: {
+    users?: IUser[]
+    user?: IUser
+  }
+}
+
+export type IUserModalState =
+  'login'
+  | 'register'
+  | 'reset'
+  | 'forgot'
+  | 'update'
+  | 'terms'
+  | 'edit'
+  | 'delete'
+  | 'loginConfirm'
+  | 'registerConfirm'
+  | 'logoutConfirm'
+  | 'resetConfirm'
+  | 'forgotConfirm'
+  | 'editConfirm'
+  | 'deleteConfirm'
+
+export interface IUserLoginRequest {
+  password: string;
+  rememberMe: boolean;
+  email: string;
+}
+
+
+export interface IUpdatePasswordRequest {
+  id?: string | number;
+  passwordCurrent: string;
+  password: string;
+  passwordConfirm: string;
+}
+

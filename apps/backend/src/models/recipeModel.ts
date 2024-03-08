@@ -2,10 +2,6 @@ import { Schema, model } from 'mongoose';
 import { IRecipe, IRecipeModel } from '@types'
 
 const recipeSchema = new Schema<IRecipe, IRecipeModel>({
-  _id: {
-    type: String,
-    required: [true, 'ID required']
-  },
   category: {
     id: {
       type: Number,

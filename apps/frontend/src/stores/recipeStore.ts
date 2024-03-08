@@ -1,6 +1,7 @@
 import { useRequestHeaders, useRuntimeConfig } from 'nuxt/app';
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
+import { IRecipe } from 'types'
 
 
 export const useRecipeStore = defineStore('recipeStore', () => {
@@ -13,7 +14,22 @@ export const useRecipeStore = defineStore('recipeStore', () => {
   const isModalVisible = ref(false);
   const recipeModalState = ref('add')
   const recipeError = ref('');
-  const recipes = ref([]);
+  const recipes = ref<IRecipe[]>([]);
+  const recipe = ref<IRecipe>(null)
+
+  const getRecipeById = async (id: string) => {
+    try {
+      const response = await $fetch(`${backedUrl}/recipes/${id}`, {
+        method: 'GET',
+        headers,
+      })
+      //@ts-expect-error: fix types
+      recipe.value = response.data.recipe
+    }
+    catch (e: any) {
+      recipeError.value = "Er ging iets mis bij het ophalen van het recept. Probeer het opnieuw."
+    }
+  }
 
   const getRecipes = async () => {
     try {
@@ -45,5 +61,5 @@ export const useRecipeStore = defineStore('recipeStore', () => {
     }
   }
 
-  return { isModalVisible, recipeModalState, recipeError, recipes, getRecipes, addRecipe }
+  return { isModalVisible, recipeModalState, recipeError, recipes, recipe, getRecipes, addRecipe, getRecipeById }
 })

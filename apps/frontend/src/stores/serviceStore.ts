@@ -1,6 +1,5 @@
 import { useRuntimeConfig } from 'nuxt/app';
 import { defineStore } from 'pinia'
-import { ref, computed } from 'vue'
 
 export const useServiceStore = defineStore('counter', () => {
   const { apiBase } = useRuntimeConfig().public;
@@ -14,7 +13,7 @@ export const useServiceStore = defineStore('counter', () => {
       return
     }
     try {
-      const response = await $fetch(apiBase as string)
+      const response = await $fetch(backendUrl as string)
     }
     catch (e) {
       console.error('API check failed', e)
