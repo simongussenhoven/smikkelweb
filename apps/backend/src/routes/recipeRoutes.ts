@@ -4,7 +4,6 @@ import * as authController from '../controllers/auth'
 import * as recipeConstroller from '../controllers/recipeController'
 
 // restricted to admin, moderator, user
-router.get('/:id', recipeConstroller.getRecipe)
 router.get('/', recipeConstroller.getRecipes)
 router.post('/', authController.protect, recipeConstroller.addRecipe)
 
