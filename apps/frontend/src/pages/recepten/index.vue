@@ -3,8 +3,8 @@
     <h1 class="title mb-4 text-4xl font-extrabold tracking-tight leading-none text-white md:text-5xl lg:text-6xl">
       Recepten
     </h1>
-    <div class=" recipes">
-      <SCard v-for="recipe in recipeStore.recipes" :key="recipe.id" :title="recipe.title"
+    <div class="recipes flex flex-wrap gap-3">
+      <SCard v-for="recipe in recipeStore.recipes" :key="recipe" :title="recipe.title"
         :description="recipe.description" :id="recipe._id" />
     </div>
   </div>
