@@ -16,18 +16,22 @@ export const useUserStore = defineStore('userStore', () => {
   const isLoading = ref(true);
 
   // state of the user
-  const id = ref('')
-  const username = ref('')
-  const role = ref('')
-  const email = ref('')
-  const token = ref('')
+
+  const id = ref(null)
+  const username = ref(null)
+  const role = ref(null)
+  const email = ref(null)
+  const token = ref(null)
   const isLoggedIn = ref(false)
-  const userError = ref('');
-  const resetHashToken = ref('')
+  const userError = ref(null)
+  const resetHashToken = ref(null)
   const photo = ref(null)
   const lastUpdated = ref(Date.now().toString())
   const photoPath = computed(() => `${backendUrl}/public/img/users/${photo.value}`)
-
+  const useDarkmode = ref(false)
+  const toggleDarkmode = () => {
+    useDarkmode.value = !useDarkmode.value
+  }
   // admin stuff
   const users = ref([])
 
@@ -240,13 +244,11 @@ export const useUserStore = defineStore('userStore', () => {
   // update user
   const updateMe = async (request) => {
     isLoading.value = true
-
     // construction of form data is needed to send a file
     const formData = new FormData()
     if (request.file) formData.append('photo', request.file)
-    formData.append('username', request.username)
-    formData.append('email', request.email)
-
+    formData.append('username', request.username || username.value)
+    formData.append('email', request.email || email.value)
     try {
       const response: IUserResponse = await $fetch(`${backendUrl}/users/updateMe`, {
         method: 'PATCH',
@@ -297,6 +299,8 @@ export const useUserStore = defineStore('userStore', () => {
     isLoading,
     lastUpdated,
     photoPath,
+    useDarkmode,
+    toggleDarkmode,
     getUsers,
     login,
     register,
@@ -306,6 +310,6 @@ export const useUserStore = defineStore('userStore', () => {
     logOut,
     sendResetPassword,
     updateMe,
-    deleteAccount
+    deleteAccount,
   }
 })

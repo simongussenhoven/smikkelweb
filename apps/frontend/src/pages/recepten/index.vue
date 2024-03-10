@@ -1,6 +1,6 @@
 <template>
-  <div class="max-w-screen-xl flex flex-col justify-between mx-auto p-4">
-    <h1 class="title mb-4 text-4xl font-extrabold tracking-tight leading-none text-white md:text-5xl lg:text-6xl">
+  <div class="max-w-screen-xl flex flex-col justify-between mx-auto p-4 recipe-container">
+    <h1 class="title mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl lg:text-6xl text-dark dark:text-white">
       Recepten
     </h1>
     <div class="recipes flex flex-wrap gap-3">
@@ -20,3 +20,12 @@ onMounted(() => {
   recipeStore.getRecipes();
 });
 </script>
+<style lang="scss" scoped>
+  .recipe-container {
+    flex-grow: 1;
+    justify-content: flex-start;
+  }
+  .recipes {
+    justify-content: center;
+  }
+</style>

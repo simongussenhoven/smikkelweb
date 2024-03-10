@@ -4,14 +4,17 @@
       <nuxt-link to="/" class="flex items-center space-x-3 rtl:space-x-reverse">
         <img src="../docs/images/style/logo.png" class="h-8" alt="Smikkelweb logo">
       </nuxt-link>
-      <div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+      <div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse px-2">
+        <button type="button" class="flex text-sm bg-gray-400 dark:bg-gray-800 rounded-full md:me-0 md:mr-1">
+          <Icon @click="userStore.toggleDarkmode" class="w-8 h-8 rounded-full" :color="getDarkModeProps.color" :name="getDarkModeProps.icon"/>
+        </button>
         <button id="user-menu-button" type="button"
-          class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+          class="flex text-sm bg-gray-400 dark:bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
           aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom"
           @click="onClickUser">
           <span class="sr-only">Open user menu</span>
           <fwb-spinner class="w-8 h-8 rounded-full p-2" v-if="isUserStoreLoading" />
-          <Icon v-else-if="!userStore.photo" class="w-8 h-8 rounded-full" color="grey" name="flowbite:user-solid"/>
+          <Icon v-else-if="!userStore.photo" class="w-8 h-8 rounded-full" :color="getUserProps.color" name="flowbite:user-solid"/>
           <img v-else class="w-8 h-8 rounded-full" :src="userImage" alt="user photo" :key="lastUpdated">
         </button>
         <div v-show="isLoggedIn" id="user-dropdown"
@@ -69,6 +72,7 @@ const isLoggedIn = computed(() => userStore.isLoggedIn);
 const isUserStoreLoading = computed(() => userStore.isLoading);
 const userImage = computed(() => userStore.photoPath)
 const lastUpdated = computed(() => userStore.lastUpdated)
+const useDarkmode = computed(() => userStore.useDarkmode)
 
 const onClickUser = (e: any) => {
   if (userStore.isLoggedIn) {
@@ -78,6 +82,8 @@ const onClickUser = (e: any) => {
   userStore.isModalVisible = true;
 }
 
+const emit = defineEmits(['toggleDark'])
+
 const onClickLogout = () => {
   userStore.logOut();
 }
@@ -86,6 +92,19 @@ const onClickAddRecipe = () => {
   recipeStore.isModalVisible = true;
   recipeStore.recipeModalState = 'add';
 }
+
+const getDarkModeProps = computed(() => {
+  return {
+    color: useDarkmode.value ? 'white' : 'grey',
+    icon: useDarkmode.value ? 'flowbite:sun-solid' : 'flowbite:moon-solid',
+  }
+})
+
+const getUserProps = computed(() => {
+  return {
+    color: useDarkmode.value ? 'white' : 'grey',
+  }
+})
 
 </script>
 

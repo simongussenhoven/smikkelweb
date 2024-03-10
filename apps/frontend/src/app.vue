@@ -1,23 +1,28 @@
 <template>
-  <div class="app">
-    <UserModal />
-    <RecipeModal />
-    <SNavbar />
-    <NuxtPage />
+  <div :class="colorClass" class="app">
+    <div class="app-container bg-slate-200 dark:bg-slate-800">
+      <UserModal />
+      <RecipeModal />
+      <SNavbar/>
+      <NuxtPage />
+    </div>
   </div>
 </template>
 <script lang="ts" setup>
-import { onMounted } from 'vue'
+import { computed, onMounted } from 'vue'
 import { initFlowbite } from 'flowbite'
 import { useServiceStore } from './stores/serviceStore'
 import { useUserStore } from './stores/userStore';
+
 const serviceStore = useServiceStore()
 serviceStore.checkApi()
-
 const userStore = useUserStore()
 onMounted(async () => {
   initFlowbite();
   userStore.checkToken()
+})
+const colorClass = computed(() => {
+  return userStore.useDarkmode ? 'dark' : 'light'
 })
 
 </script>
@@ -26,10 +31,13 @@ onMounted(async () => {
 </style>
 <style lang="scss" scoped>
 .app {
-  background-color: black;
   min-height: 100vh;
-  color: white;
   display: flex;
+  
+}
+.app-container {
+  flex-grow: 1;
+  display:flex;
   flex-direction: column;
 }
 </style>
