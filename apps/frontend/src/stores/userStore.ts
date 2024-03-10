@@ -25,10 +25,8 @@ export const useUserStore = defineStore('userStore', () => {
   const userError = ref('');
   const resetHashToken = ref('')
   const photo = ref(null)
-  const lastUpdated = ref(Date.now())
-  const photoPath = computed(() => {
-    return `${backendUrl}/assets/img/users/${photo.value ?? 'default-user.png'}`
-  })
+  const lastUpdated = ref(Date.now().toString())
+  const photoPath = computed(() => `${backendUrl}/public/img/users/${photo.value}`)
 
   // admin stuff
   const users = ref([])
@@ -68,6 +66,7 @@ export const useUserStore = defineStore('userStore', () => {
   // set user after register, login or checkToken
   const setUser = async (user: IUser) => {
     if (!user) return
+    if (user.password) console.error('Do not log the password')
     id.value = user.id
     username.value = user.username
     role.value = user.role
@@ -76,6 +75,11 @@ export const useUserStore = defineStore('userStore', () => {
     isLoggedIn.value = true
     photo.value = user.photo
     isLoading.value = false
+
+    // wait for backend to process file
+    setTimeout(() => {
+      lastUpdated.value = Date.now().toString()
+    }, 1000)
     return
   }
 
@@ -236,11 +240,13 @@ export const useUserStore = defineStore('userStore', () => {
   // update user
   const updateMe = async (request) => {
     isLoading.value = true
+
     // construction of form data is needed to send a file
     const formData = new FormData()
     if (request.file) formData.append('photo', request.file)
     formData.append('username', request.username)
     formData.append('email', request.email)
+
     try {
       const response: IUserResponse = await $fetch(`${backendUrl}/users/updateMe`, {
         method: 'PATCH',
@@ -248,9 +254,10 @@ export const useUserStore = defineStore('userStore', () => {
         credentials: 'include',
         body: formData
       });
-      await setUser(response.data.user)
 
+      await setUser(response.data.user)
       userModalState.value = 'editConfirm'
+
     } catch (error) {
       userError.value = "Er ging iets mis bij het updaten van je gegevens. Probeer het opnieuw.";
     } finally {

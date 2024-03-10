@@ -12,7 +12,8 @@
           @click="onClickUser">
           <!-- <span class="sr-only">Open user menu</span> -->
           <fwb-spinner class="w-8 h-8 rounded-full p-2" v-if="isUserStoreLoading" />
-          <img v-else class="w-8 h-8 rounded-full" :src="userImage" alt="user photo">
+          <Icon v-else-if="!userStore.photo" class="w-8 h-8 rounded-full" color="grey" name="flowbite:user-solid"/>
+          <img v-else class="w-8 h-8 rounded-full" :src="userImage" alt="user photo" :key="lastUpdated">
         </button>
         <!-- Dropdown menu -->
         <div v-show="isLoggedIn" id="user-dropdown"
@@ -62,12 +63,14 @@ import { computed } from 'vue';
 import { useUserStore } from '../stores/userStore'
 import { useRecipeStore } from '../stores/recipeStore'
 import { FwbSpinner } from 'flowbite-vue'
+import { storeToRefs } from 'pinia';
 const userStore = useUserStore();
 const recipeStore = useRecipeStore();
 const isAdmin = computed(() => userStore.role === 'admin');
 const isLoggedIn = computed(() => userStore.isLoggedIn);
 const isUserStoreLoading = computed(() => userStore.isLoading);
 const userImage = computed(() => userStore.photoPath)
+const lastUpdated = computed(() => userStore.lastUpdated)
 
 const onClickUser = (e: any) => {
   if (userStore.isLoggedIn) {

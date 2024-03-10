@@ -2,7 +2,8 @@
   <div class="p-4 md:p-5">
     <form class="space-y-4" action="#">
     <div class="flex justify-center w-100">
-      <img :src="userImage" alt="user" class="w-20 h-20 rounded-full"/>  
+      <img v-if="userStore.photo" :src="userStore.photoPath" alt="user" class="w-20 h-20 rounded-full"/> 
+      <Icon v-else="!userStore.photo" class="w-8 h-8 rounded-full" color="grey" name="flowbite:user-solid" />
     </div>
       <fwb-file-input class="uploader" v-model="file"/>
       <div>

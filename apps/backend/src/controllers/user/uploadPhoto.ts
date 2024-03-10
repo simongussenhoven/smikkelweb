@@ -5,7 +5,7 @@ import * as path from 'path';
 
 const multerStore = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, 'assets/img/users'));
+    cb(null, 'public/img/users');
   },
   filename: (req: IUserRequest, file, cb) => {
     const ext = file.mimetype.split('/')[1];

@@ -6,7 +6,8 @@
 .env.production
 *.env
 
-
+# photos
+public
 
 # compiled output
 dist

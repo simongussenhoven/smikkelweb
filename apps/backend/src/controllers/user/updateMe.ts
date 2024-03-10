@@ -45,7 +45,12 @@ export const updateMe = async (req: IUserRequest, res: Response, next: NextFunct
     status: 'success',
     message: 'User updated',
     data: {
-      updatedUser
+      user: {
+        id: updatedUser.id,
+        username: updatedUser.username,
+        email: updatedUser.email,
+        photo: updatedUser.photo
+      }
     }
   })
 }

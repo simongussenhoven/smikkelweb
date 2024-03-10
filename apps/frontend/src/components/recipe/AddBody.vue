@@ -145,8 +145,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch, onMounted } from 'vue'
-import { FwbSpinner, FwbInput, FwbTextarea, FwbCheckbox, FwbButton, FwbDropdown, FwbListGroupItem, FwbSelect, FwbFileInput } from 'flowbite-vue';
+import { computed, ref } from 'vue'
+import { FwbSpinner, FwbInput, FwbTextarea, FwbCheckbox, FwbButton, FwbSelect, FwbFileInput } from 'flowbite-vue';
 import { useRecipeStore } from '../../stores/recipeStore';
 import { tools } from '../../data/tools'
 import { units } from '../../data/units'

@@ -21,7 +21,7 @@ dotenv.config({ path: envPath });
 
 // init app
 const app = express();
-app.use('/api/v1/assets', express.static(path.join(__dirname, 'assets')));
+app.use('/api/v1/public', express.static(path.join(__dirname, '../../../public')));
 
 // only enable cors on dev
 if (process.env.NODE_ENV === 'development') app.use(cors(corsOptions))
