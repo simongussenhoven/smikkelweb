@@ -47,8 +47,6 @@ export const useUserStore = defineStore('userStore', () => {
     }
   })
 
-
-
   // get users, admin only
   const getUsers = async () => {
     try {
@@ -77,6 +75,18 @@ export const useUserStore = defineStore('userStore', () => {
     return
   }
 
+  // clear user
+  const clearUser = () => {
+    id.value = ''
+    username.value = ''
+    role.value = ''
+    email.value = ''
+    token.value = ''
+    isLoggedIn.value = false
+    photo.value = null
+    isLoading.value = false
+  }
+
   // register
   const register = async (request) => {
     isLoading.value = true
@@ -91,6 +101,9 @@ export const useUserStore = defineStore('userStore', () => {
     }
     catch (e: any) {
       userError.value = "Er ging iets mis bij het aanmaken. Probeer het opnieuw."
+    }
+    finally {
+      isLoading.value = false
     }
   }
 
@@ -109,6 +122,9 @@ export const useUserStore = defineStore('userStore', () => {
     } catch (e: any) {
       console.log('Error:', e)
       userError.value = "Login mislukt. Controleer je gegevens en probeer het opnieuw.";
+    }
+    finally {
+      isLoading.value = false
     }
   };
 
@@ -130,6 +146,8 @@ export const useUserStore = defineStore('userStore', () => {
       userModalState.value = 'resetConfirm'
     } catch (e: any) {
       userError.value = "Er ging iets mis bij het updaten van je wachtwoord. Probeer het opnieuw.";
+    } finally {
+      isLoading.value = false
     }
   }
 
@@ -150,6 +168,8 @@ export const useUserStore = defineStore('userStore', () => {
       resetHashToken.value = ''
     } catch (e: any) {
       userError.value = "Er ging iets mis bij het updaten van je wachtwoord. Probeer het opnieuw.";
+    } finally {
+      isLoading.value = false
     }
   }
 
@@ -167,21 +187,11 @@ export const useUserStore = defineStore('userStore', () => {
       return
     } catch (error) {
       console.error('Error checking token:', error);
+    } finally {
+      isLoading.value = false
     }
   };
 
-  // clear user
-  const clearUser = () => {
-
-    id.value = ''
-    username.value = ''
-    role.value = ''
-    email.value = ''
-    token.value = ''
-    isLoggedIn.value = false
-    photo.value = null
-    isLoading.value = false
-  }
 
   // send reset password
   const sendResetPassword = async (email: string) => {
@@ -196,6 +206,8 @@ export const useUserStore = defineStore('userStore', () => {
       isLoading.value = false
     } catch (error) {
       console.error('Error sending reset password:', error);
+    } finally {
+      isLoading.value = false
     }
   }
 
@@ -213,28 +225,33 @@ export const useUserStore = defineStore('userStore', () => {
       userModalState.value = 'logoutConfirm';
     } catch (error) {
       console.error('Error logging out:', error);
+    } finally {
+      isLoading.value = false
     }
   };
 
   // update user
   const updateMe = async (request) => {
     isLoading.value = true
-    console.log(request)
+    const formData = new FormData()
+    if (request.file) formData.append('photo', request.file)
+    formData.append('username', request.username)
+    formData.append('email', request.email)
     try {
       const response: IUserResponse = await $fetch(`${backendUrl}/users/updateMe`, {
         method: 'PATCH',
-        headers: {
-          "Content-Type": "multipart/form-data",
-          ...headers
-        },
+        headers,
         credentials: 'include',
-        body: JSON.stringify(request)
+        body: formData
       });
+      console.log('response:', response)
       setUser(response.data.user)
       userModalState.value = 'editConfirm'
 
     } catch (error) {
       userError.value = "Er ging iets mis bij het updaten van je gegevens. Probeer het opnieuw.";
+    } finally {
+      isLoading.value = false
     }
   }
 
@@ -251,6 +268,8 @@ export const useUserStore = defineStore('userStore', () => {
       userModalState.value = 'deleteConfirm'
     } catch (error) {
       userError.value = "Er ging iets mis bij het updaten van je gegevens. Probeer het opnieuw.";
+    } finally {
+      isLoading.value = false
     }
   }
   return {

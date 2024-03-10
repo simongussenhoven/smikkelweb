@@ -1,8 +1,11 @@
 <template>
   <div class="p-4 md:p-5">
     <form class="space-y-4" action="#">
-      <div class="file-input">
-        <fwb-file-input v-model="file" dropzone label="Profielfoto" />
+      <div class="flex justify-center gap-5">
+        <img :src="userImage" alt="user" class="w-20 h-20 rounded-full" />
+        <div class="file-input">
+        <fwb-file-input dropzone v-model="file"/>
+      </div>
       </div>
       <div>
         <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Naam</label>
@@ -42,6 +45,10 @@ const file = ref(null)
 const loginVisible = computed(() => userStore.isModalVisible)
 const isDisabled = ref(false);
 const isLoading = ref(false);
+const userImage = computed(() => {
+  const fileName = userStore.photo ?? 'default-user.png';
+  return `http://localhost:4000/api/v1/assets/img/users/${fileName}`
+})
 
 onMounted(() => {
   username.value = userStore.username;

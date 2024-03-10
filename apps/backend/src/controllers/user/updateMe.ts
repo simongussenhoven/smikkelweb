@@ -19,8 +19,7 @@ export const updateMe = async (req: IUserRequest, res: Response, next: NextFunct
   }
 
   const filteredBody = filterObj(req.body, 'username', 'email');
-  console.log('file!')
-  console.log(req.file)
+  console.log('file!', req.file)
   if (req.file) filteredBody.photo = req.file.filename;
 
   const existingEmailUser = await User.findOne({ email: filteredBody.email });
@@ -38,12 +37,12 @@ export const updateMe = async (req: IUserRequest, res: Response, next: NextFunct
       message: 'Username in use'
     })
   }
-  console.log('filteredBody', filteredBody)
   const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
     new: true,
     runValidators: true
   })
 
+  console.log(updatedUser)
   res.status(200).json({
     status: 'success',
     message: 'User updated',
