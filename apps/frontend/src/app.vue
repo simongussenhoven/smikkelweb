@@ -3,6 +3,7 @@
     <div class="app-container bg-slate-200 dark:bg-slate-800">
       <UserModal />
       <RecipeModal />
+      <ErrorModal/>
       <SNavbar/>
       <NuxtPage />
     </div>
@@ -20,6 +21,7 @@ const userStore = useUserStore()
 onMounted(async () => {
   initFlowbite();
   userStore.checkToken()
+  userStore.setDarkmode()
 })
 const colorClass = computed(() => {
   return userStore.useDarkmode ? 'dark' : 'light'

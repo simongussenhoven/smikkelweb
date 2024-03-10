@@ -1,6 +1,6 @@
 <template>
   <div v-if="!recipe" class="flex items-center justify-center h-screen p-4">
-    <div class="text-2xl font-bold text-center">Loading...</div>
+    <fwb-spinner spinner-size="10"/>
   </div>
   <div v-else class="max-w-screen-xl flex flex-col justify-between mx-auto p-4">
     <div class="container mx-auto rounded p-6">
@@ -51,6 +51,7 @@
 import { useRoute } from 'vue-router';
 import { useRecipeStore } from '../../stores/recipeStore'
 import { computed, onMounted } from 'vue';
+import { FwbSpinner } from 'flowbite-vue';
 const recipeStore = useRecipeStore();
 const route = useRoute();
 

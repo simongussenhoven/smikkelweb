@@ -28,9 +28,17 @@ export const useUserStore = defineStore('userStore', () => {
   const photo = ref(null)
   const lastUpdated = ref(Date.now().toString())
   const photoPath = computed(() => `${backendUrl}/public/img/users/${photo.value}`)
-  const useDarkmode = ref(false)
-  const toggleDarkmode = () => {
+  const useDarkmode = ref(true)
+
+  // dark mode stuff
+  const setDarkmode = () => {
+    const isDark = localStorage.getItem('useDarkMode')
+    useDarkmode.value = isDark === 'true'
+  }
+
+  const toggleDarkmode = async () => {
     useDarkmode.value = !useDarkmode.value
+    localStorage.setItem('useDarkMode', useDarkmode.value.toString())
   }
   // admin stuff
   const users = ref([])
@@ -83,7 +91,7 @@ export const useUserStore = defineStore('userStore', () => {
     // wait for backend to process file
     setTimeout(() => {
       lastUpdated.value = Date.now().toString()
-    }, 1000)
+    }, 500)
     return
   }
 
@@ -311,5 +319,6 @@ export const useUserStore = defineStore('userStore', () => {
     sendResetPassword,
     updateMe,
     deleteAccount,
+    setDarkmode
   }
 })
