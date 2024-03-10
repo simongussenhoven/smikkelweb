@@ -11,7 +11,7 @@
           aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom"
           @click="onClickUser">
           <!-- <span class="sr-only">Open user menu</span> -->
-          <img class="w-8 h-8 rounded-full" src="../../../../public/images/users/user.png" alt="user photo">
+          <img class="w-8 h-8 rounded-full" :src="userImage" alt="user photo">
         </button>
         <!-- Dropdown menu -->
         <div v-show="isLoggedIn" id="user-dropdown"
@@ -64,6 +64,11 @@ const userStore = useUserStore();
 const recipeStore = useRecipeStore();
 const isAdmin = computed(() => userStore.role === 'admin');
 const isLoggedIn = computed(() => userStore.isLoggedIn);
+
+const userImage = computed(() => {
+  return `http://localhost:4000/api/v1/assets/img/users/${'default-user.png'}`
+})
+
 const onClickUser = (e: any) => {
   if (userStore.isLoggedIn) {
     return

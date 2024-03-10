@@ -21,6 +21,8 @@ dotenv.config({ path: envPath });
 
 // init app
 const app = express();
+console.log(path.join(__dirname, 'assets'))
+app.use('/api/v1/assets', express.static(path.join(__dirname, 'assets')));
 
 // only enable cors on dev
 if (process.env.NODE_ENV === 'development') app.use(cors(corsOptions))
@@ -39,9 +41,7 @@ const limiter = rateLimit(limitOptions)
 if (process.env.NODE_ENV === 'production') app.use('/api', limiter)
 
 // other middleware
-app.get('/assets', express.static(path.join(__dirname, 'src/assets')));
-console.log(path.join(__dirname, 'src/public'));
-app.get('/public', express.static(path.join(__dirname, 'src/public')));
+
 
 app.use(express.json({ limit: '10kb' }))
 app.use(globalErrorHandler)

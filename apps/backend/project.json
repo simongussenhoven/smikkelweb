@@ -8,17 +8,14 @@
       "executor": "@nx/js:node",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "backend:build",
-        "assets": ["/assets"]
+        "buildTarget": "backend:build"
       },
       "configurations": {
         "development": {
-          "buildTarget": "backend:build:development",
-          "assets": ["/assets"]
+          "buildTarget": "backend:build:development"
         },
         "production": {
-          "buildTarget": "backend:build:production",
-          "assets": ["/assets"]
+          "buildTarget": "backend:build:production"
         }
       }
     }

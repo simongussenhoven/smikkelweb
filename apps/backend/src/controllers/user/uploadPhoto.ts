@@ -1,10 +1,11 @@
 import multer from 'multer';;
 import { IUserRequest } from '@types';
 import AppError from '../../utils/appError';
+import * as path from 'path';
 
 const multerStore = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'public/images/users');
+    cb(null, path.join(__dirname, 'assets/img/users'));
 
   },
   filename: (req: IUserRequest, file, cb) => {

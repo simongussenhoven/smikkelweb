@@ -46,6 +46,8 @@ export const useUserStore = defineStore('userStore', () => {
     }
   })
 
+
+
   // get users, admin only
   const getUsers = async () => {
     try {
@@ -61,7 +63,7 @@ export const useUserStore = defineStore('userStore', () => {
   }
 
   // set user after register, login or checkToken
-  const setUser = (user: IUser) => {
+  const setUser = async (user: IUser) => {
     console.log(user)
     if (!user) return
     id.value = user.id
@@ -70,7 +72,11 @@ export const useUserStore = defineStore('userStore', () => {
     email.value = user.email
     token.value = user.token
     isLoggedIn.value = true
-    photo.value = user.photo
+    photo.value = await $fetch(`${backendUrl}/assets/img/users/${user.photo}`, {
+      method: 'GET',
+      headers,
+      credentials: 'include',
+    })
     return
   }
 
