@@ -19,6 +19,7 @@ export const updateMe = async (req: IUserRequest, res: Response, next: NextFunct
   }
 
   const filteredBody = filterObj(req.body, 'username', 'email');
+  console.log('file!')
   console.log(req.file)
   if (req.file) filteredBody.photo = req.file.filename;
 

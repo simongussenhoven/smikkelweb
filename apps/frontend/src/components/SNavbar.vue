@@ -11,7 +11,8 @@
           aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom"
           @click="onClickUser">
           <!-- <span class="sr-only">Open user menu</span> -->
-          <img class="w-8 h-8 rounded-full" :src="userImage" alt="user photo">
+          <fwb-spinner class="w-8 h-8 rounded-full p-2" v-if="isUserStoreLoading" />
+          <img v-else class="w-8 h-8 rounded-full" :src="userImage" alt="user photo">
         </button>
         <!-- Dropdown menu -->
         <div v-show="isLoggedIn" id="user-dropdown"
@@ -60,13 +61,16 @@
 import { computed } from 'vue';
 import { useUserStore } from '../stores/userStore'
 import { useRecipeStore } from '../stores/recipeStore'
+import { FwbSpinner } from 'flowbite-vue'
 const userStore = useUserStore();
 const recipeStore = useRecipeStore();
 const isAdmin = computed(() => userStore.role === 'admin');
 const isLoggedIn = computed(() => userStore.isLoggedIn);
+const isUserStoreLoading = computed(() => userStore.isLoading);
 
 const userImage = computed(() => {
-  return `http://localhost:4000/api/v1/assets/img/users/${'default-user.png'}`
+  const fileName = userStore.photo ?? 'default-user.png';
+  return `http://localhost:4000/api/v1/assets/img/users/${fileName}`
 })
 
 const onClickUser = (e: any) => {

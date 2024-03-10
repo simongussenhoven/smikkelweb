@@ -13,6 +13,7 @@ export const useUserStore = defineStore('userStore', () => {
   const isModalVisible = ref(false);
   const userModalState = ref<IUserModalState>('login')
   const isUserMenuVisible = ref(false);
+  const isLoading = ref(true);
 
   // state of the user
   const id = ref('')
@@ -23,7 +24,7 @@ export const useUserStore = defineStore('userStore', () => {
   const isLoggedIn = ref(false)
   const userError = ref('');
   const resetHashToken = ref('')
-  const photo = ref('')
+  const photo = ref(null)
 
   // admin stuff
   const users = ref([])
@@ -64,7 +65,6 @@ export const useUserStore = defineStore('userStore', () => {
 
   // set user after register, login or checkToken
   const setUser = async (user: IUser) => {
-    console.log(user)
     if (!user) return
     id.value = user.id
     username.value = user.username
@@ -72,16 +72,14 @@ export const useUserStore = defineStore('userStore', () => {
     email.value = user.email
     token.value = user.token
     isLoggedIn.value = true
-    photo.value = await $fetch(`${backendUrl}/assets/img/users/${user.photo}`, {
-      method: 'GET',
-      headers,
-      credentials: 'include',
-    })
+    photo.value = user.photo
+    isLoading.value = false
     return
   }
 
   // register
   const register = async (request) => {
+    isLoading.value = true
     try {
       const response: IUserResponse = await $fetch(`${backendUrl}/users/register`, {
         method: 'POST',
@@ -98,6 +96,7 @@ export const useUserStore = defineStore('userStore', () => {
 
   // login
   const login = async (request) => {
+    isLoading.value = true
     try {
       const response: IUserResponse = await $fetch(`${backendUrl}/users/login`, {
         method: 'POST',
@@ -115,6 +114,7 @@ export const useUserStore = defineStore('userStore', () => {
 
   // update password
   const updatePassword = async (request: IUpdatePasswordRequest) => {
+    isLoading.value = true
     if (resetHashToken.value) return resetPassword(request)
     try {
       request.id = id.value
@@ -135,6 +135,7 @@ export const useUserStore = defineStore('userStore', () => {
 
   // reset password
   const resetPassword = async (request: IUpdatePasswordRequest) => {
+    isLoading.value = true
     try {
       const response: IUserResponse = await $fetch(`${backendUrl}/users/resetPassword/${resetHashToken.value}`, {
         method: 'PATCH',
@@ -154,6 +155,7 @@ export const useUserStore = defineStore('userStore', () => {
 
   // check token
   const checkToken = async () => {
+    isLoading.value = true
     if (isLoggedIn.value) return
     try {
       const response: any = await $fetch(`${backendUrl}/users/checkToken`, {
@@ -170,16 +172,20 @@ export const useUserStore = defineStore('userStore', () => {
 
   // clear user
   const clearUser = () => {
+
     id.value = ''
     username.value = ''
     role.value = ''
     email.value = ''
     token.value = ''
     isLoggedIn.value = false
+    photo.value = null
+    isLoading.value = false
   }
 
   // send reset password
   const sendResetPassword = async (email: string) => {
+    isLoading.value = true
     try {
       const response: any = await $fetch(`${backendUrl}/users/forgotPassword`, {
         method: 'POST',
@@ -187,6 +193,7 @@ export const useUserStore = defineStore('userStore', () => {
         body: JSON.stringify({ email })
       });
       userModalState.value = 'forgotConfirm'
+      isLoading.value = false
     } catch (error) {
       console.error('Error sending reset password:', error);
     }
@@ -194,6 +201,7 @@ export const useUserStore = defineStore('userStore', () => {
 
   // log out
   const logOut = async () => {
+    isLoading.value = true
     try {
       await $fetch(`${backendUrl}/users/logout`, {
         method: 'GET',
@@ -210,6 +218,7 @@ export const useUserStore = defineStore('userStore', () => {
 
   // update user
   const updateMe = async (request) => {
+    isLoading.value = true
     console.log(request)
     try {
       const response: IUserResponse = await $fetch(`${backendUrl}/users/updateMe`, {
@@ -221,8 +230,7 @@ export const useUserStore = defineStore('userStore', () => {
         credentials: 'include',
         body: JSON.stringify(request)
       });
-      username.value = request.username
-      email.value = request.email
+      setUser(response.data.user)
       userModalState.value = 'editConfirm'
 
     } catch (error) {
@@ -232,6 +240,7 @@ export const useUserStore = defineStore('userStore', () => {
 
   // update user
   const deleteAccount = async () => {
+    isLoading.value = true
     try {
       const response: IUserResponse = await $fetch(`${backendUrl}/users/deleteMe`, {
         method: 'DELETE',
@@ -256,6 +265,7 @@ export const useUserStore = defineStore('userStore', () => {
     resetHashToken,
     role,
     photo,
+    isLoading,
     getUsers,
     login,
     register,

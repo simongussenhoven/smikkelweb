@@ -32,6 +32,7 @@ export interface IUserRequest extends Request {
   passwordConfirm: string,
   passwordChangedAt: Date,
   user: IUser
+  photo: File
 }
 
 export interface INewUserRequest {
