@@ -25,6 +25,8 @@ export const useUserStore = defineStore('userStore', () => {
   const userError = ref('');
   const resetHashToken = ref('')
   const photo = ref(null)
+  const lastUpdated = ref(Date.now())
+
 
   // admin stuff
   const users = ref([])
@@ -233,6 +235,7 @@ export const useUserStore = defineStore('userStore', () => {
   // update user
   const updateMe = async (request) => {
     isLoading.value = true
+    // construction of form data is needed to send a file
     const formData = new FormData()
     if (request.file) formData.append('photo', request.file)
     formData.append('username', request.username)
@@ -244,10 +247,9 @@ export const useUserStore = defineStore('userStore', () => {
         credentials: 'include',
         body: formData
       });
-      console.log('response:', response)
-      setUser(response.data.user)
-      userModalState.value = 'editConfirm'
+      await setUser(response.data.user)
 
+      userModalState.value = 'editConfirm'
     } catch (error) {
       userError.value = "Er ging iets mis bij het updaten van je gegevens. Probeer het opnieuw.";
     } finally {
@@ -285,6 +287,7 @@ export const useUserStore = defineStore('userStore', () => {
     role,
     photo,
     isLoading,
+    lastUpdated,
     getUsers,
     login,
     register,

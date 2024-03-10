@@ -67,7 +67,6 @@ const recipeStore = useRecipeStore();
 const isAdmin = computed(() => userStore.role === 'admin');
 const isLoggedIn = computed(() => userStore.isLoggedIn);
 const isUserStoreLoading = computed(() => userStore.isLoading);
-
 const userImage = computed(() => {
   const fileName = userStore.photo ?? 'default-user.png';
   return `http://localhost:4000/api/v1/assets/img/users/${fileName}`

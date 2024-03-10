@@ -1,12 +1,10 @@
 <template>
   <div class="p-4 md:p-5">
     <form class="space-y-4" action="#">
-      <div class="flex justify-center gap-5">
-        <img :src="userImage" alt="user" class="w-20 h-20 rounded-full" />
-        <div class="file-input">
-        <fwb-file-input dropzone v-model="file"/>
-      </div>
-      </div>
+    <div class="flex justify-center w-100">
+      <img :src="userImage" alt="user" class="w-20 h-20 rounded-full"/>  
+    </div>
+      <fwb-file-input class="uploader" v-model="file"/>
       <div>
         <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Naam</label>
         <input id="username" v-model="username" type="text" name="username"
@@ -106,3 +104,10 @@ const onClickUpdate = async (e: any) => {
 }
 
 </script>
+<style lang="scss" scoped>
+  .uploader {
+    :deep(svg) {
+      display: none;
+    }
+  }
+</style>
