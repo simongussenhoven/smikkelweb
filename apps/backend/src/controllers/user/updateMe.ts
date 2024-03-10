@@ -1,6 +1,5 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Response } from "express";
 import User from "../../models/userModel";
-import AppError from "../../utils/appError";
 import { IUserRequest } from "@types";
 
 const filterObj = (obj: any, ...allowedFields: string[]) => {
@@ -18,13 +17,16 @@ export const updateMe = async (req: IUserRequest, res: Response, next: NextFunct
       message: 'This route is not for password updates. Please use /updateMyPassword'
     })
   }
+
   const filteredBody = filterObj(req.body, 'username', 'email');
+  console.log('file!', req.file)
+  if (req.file) filteredBody.photo = req.file.filename;
 
   const existingEmailUser = await User.findOne({ email: filteredBody.email });
   if (existingEmailUser && existingEmailUser.id !== req.user.id) {
     return res.status(400).json({
       status: 'fail',
-      message: 'Emailadres is al in gebruik'
+      message: 'Emailadress in use'
     })
   }
 
@@ -32,15 +34,15 @@ export const updateMe = async (req: IUserRequest, res: Response, next: NextFunct
   if (existingUserName && existingUserName.id !== req.user.id) {
     return res.status(400).json({
       status: 'fail',
-      message: 'Gebruikersnaam is al in gebruik'
+      message: 'Username in use'
     })
   }
-
   const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
     new: true,
     runValidators: true
   })
 
+  console.log(updatedUser)
   res.status(200).json({
     status: 'success',
     message: 'User updated',

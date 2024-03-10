@@ -8,6 +8,3 @@ export * from './updatePassword';
 export * from './resetPassword';
 export * from './checkToken';
 export * from './logout';
-export * from './updateMe';
-export * from './deleteMe';
-export * from './getUsers';

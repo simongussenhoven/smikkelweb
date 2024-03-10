@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 import User from '../../models/userModel';
 import { promisify } from 'util';
 import AppError from '../../utils/appError';
+import { createSendToken } from './createSendToken';
 
 export const checkToken = async (req, res, next) => {
   const token = req.cookies.token
@@ -21,7 +22,7 @@ export const checkToken = async (req, res, next) => {
       return res.status(401).json({ error: 'Unauthorized - User not found' });
     }
     req.user = user;
-    res.status(200).json({ status: 'success', data: { user } });
+    createSendToken(user, 200, res);
   } catch (error) {
     return next(new AppError('Internal server error', 500))
   }

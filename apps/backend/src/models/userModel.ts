@@ -53,6 +53,10 @@ const userSchema = new Schema<IUser, UserModel, IUserMethods>({
     type: Boolean,
     default: true,
     select: false
+  },
+  photo: {
+    type: String,
+    default: 'default-user.png'
   }
 });
 

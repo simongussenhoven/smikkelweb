@@ -25,7 +25,7 @@
 import { FwbButton, FwbSpinner } from 'flowbite-vue';
 import { computed, ref } from 'vue'
 import { useUserStore } from '../../stores/userStore';
-import { useRoute, useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
 const userStore = useUserStore();
 
 const isLoading = ref(false);

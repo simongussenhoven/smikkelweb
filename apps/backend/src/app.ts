@@ -5,7 +5,7 @@ import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
 import mongoSanitize from 'express-mongo-sanitize';
 import xss from 'xss-clean';
-import express from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import * as path from 'path';
 import * as mongoose from 'mongoose';
 import userRoutes from './routes/userRoutes';
@@ -21,6 +21,7 @@ dotenv.config({ path: envPath });
 
 // init app
 const app = express();
+app.use('/api/v1/assets', express.static(path.join(__dirname, 'assets')));
 
 // only enable cors on dev
 if (process.env.NODE_ENV === 'development') app.use(cors(corsOptions))
@@ -39,9 +40,9 @@ const limiter = rateLimit(limitOptions)
 if (process.env.NODE_ENV === 'production') app.use('/api', limiter)
 
 // other middleware
-app.use('/assets', express.static(path.join(__dirname, 'assets')));
-app.use(express.json({ limit: '10kb' }))
-app.use(express.static(`${__dirname}/public`))
+
+
+app.use(express.json({ limit: '5000kb' }))
 app.use(globalErrorHandler)
 app.use(cookieParser())
 app.use(logger('dev'))
@@ -52,8 +53,8 @@ mongoose.connect(process.env.DB_STRING).then(() => {
 })
 
 // routes
-app.use('/api/v1/users/', userRoutes)
-app.use('/api/v1/recipes/', recipeRoutes)
+app.use('/api/v1/users', userRoutes)
+app.use('/api/v1/recipes', recipeRoutes)
 
 // get the status of the API
 app.get('/', (req, res) => {

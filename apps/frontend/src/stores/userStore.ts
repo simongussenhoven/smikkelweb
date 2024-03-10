@@ -3,17 +3,17 @@ import { defineStore } from 'pinia';
 import { ref, watch } from 'vue';
 import { IUser, IUserModalState, IUserResponse, IUpdatePasswordRequest } from 'types';
 
-
 export const useUserStore = defineStore('userStore', () => {
   // request options
   const { apiBase } = useRuntimeConfig().public;
   const backendUrl = process.env.NODE_ENV === 'development' ? `${apiBase}/api/v1` : '/api/v1'
-  const headers = useRequestHeaders(['cookie', 'content-type', 'accept', 'authorization'])
+  const headers = useRequestHeaders(['cookie', 'accept', 'authorization'])
 
   // state of the modal and user menu
   const isModalVisible = ref(false);
   const userModalState = ref<IUserModalState>('login')
   const isUserMenuVisible = ref(false);
+  const isLoading = ref(true);
 
   // state of the user
   const id = ref('')
@@ -24,6 +24,9 @@ export const useUserStore = defineStore('userStore', () => {
   const isLoggedIn = ref(false)
   const userError = ref('');
   const resetHashToken = ref('')
+  const photo = ref(null)
+  const lastUpdated = ref(Date.now())
+
 
   // admin stuff
   const users = ref([])
@@ -46,6 +49,7 @@ export const useUserStore = defineStore('userStore', () => {
     }
   })
 
+  // get users, admin only
   const getUsers = async () => {
     try {
       const response: IUserResponse = await $fetch(`${backendUrl}/users/getUsers`, {
@@ -60,7 +64,7 @@ export const useUserStore = defineStore('userStore', () => {
   }
 
   // set user after register, login or checkToken
-  const setUser = (user: IUser) => {
+  const setUser = async (user: IUser) => {
     if (!user) return
     id.value = user.id
     username.value = user.username
@@ -68,11 +72,26 @@ export const useUserStore = defineStore('userStore', () => {
     email.value = user.email
     token.value = user.token
     isLoggedIn.value = true
+    photo.value = user.photo
+    isLoading.value = false
     return
+  }
+
+  // clear user
+  const clearUser = () => {
+    id.value = ''
+    username.value = ''
+    role.value = ''
+    email.value = ''
+    token.value = ''
+    isLoggedIn.value = false
+    photo.value = null
+    isLoading.value = false
   }
 
   // register
   const register = async (request) => {
+    isLoading.value = true
     try {
       const response: IUserResponse = await $fetch(`${backendUrl}/users/register`, {
         method: 'POST',
@@ -85,10 +104,14 @@ export const useUserStore = defineStore('userStore', () => {
     catch (e: any) {
       userError.value = "Er ging iets mis bij het aanmaken. Probeer het opnieuw."
     }
+    finally {
+      isLoading.value = false
+    }
   }
 
   // login
   const login = async (request) => {
+    isLoading.value = true
     try {
       const response: IUserResponse = await $fetch(`${backendUrl}/users/login`, {
         method: 'POST',
@@ -102,10 +125,14 @@ export const useUserStore = defineStore('userStore', () => {
       console.log('Error:', e)
       userError.value = "Login mislukt. Controleer je gegevens en probeer het opnieuw.";
     }
+    finally {
+      isLoading.value = false
+    }
   };
 
   // update password
   const updatePassword = async (request: IUpdatePasswordRequest) => {
+    isLoading.value = true
     if (resetHashToken.value) return resetPassword(request)
     try {
       request.id = id.value
@@ -121,11 +148,14 @@ export const useUserStore = defineStore('userStore', () => {
       userModalState.value = 'resetConfirm'
     } catch (e: any) {
       userError.value = "Er ging iets mis bij het updaten van je wachtwoord. Probeer het opnieuw.";
+    } finally {
+      isLoading.value = false
     }
   }
 
   // reset password
   const resetPassword = async (request: IUpdatePasswordRequest) => {
+    isLoading.value = true
     try {
       const response: IUserResponse = await $fetch(`${backendUrl}/users/resetPassword/${resetHashToken.value}`, {
         method: 'PATCH',
@@ -140,11 +170,14 @@ export const useUserStore = defineStore('userStore', () => {
       resetHashToken.value = ''
     } catch (e: any) {
       userError.value = "Er ging iets mis bij het updaten van je wachtwoord. Probeer het opnieuw.";
+    } finally {
+      isLoading.value = false
     }
   }
 
   // check token
   const checkToken = async () => {
+    isLoading.value = true
     if (isLoggedIn.value) return
     try {
       const response: any = await $fetch(`${backendUrl}/users/checkToken`, {
@@ -156,21 +189,15 @@ export const useUserStore = defineStore('userStore', () => {
       return
     } catch (error) {
       console.error('Error checking token:', error);
+    } finally {
+      isLoading.value = false
     }
   };
 
-  // clear user
-  const clearUser = () => {
-    id.value = ''
-    username.value = ''
-    role.value = ''
-    email.value = ''
-    token.value = ''
-    isLoggedIn.value = false
-  }
 
   // send reset password
   const sendResetPassword = async (email: string) => {
+    isLoading.value = true
     try {
       const response: any = await $fetch(`${backendUrl}/users/forgotPassword`, {
         method: 'POST',
@@ -178,13 +205,17 @@ export const useUserStore = defineStore('userStore', () => {
         body: JSON.stringify({ email })
       });
       userModalState.value = 'forgotConfirm'
+      isLoading.value = false
     } catch (error) {
       console.error('Error sending reset password:', error);
+    } finally {
+      isLoading.value = false
     }
   }
 
   // log out
   const logOut = async () => {
+    isLoading.value = true
     try {
       await $fetch(`${backendUrl}/users/logout`, {
         method: 'GET',
@@ -196,29 +227,39 @@ export const useUserStore = defineStore('userStore', () => {
       userModalState.value = 'logoutConfirm';
     } catch (error) {
       console.error('Error logging out:', error);
+    } finally {
+      isLoading.value = false
     }
   };
 
   // update user
-  const update = async (request) => {
+  const updateMe = async (request) => {
+    isLoading.value = true
+    // construction of form data is needed to send a file
+    const formData = new FormData()
+    if (request.file) formData.append('photo', request.file)
+    formData.append('username', request.username)
+    formData.append('email', request.email)
     try {
       const response: IUserResponse = await $fetch(`${backendUrl}/users/updateMe`, {
         method: 'PATCH',
         headers,
         credentials: 'include',
-        body: JSON.stringify(request)
+        body: formData
       });
-      username.value = request.username
-      email.value = request.email
-      userModalState.value = 'editConfirm'
+      await setUser(response.data.user)
 
+      userModalState.value = 'editConfirm'
     } catch (error) {
       userError.value = "Er ging iets mis bij het updaten van je gegevens. Probeer het opnieuw.";
+    } finally {
+      isLoading.value = false
     }
   }
 
   // update user
   const deleteAccount = async () => {
+    isLoading.value = true
     try {
       const response: IUserResponse = await $fetch(`${backendUrl}/users/deleteMe`, {
         method: 'DELETE',
@@ -229,6 +270,8 @@ export const useUserStore = defineStore('userStore', () => {
       userModalState.value = 'deleteConfirm'
     } catch (error) {
       userError.value = "Er ging iets mis bij het updaten van je gegevens. Probeer het opnieuw.";
+    } finally {
+      isLoading.value = false
     }
   }
   return {
@@ -242,6 +285,9 @@ export const useUserStore = defineStore('userStore', () => {
     isUserMenuVisible,
     resetHashToken,
     role,
+    photo,
+    isLoading,
+    lastUpdated,
     getUsers,
     login,
     register,
@@ -250,7 +296,7 @@ export const useUserStore = defineStore('userStore', () => {
     checkToken,
     logOut,
     sendResetPassword,
-    update,
+    updateMe,
     deleteAccount
   }
 })

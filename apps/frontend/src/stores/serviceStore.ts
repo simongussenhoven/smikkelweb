@@ -1,7 +1,7 @@
 import { useRuntimeConfig } from 'nuxt/app';
 import { defineStore } from 'pinia'
 
-export const useServiceStore = defineStore('counter', () => {
+export const useServiceStore = defineStore('serviceStore', () => {
   const { apiBase } = useRuntimeConfig().public;
   console.log(`Running ${process.env.NODE_ENV}`)
 
