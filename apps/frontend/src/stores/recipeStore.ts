@@ -54,7 +54,6 @@ export const useRecipeStore = defineStore('recipeStore', () => {
         credentials: 'include',
         body: JSON.stringify(request)
       })
-      console.log(response)
     }
     catch (e: any) {
       recipeError.value = "Er ging iets mis bij het aanmaken. Probeer het opnieuw."

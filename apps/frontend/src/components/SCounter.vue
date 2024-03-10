@@ -50,10 +50,8 @@ const value = computed({
 })
 
 const onClickSubstract = () => {
-  console.log()
   if (value.value > (props.min || 0)) {
     value.value -= 1
-
   }
 }
 

@@ -1,6 +1,6 @@
 import { useRequestHeaders, useRuntimeConfig } from 'nuxt/app';
 import { defineStore } from 'pinia';
-import { ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { IUser, IUserModalState, IUserResponse, IUpdatePasswordRequest } from 'types';
 
 export const useUserStore = defineStore('userStore', () => {
@@ -26,7 +26,9 @@ export const useUserStore = defineStore('userStore', () => {
   const resetHashToken = ref('')
   const photo = ref(null)
   const lastUpdated = ref(Date.now())
-
+  const photoPath = computed(() => {
+    return `${backendUrl}/assets/img/users/${photo.value ?? 'default-user.png'}`
+  })
 
   // admin stuff
   const users = ref([])
@@ -122,7 +124,6 @@ export const useUserStore = defineStore('userStore', () => {
       setUser(response.data.user);
       userModalState.value = 'loginConfirm'
     } catch (e: any) {
-      console.log('Error:', e)
       userError.value = "Login mislukt. Controleer je gegevens en probeer het opnieuw.";
     }
     finally {
@@ -288,6 +289,7 @@ export const useUserStore = defineStore('userStore', () => {
     photo,
     isLoading,
     lastUpdated,
+    photoPath,
     getUsers,
     login,
     register,
