@@ -3,9 +3,9 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
+  # pull_request:
+  #   branches:
+  #     - main
 # Needed for nx-set-shas when run on the main branch
 permissions:
   actions: read

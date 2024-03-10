@@ -1,21 +1,19 @@
 <template>
   <nav class="bg-white border-gray-200 dark:bg-gray-900">
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-      <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
+      <nuxt-link to="/" class="flex items-center space-x-3 rtl:space-x-reverse">
         <img src="../docs/images/style/logo.png" class="h-8" alt="Smikkelweb logo">
-        <!-- <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Flowbite</span> -->
-      </a>
+      </nuxt-link>
       <div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
         <button id="user-menu-button" type="button"
           class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
           aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom"
           @click="onClickUser">
-          <!-- <span class="sr-only">Open user menu</span> -->
+          <span class="sr-only">Open user menu</span>
           <fwb-spinner class="w-8 h-8 rounded-full p-2" v-if="isUserStoreLoading" />
           <Icon v-else-if="!userStore.photo" class="w-8 h-8 rounded-full" color="grey" name="flowbite:user-solid"/>
           <img v-else class="w-8 h-8 rounded-full" :src="userImage" alt="user photo" :key="lastUpdated">
         </button>
-        <!-- Dropdown menu -->
         <div v-show="isLoggedIn" id="user-dropdown"
           class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600">
           <div class="px-4 py-3">
@@ -46,7 +44,7 @@
           </svg>
         </button>
       </div>
-      <div id="navbar-user" class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1">
+      <div id="navbar-user" class="items-center hidden w-full md:flex md:w-auto md:order-1 justify-center">
         <ul
           class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
           <SNavbarLink title="Home" link="/" />
@@ -63,7 +61,7 @@ import { computed } from 'vue';
 import { useUserStore } from '../stores/userStore'
 import { useRecipeStore } from '../stores/recipeStore'
 import { FwbSpinner } from 'flowbite-vue'
-import { storeToRefs } from 'pinia';
+
 const userStore = useUserStore();
 const recipeStore = useRecipeStore();
 const isAdmin = computed(() => userStore.role === 'admin');

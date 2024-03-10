@@ -30,7 +30,6 @@ export const getRecipes = async (req: IRecipeRequest, res: Response, next: NextF
 }
 
 export const addRecipe = async (req: IRecipeRequest, res: Response, next: NextFunction) => {
-  console.log('Registering recipe')
   try {
     const newRecipe = new recipeModel(req.body);
     await newRecipe.save();

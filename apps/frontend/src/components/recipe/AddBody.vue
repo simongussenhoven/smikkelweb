@@ -9,7 +9,7 @@
             <Icon name="flowbite:user-solid" />
             Aantal personen
           </span>
-          <SCounter v-model="recipeModel.servings" />
+          <SCounter forValue="servings" v-model="recipeModel.servings" />
         </div>
         <!-- prep time -->
         <div class="w-1/2">
@@ -18,7 +18,7 @@
             Bereidingstijd (min)
           </span>
           <div class="flex items-center gap-2">
-            <SCounter v-model="recipeModel.time" />
+            <SCounter forValue="time" v-model="recipeModel.time" />
           </div>
         </div>
 
